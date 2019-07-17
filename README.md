@@ -2,7 +2,7 @@
 This codebase was forked from https://github.com/MrBenGriffin/Amaze.
 ![Logo](assets/logo.png)
 
-## The font
+## The Font
 You will need the font 'KNOTS Zoo' (any variant) installed with ligatures set for this to show what it is doing.
 
 The font is included in this project, both the original 
