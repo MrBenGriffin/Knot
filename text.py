@@ -13,7 +13,7 @@ def maze(parms):
     knot_work = Maze(parms[0], parms[1], 1, 0)
     Wall.straights_balance = parms[2]
     Wall.zoomorph_balance = parms[3]
-
+    Mazer.cutoff = max(2, parms[5])
     miner1 = Mazer(knot_work)
     miner1.dig(knot_work.entrance(Tweak(Tweak.master)))
     knot_work.add_bod(miner1, True)
@@ -38,7 +38,7 @@ def maze(parms):
 
 
 if __name__ == "__main__":
-    parameters = [21, 5, 850, 300, 3, 0, 0]
+    parameters = [21, 5, 850, 300, 3, 10, 0, 0]
     if len(sys.argv) < 3 or sys.argv[1] == "-?":
         print("You will need the font 'KNOTS Zoo' installed with ligatures set for this to show what it is doing.")
         print("This takes from two or more numeric parameters. Each one affects the knot work generated.")
@@ -47,9 +47,10 @@ if __name__ == "__main__":
         print("Parm 3: Straights Balance. This is a value between 0 and 1000. 0 = All twists, 1000=all straights. Default is 850.")
         print("Parm 4: Zoomorph Balance (Only affects twists). This is a value between 0 and 1000. 0 = All twists, 1000=all Zoomorphs. Default is 300.")
         print("Parm 5: Transform, 0: None; 1: Horizontal Mirror; 2: Vertical Mirror; 3: Rotate 180; 4: Rotate 90 (needs width and height to be the same. Default is Rotate.")
+        print("Parm 6: Connectivity. Slightly adjusts connections, smaller makes more. Minimum is 2. Default is 10")
         # The below is not yet implemented.
-        # print("Parm 6: Border. If this is more than 0, then the knotwork will be a border this thick. Default is none")
-        # print("Parm 7: Tiling. 0: None, 1: Horizontal, 2: Vertical, 3: Both. Default is none.")
+        # print("Parm 7: Border. If this is more than 0, then the knotwork will be a border this thick. Default is none")
+        # print("Parm 8: Tiling. 0: None, 1: Horizontal, 2: Vertical, 3: Both. Default is none.")
     for i in range(1, len(sys.argv)):
         parameters[i - 1] = int(sys.argv[i])
     maze(parameters)

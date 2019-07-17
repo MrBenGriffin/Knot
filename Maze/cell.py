@@ -113,7 +113,7 @@ class Cell:
         return False
 
     # make_door_in is done on self's side.
-    def make_door_in(self, com, kind=None):
+    def make_door_in(self, com, kind=None, tweak=None):
         if com == Com.C or com == Com.F:
             cell = self.floors[com].make_hole(com)
             if cell:
@@ -121,7 +121,7 @@ class Cell:
                 self.floors[com].tk_paint(com)
                 cell.stairs_coming_in(com.opposite)
         else:
-            cell = self.walls[com].make_door(com, kind)
+            cell = self.walls[com].make_door(com, kind, tweak)
         if cell:
             Cell.last_mined = cell
         return cell

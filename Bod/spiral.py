@@ -28,6 +28,6 @@ class Spiral(Mover):
                     next_cell = this_cell.make_door_in(self.face)
                     self.dig(next_cell)
                 else:
-                    self.track.pop
+                    self.track.pop()
             else:
                 self.track.pop()

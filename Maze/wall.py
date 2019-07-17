@@ -2,7 +2,7 @@
 import random
 # from tkinter import HIDDEN
 from Maze.cell import Cell
-from Maze.util import Dim, Com, Orientation
+from Maze.util import Dim, Com, Orientation, Tweak
 
 
 class Concrete:
@@ -59,7 +59,7 @@ class Wall:
             (self.x, self.y, self.x, self.y)
         ))
 
-    def make_door(self, cell_dir, kind=None):
+    def make_door(self, cell_dir, kind=None, tweak=None):
         if cell_dir not in self.cells:
             return None
         other = self.cells[cell_dir]
@@ -82,8 +82,16 @@ class Wall:
                 self.doors[cell_dir] = kind
                 self.doors[cell_dir.opposite] = opp[kind]
             else:
-                self.doors[cell_dir] = kind
-                self.doors[cell_dir.opposite] = opp[kind]
+                # This seems backward, but it's not.  The cell is already digging the opposite wall,
+                # and so doesn't need to worry about that part.  But the EW will look odd if unaffected by the mirror.
+                # It's still not a true mirror image, as types are always CCW oriented.
+                if (tweak is Tweak.horizon and self.orientation is Orientation.EW) or \
+                   (tweak is Tweak.vanity and self.orientation is Orientation.NS):
+                    self.doors[cell_dir.opposite] = kind
+                    self.doors[cell_dir] = opp[kind]
+                else:
+                    self.doors[cell_dir] = kind
+                    self.doors[cell_dir.opposite] = opp[kind]
             return other
         else:
             return None
