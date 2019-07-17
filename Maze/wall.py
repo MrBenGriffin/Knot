@@ -1,6 +1,6 @@
 # encoding: utf-8
 import random
-from tkinter import HIDDEN
+# from tkinter import HIDDEN
 from Maze.cell import Cell
 from Maze.util import Dim, Com, Orientation
 
@@ -67,8 +67,8 @@ class Wall:
             opp = {"I": "I", "X": "X", "H": "B", "B": "H"}
             self.door = " "
             other.mined = True
-            if self.level.tk_level:
-                self.level.tk_level.itemconfig(self.id, state=HIDDEN)
+            # if self.level.tk_level:
+            #     self.level.tk_level.itemconfig(self.id, state=HIDDEN)
             if kind is None:
                 # straights_balance; 0 = All twists, 1000=all straights
                 kind = "I"
@@ -122,12 +122,12 @@ class Wall:
     def code(self, com):
         return "O" if com not in self.doors else self.doors[com]
 
-    def tk_paint(self):
-        if self.level.tk_level:
-            if self.is_wall():
-                self.id = self.level.tk_level.create_line(self.solid, width=2)
-            else:
-                self.id = self.level.tk_level.create_line(self.solid, width=2, state=HIDDEN)
+    # def tk_paint(self):
+    #     if self.level.tk_level:
+    #         if self.is_wall():
+    #             self.id = self.level.tk_level.create_line(self.solid, width=2)
+    #         else:
+    #             self.id = self.level.tk_level.create_line(self.solid, width=2, state=HIDDEN)
 
 
 class Floor:
@@ -152,29 +152,29 @@ class Floor:
 
     def make_hole(self, com):
         self.solid = False
-        this = self.cells[com]
+        # this = self.cells[com]
         other = self.cells[com.opposite]
-        if this:
-            self.tk_paint(this)
-        if other:
-            self.tk_paint(other)
+        # if this:
+        #     self.tk_paint(this)
+        # if other:
+        #     self.tk_paint(other)
         return other
 
-    def tk_paint(self, cell):
-        if self.solid:
-            return
-        if cell == self.cells[Com.C]:
-            if cell.level.tk_level:
-                self.tk_c = cell.level.tk_level.create_line(
-                    (
-                        self.p.x, self.p.y, self.q.x, self.p.y, self.q.x, self.q.y, self.p.x,
-                        self.p.y),
-                    width=2, fill='red')
-        elif cell == self.cells[Com.F]:
-            if cell.level.tk_level:
-                self.tk_f = cell.level.tk_level.create_line(
-                    (
-                        self.p.x, self.p.y, self.p.x, self.q.y, self.q.x, self.p.y, self.p.x,
-                        self.p.y),
-                    width=2, fill='blue')
+    # def tk_paint(self, cell):
+    #     if self.solid:
+    #         return
+    #     if cell == self.cells[Com.C]:
+    #         if cell.level.tk_level:
+    #             self.tk_c = cell.level.tk_level.create_line(
+    #                 (
+    #                     self.p.x, self.p.y, self.q.x, self.p.y, self.q.x, self.q.y, self.p.x,
+    #                     self.p.y),
+    #                 width=2, fill='red')
+    #     elif cell == self.cells[Com.F]:
+    #         if cell.level.tk_level:
+    #             self.tk_f = cell.level.tk_level.create_line(
+    #                 (
+    #                     self.p.x, self.p.y, self.p.x, self.q.y, self.q.x, self.p.y, self.p.x,
+    #                     self.p.y),
+    #                 width=2, fill='blue')
 

@@ -7,8 +7,8 @@ class Spiral(Mover):
     def __init__(self, maze):
         super().__init__(maze)
         self.is_miner = True
-        self.halo = "white"
-        self.body = "green"
+        # self.halo = "white"
+        # self.body = "green"
         self.face = None
         self.com = Com.N
 

@@ -1,6 +1,5 @@
 # encoding: utf-8
-import math
-from tkinter import Canvas
+# from tkinter import Canvas
 from Maze.util import Orientation, Com, Dim, Tweak
 from Maze.wall import Wall, Floor, Corner
 from Maze.cell import Cell
@@ -83,32 +82,32 @@ class Maze:
                 bod.run()
                 self.do_mined()
 
-    def tk_init(self, root):
-        self.tk_maze = root
-        self.tk_maze.title("Maze")
-        for level in self.levels:
-            level.tk_level = Canvas(self.tk_maze,
-                                    width=20 + Cell.size * (self.cells_across + 0),
-                                    height=20 + Cell.size * (self.cells_up + 0),
-                                    bg='gray')
-            level.tk_level.grid(columns=1, rows=1)
-        self.tk_maze.after(0, self.animation)
+    # def tk_init(self, root):
+    #     self.tk_maze = root
+    #     self.tk_maze.title("Maze")
+    #     for level in self.levels:
+    #         level.tk_level = Canvas(self.tk_maze,
+    #                                 width=20 + Cell.size * (self.cells_across + 0),
+    #                                 height=20 + Cell.size * (self.cells_up + 0),
+    #                                 bg='gray')
+    #         level.tk_level.grid(columns=1, rows=1)
+    #     self.tk_maze.after(0, self.animation)
 
-    def animation(self):
-        for bod in self.bods:
-            if bod.is_miner:
-                if not self.mined:
-                    bod.tk_paint()
-            else:
-                if self.mined:
-                    bod.tk_paint()
-        for thing in self.things:
-            thing.tk_paint()
-        self.tk_maze.after(50, self.animation)
-
-    def tk_paint(self):
-        for level in self.levels:
-            level.tk_paint()
+    # def animation(self):
+    #     for bod in self.bods:
+    #         if bod.is_miner:
+    #             if not self.mined:
+    #                 bod.tk_paint()
+    #         else:
+    #             if self.mined:
+    #                 bod.tk_paint()
+    #     for thing in self.things:
+    #         thing.tk_paint()
+    #     self.tk_maze.after(50, self.animation)
+    #
+    # def tk_paint(self):
+    #     for level in self.levels:
+    #         level.tk_paint()
 
     def string(self):
         result = ""
@@ -153,13 +152,6 @@ class Level:
             for j in range(self.cells_up+1)]
             for i in range(self.cells_across+1)]
 
-    def erode(self):
-        pass
-        # for wall in self.ns_walls:
-        #     wall.erode()
-        # for wall in self.ew_walls:
-        #     wall.erode()
-
     def set_floor(self, maze):
         self.floors = [[Floor(self.cells[i][j], maze.cell(i, j, self.level + 1))
                        for j in range(self.cells_up)]
@@ -180,16 +172,16 @@ class Level:
             return self.cells[across][up]
         return None
 
-    def tk_paint(self):
-        for i in range(len(self.ns_walls)):
-            for j in range(len(self.ns_walls[i])):
-                self.ns_walls[i][j].tk_paint()
-        for i in range(len(self.ew_walls)):
-            for j in range(len(self.ew_walls[i])):
-                self.ew_walls[i][j].tk_paint()
-        for i in range(len(self.cells)):
-            for j in range(len(self.cells[i])):
-                self.floors[i][j].tk_paint(self.cells[i][j])
+    # def tk_paint(self):
+    #     for i in range(len(self.ns_walls)):
+    #         for j in range(len(self.ns_walls[i])):
+    #             self.ns_walls[i][j].tk_paint()
+    #     for i in range(len(self.ew_walls)):
+    #         for j in range(len(self.ew_walls[i])):
+    #             self.ew_walls[i][j].tk_paint()
+    #     for i in range(len(self.cells)):
+    #         for j in range(len(self.cells[i])):
+    #             self.floors[i][j].tk_paint(self.cells[i][j])
 
     def string(self):  # __str__ method here is just for easy visualisation purposes.
         line = "Level %s\n" % (1 + self.level)

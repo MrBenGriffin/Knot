@@ -1,25 +1,25 @@
-from tkinter import *
+# from tkinter import *
 from Maze.maze import Maze
 from Bod.clone import Clone
 from Bod.mazer import Mazer
 from Bod.spiral import Spiral
-from App.config import Config
+# from App.config import Config
 from Maze.util import Tweak
 
 
 class App(object):
     def __init__(self, tk_root):
-        # self.miner = None
         self.root = tk_root
-        self.maze_windows = []
-        self.config_window = tk_root     # for the moment, we shall use root for config.
-        self.config = Config(self.config_window, self.create_maze)
+    #   self.miner = None
+    #   self.maze_windows = []
+    #   self.config_window = tk_root     # for the moment, we shall use root for config.
+    #   self.config = Config(self.config_window, self.create_maze)
 
 # width, height, levels, cell_size, digger, show_dig
     def create_maze(self, cells_across, cells_up, levels, cell_size, digger, show_dig):
-        maze_window = Toplevel(self.root)
         the_maze = Maze(cells_across, cells_up, levels, cell_size)
-        the_maze.tk_init(maze_window)
+        # maze_window = Toplevel(self.root)
+        # the_maze.tk_init(maze_window)
         miner1 = Mazer(the_maze)
         miner2 = Clone(the_maze, Tweak(Tweak.rot090), miner1)
         miner3 = Clone(the_maze, Tweak(Tweak.rot180), miner1)
@@ -32,12 +32,13 @@ class App(object):
         the_maze.add_bod(miner2, True)
         the_maze.add_bod(miner3, True)
         the_maze.add_bod(miner4, True)
-        the_maze.tk_paint()
-        self.maze_windows.append(maze_window)
+        # the_maze.tk_paint()
+        # self.maze_windows.append(maze_window)
 
     @staticmethod
     def run():
-        the_root = Tk()
+        the_root = None
+        # the_root = Tk()
         App(the_root)
         the_root.mainloop()
 

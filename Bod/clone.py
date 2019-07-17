@@ -1,5 +1,5 @@
 from Bod.mover import Mover
-# from Maze.util import Com
+
 
 class Clone(Mover):
     def __init__(self, maze, tweak, other):
@@ -7,8 +7,8 @@ class Clone(Mover):
         self.is_miner = True
         self.tweak = tweak
         self.other = other
-        self.halo = "white"
-        self.body = "gray"
+        # self.halo = "white"
+        # self.body = "gray"
         self.face = None
         self.clone_doors = True
 
@@ -17,7 +17,6 @@ class Clone(Mover):
             master_cell = self.other.track[-2]
             this_cell = self.tweak.cell(self.maze, master_cell)
             if this_cell:
-                # print(str(master_cell.dim)) + "; " + str(self.other.face) + this_cell.dim
                 if not this_cell.mined:
                     self.dig(this_cell)
                 else:

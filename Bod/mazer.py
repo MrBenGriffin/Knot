@@ -1,6 +1,5 @@
 import random
 from Bod.mover import Mover
-# from Maze.util import Com
 
 
 class Mazer(Mover):
@@ -14,8 +13,8 @@ class Mazer(Mover):
     def __init__(self, maze):
         super().__init__(maze)
         self.is_miner = True
-        self.halo = "white"
-        self.body = "black"
+        # self.halo = "white"
+        # self.body = "black"
         self.sequence = 0
         self.forward = 0
         self.cell_index = None

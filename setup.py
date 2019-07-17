@@ -1,12 +1,12 @@
 from distutils.core import setup
 
 setup(
-    name='Amaze',
-    version='',
+    name='Knot',
+    version='2019.07.17',
     packages=['Maze', 'App', 'Bod'],
-    url='',
-    license='',
-    author='Ben and Tay and Cheddies',
+    url='https://github.com/MrBenGriffin/Knot',
+    license='GPL 3.0',
+    author='Ben Griffin',
     author_email='',
     description=''
 )

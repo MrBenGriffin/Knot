@@ -46,8 +46,7 @@ The "IIII" has an alternative form when typed as "iiii". This is great when work
 
 ## application requires:
 Python 3  
-typing (pip3 install typing)
-The GUI is not yet available!
+The GUI is not yet available! (When the GUI is working, you may need tkinter!)
 
 # Launching The application:
 ```bash
