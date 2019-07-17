@@ -1,12 +1,13 @@
-# Knotwork - Cloned from Amaze.
-![Maze](assets/logo.png)
+# Knotwork 
+This codebase was forked from https://github.com/MrBenGriffin/Amaze.
+![Logo](assets/logo.png)
 
 ## The font
-You will need the font 'KNOTS Zoo' installed with ligatures set for this to show what it is doing.
+You will need the font 'KNOTS Zoo' (any variant) installed with ligatures set for this to show what it is doing.
 
-[The font is included in this project](assets/KnotsZoo.otf)
+The font is included in this project, both the original 
+[KNOTS Black](assets/KnotsZoo-Black.otf) and [KNOTS Teeth](assets/KnotsZoo-Teeth.otf)
 
-This font is copyright Ben Griffin, and is licensed under the GPL3.0 copyleft license
 You can use the font directly in any text editors that support ligatures or character alternatives.
 You can use the box drawing characters (Unicode U+2500) and character alternatives in e.g. Adobe via the glyphs window.
 You can also use the built in ligature support, which is pretty straightforward,
@@ -45,9 +46,8 @@ The "IIII" has an alternative form when typed as "iiii". This is great when work
 
 ## application requires:
 Python 3  
-tkinter How to install( http://www.tkdocs.com/tutorial/install.html )  
 typing (pip3 install typing)
-
+The GUI is not yet available!
 
 # Launching The application:
 ```bash
@@ -58,14 +58,8 @@ This takes from two or more numeric parameters. Each one affects the knot work g
 * 1: Width.  The number of characters wide. It must be more than 1.
 * 2: Height. The number of characters high. It must be more than 1.
 * 3: Straights Balance. This is a value between 0 and 1000. 0 = All straights, 1000=all twists. Default is 150.
-* 4: Zoomorph Balance (Only affects twists). This is a value between 0 and 1000. 0 = All twists, 1000=all Zoomorphs. Default is 300.
+* 4: Zoomorphic Balance (Only affects twists). This is a value between 0 and 1000. 0 = All twists, 1000=all Zoomorphs. Default is 300.
 * 5: Transform, 0: None; 1: Horizontal Mirror; 2: Vertical Mirror; 3: Rotate 180; 4: Rotate 90 (needs width and height to be the same. Default is Rotate.
-
-### For the GUI, run gui.py. This is not very exciting at the moment.
-It still draws mazes, but does not have the right buttons or anything else.
-```bash
-python3 ./gui.py
-```
 
 You can still draw mazes also, by turning the Straights balance right up
 
