@@ -50,7 +50,7 @@ if __name__ == "__main__":
         print("Parm 6: Connectivity. Slightly adjusts connections, smaller makes more. Minimum is 2. Default is 10")
         print("Parm 7: Border. If this is more than 0, then the knotwork will be a border this thick. Default is none")
         # print("Parm 8: Tiling. 0: None, 1: Horizontal, 2: Vertical, 3: Both. Default is none.")
-    # for i in range(1, len(sys.argv)):
-    #     parameters[i - 1] = int(sys.argv[i])
+    for i in range(1, len(sys.argv)):
+        parameters[i - 1] = int(sys.argv[i])
     maze(parameters)
 
