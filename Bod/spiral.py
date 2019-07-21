@@ -4,11 +4,9 @@ from Maze.util import Com
 
 class Spiral(Mover):
 
-    def __init__(self, maze):
-        super().__init__(maze)
+    def __init__(self, maze, tweak):
+        super().__init__(maze, tweak)
         self.is_miner = True
-        # self.halo = "white"
-        # self.body = "green"
         self.face = None
         self.com = Com.N
 

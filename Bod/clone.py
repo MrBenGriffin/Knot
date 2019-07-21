@@ -3,12 +3,9 @@ from Bod.mover import Mover
 
 class Clone(Mover):
     def __init__(self, maze, tweak, other):
-        super().__init__(maze)
+        super().__init__(maze, tweak)
         self.is_miner = True
-        self.tweak = tweak
         self.other = other
-        # self.halo = "white"
-        # self.body = "gray"
         self.face = None
         self.clone_doors = True
 
@@ -25,7 +22,7 @@ class Clone(Mover):
                 if self.other.face is not None:
                     door = master_cell.walls[self.other.face].doors[self.other.face]
                     self.face = self.tweak.choose(self.other.face)
-                    next_cell = this_cell.make_door_in(self.face, door)
+                    next_cell = this_cell.make_door_in(self.face, self, door)
                     self.dig(next_cell)
         else:
             if not self.other.track:

@@ -11,14 +11,13 @@ class Mazer(Mover):
     """
     cutoff = 15
 
-    def __init__(self, maze):
-        super().__init__(maze)
+    def __init__(self, maze, tweak):
+        super().__init__(maze, tweak)
         self.is_miner = True
-        # self.halo = "white"
-        # self.body = "black"
         self.sequence = 0
         self.cell_index = None
         self.face = None
+        self.faces = []
 
     def _run(self):
         self.sequence += 1
@@ -29,7 +28,7 @@ class Mazer(Mover):
                 walls_to_dig = this_cell.walls_that_can_be_dug()
                 if walls_to_dig:
                     self.face = random.choice(walls_to_dig)
-                    next_cell = this_cell.make_door_in(self.face)
+                    next_cell = this_cell.make_door_in(self.face, self)
                     self.dig(next_cell)
                 else:
                     self.track.pop()
@@ -42,5 +41,5 @@ class Mazer(Mover):
                 if walls_to_dig:
                     self.track.append(this_cell)
                     self.face = random.choice(walls_to_dig)
-                    next_cell = this_cell.make_door_in(self.face)
+                    next_cell = this_cell.make_door_in(self.face, self)
                     self.dig(next_cell)
