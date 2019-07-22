@@ -38,12 +38,12 @@ def maze(parms):
 
 
 if __name__ == "__main__":
-    parameters = [17, 17, 850, 300, 3, 60, 3, 0, 0]
+    parameters = [9, 9, 850, 300, 4, 10, 0, 0, 0]
     if len(sys.argv) < 3 or sys.argv[1] == "-?":
         print("You will need the font 'KNOTS Zoo' installed with ligatures set for this to show what it is doing.")
         print("This takes from two or more numeric parameters. Each one affects the knot work generated.")
-        print("Parm 1: Width.  The number of characters wide. It must be more than 1.")
-        print("Parm 2: Height. The number of characters high. It must be more than 1.")
+        print("Parm 1: Width.  The number of characters wide. It must be more than 1. Default 9")
+        print("Parm 2: Height. The number of characters high. It must be more than 1. Default 9")
         print("Parm 3: Straights Balance. This is a value between 0 and 1000. 0 = All twists, 1000=all straights. Default is 850.")
         print("Parm 4: Zoomorph Balance (Only affects twists). This is a value between 0 and 1000. 0 = All twists, 1000=all Zoomorphs. Default is 300.")
         print("Parm 5: Transform, 0: None; 1: Horizontal Mirror; 2: Vertical Mirror; 3: Rotate 180; 4: Rotate 90 (needs width and height to be the same. Default is Rotate.")
