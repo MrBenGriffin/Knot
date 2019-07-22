@@ -49,6 +49,7 @@ if __name__ == "__main__":
         print("Parm 5: Transform, 0: None; 1: Horizontal Mirror; 2: Vertical Mirror; 3: Rotate 180; 4: Rotate 90 (needs width and height to be the same. Default is Rotate.")
         print("Parm 6: Connectivity. Slightly adjusts connections, smaller makes more. Minimum is 2. Default is 10")
         print("Parm 7: Border. If this is more than 0, then the knotwork will be a border this thick. Default is none")
+        print("")
         # print("Parm 8: Tiling. 0: None, 1: Horizontal, 2: Vertical, 3: Both. Default is none.")
     for i in range(1, len(sys.argv)):
         parameters[i - 1] = int(sys.argv[i])

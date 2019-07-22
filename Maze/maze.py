@@ -14,6 +14,9 @@ class Maze:
     def __init__(self, cells_across, cells_up, border=0):
         self.cells_across = cells_across
         self.cells_up = cells_up
+        if border > cells_up/2 or border > cells_across/2:
+            print("Border is too large for width and height. Setting to Border to 1")
+            border = 1
         self.border = border
         self.mined = False
         self.tk_maze = None
@@ -42,8 +45,9 @@ class Maze:
         while not self.mined:
             for bod in self.bods:
                 bod.run()
-        for bod in self.bods:
-            bod.final()  # Allow them to tidy up..
+        if self.border is not 0:
+            for bod in self.bods:
+                bod.final()  # Allow them to tidy up..
 
     def do_mined(self):
         self.mined = True
