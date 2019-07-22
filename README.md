@@ -58,6 +58,8 @@ This takes from two or more numeric parameters. Each one affects the knot work g
 * 3: Straights Balance. This is a value between 0 and 1000. 0 = All straights, 1000=all twists. Default is 150.
 * 4: Zoomorphic Balance (Only affects twists). This is a value between 0 and 1000. 0 = All twists, 1000=all Zoomorphs. Default is 300.
 * 5: Transform, 0: None; 1: Horizontal Mirror; 2: Vertical Mirror; 3: Rotate 180; 4: Rotate 90 (needs width and height to be the same. Default is Rotate.
+* 6: Border, 0: None; 1+ is the thickness of the border you want.  The centre will be space (filled with oooo). The border is within the boundary of the width and height!
+
 
 You can still draw mazes also, by turning the Straights balance right up
 
