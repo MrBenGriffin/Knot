@@ -2,6 +2,7 @@
 ![Logo](assets/logo.png)
 
 # To Install Fonts onto IOS (iPhone or iPad)
+The fonts are wrapped in a configuration profile, which is a way of saying that the fonts are safe to use.
 [click here, click on 'Download' and then approve the profile in Settings](assets/KNOTSZoomorphFonts.mobileconfig)
 
 ## The Font
