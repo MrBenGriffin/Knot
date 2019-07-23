@@ -2,7 +2,7 @@
 ![Logo](assets/logo.png)
 
 # To Install Fonts onto IOS (iPhone or iPad)
-[click here and then approve the profile in Settings](assets/KNOTSZoomorphFonts.mobileconfig)
+[click here and then approve the profile in Settings](raw/master/assets/KNOTSZoomorphFonts.mobileconfig)
 
 ## The Font
 You will need the font 'KNOTS Zoo' (any variant) installed with ligatures set for this to show what it is doing.
