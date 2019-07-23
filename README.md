@@ -2,7 +2,7 @@
 ![Logo](assets/logo.png)
 
 # To Install Fonts onto IOS (iPhone or iPad) try the following link.
-![IOS Install](assets/assets/KNOTS%20Zoomorph%20Fonts.mobileconfig)
+!(assets/assets/KNOTS%20Zoomorph%20Fonts.mobileconfig)
 
 
 ## The Font
