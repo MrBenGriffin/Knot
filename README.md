@@ -2,12 +2,12 @@
 ![Logo](assets/logo.png)
 
 # To Install Fonts onto IOS (iPhone or iPad)
-[click here and then approve the profile in Settings](raw/master/assets/KNOTSZoomorphFonts.mobileconfig)
+[click here, click on 'Download' and then approve the profile in Settings](assets/KNOTSZoomorphFonts.mobileconfig)
 
 ## The Font
 You will need the font 'KNOTS Zoo' (any variant) installed with ligatures set for this to show what it is doing.
 
-Although the font is included in this project, I recommend you go to https://fontlibrary.org/en/font/knots to get the very latest versions!
+Although the font is included in this project, if you are not on iOS I recommend you go to https://fontlibrary.org/en/font/knots to get the very latest versions!
 
 You can use the font directly in any text editors that support ligatures or character alternatives.
 You can use the box drawing characters (Unicode U+2500) and character alternatives in e.g. Adobe via the glyphs window.
