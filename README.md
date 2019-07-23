@@ -1,6 +1,9 @@
 # Knotwork 
-This codebase was forked from https://github.com/MrBenGriffin/Amaze.
 ![Logo](assets/logo.png)
+
+# To Install Fonts onto IOS (iPhone or iPad) try the following link.
+![IOS Install](assets/assets/KNOTS%20Zoomorph%20Fonts.mobileconfig)
+
 
 ## The Font
 You will need the font 'KNOTS Zoo' (any variant) installed with ligatures set for this to show what it is doing.
@@ -79,3 +82,6 @@ A spiral-generating miner. Generates nice spirals
 
 ## Clone
 Copies another Miner, either mirroring or rotating.
+
+This codebase was forked from https://github.com/MrBenGriffin/Amaze.
+
