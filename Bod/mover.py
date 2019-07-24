@@ -22,6 +22,12 @@ class Mover(object):
         else:
             self._run()
 
+    '''
+    This isn't brilliant.
+    It could start at entrance and then trace through 
+    it's own maze until it finds a neighbour it's not joined to.
+    Currently, if the entrance is bounded by the miner, there will be nowhere to join.
+    '''
     def final(self):
         self.entrance.join()
 

@@ -53,7 +53,7 @@ class Dim:
             self.z = z
 
     def __str__(self):
-        return "%02x\n%02x" % (self.x, self.y)
+        return "(%02x,%02x)" % (self.x, self.y)
 
     def __cmp__(self, other):
         return self.x == other.x and self.y == other.y and self.z == other.z

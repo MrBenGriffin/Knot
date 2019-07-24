@@ -26,6 +26,9 @@ class Cell:
             self.walls[Com.S].set_cell(self, Com.N)
             self.walls[Com.W].set_cell(self, Com.E)
 
+    def log(self, orig):
+        print(str(" " + self.name() + ":" + orig + "->" + self.code()))
+
     def name(self):
         return str(self.dim)
 
@@ -37,10 +40,12 @@ class Cell:
         return self
 
     def join(self):
+        orig = self.code()
         for compass, wall in self.walls.items():
             other = wall.neighbour(compass)
             if other and other.miner is not self.miner:
                 wall.make_door(compass, "X")
+        self.log(orig)
 
     def exits(self):
         list_of_exits = self.level_exits()
@@ -88,15 +93,15 @@ class Cell:
         return cell
 
     def __str__(self):
-        return " "
+        return self.code()
 
     def code(self):
         if not self.mined:
             return "oooo"
         return self.walls[Com.N].code(Com.N) + \
-            self.walls[Com.E].code(Com.E) + \
-            self.walls[Com.S].code(Com.S) + \
-            self.walls[Com.W].code(Com.W)
+               self.walls[Com.E].code(Com.E) + \
+               self.walls[Com.S].code(Com.S) + \
+               self.walls[Com.W].code(Com.W)
 
     def __cmp__(self, other):
         return self.dim == other.dim

@@ -4,7 +4,7 @@ import random
 from Maze.maze import Maze
 from Bod.mazer import Mazer
 from Bod.clone import Clone
-from Maze.tweak import Tweak
+from Maze.tweak import Tweak, Tw
 from Maze.wall import Wall
 
 
@@ -14,21 +14,21 @@ def maze(parms):
     Wall.straights_balance = parms[2]
     Wall.zoomorph_balance = parms[3]
     Mazer.cutoff = max(2, parms[5])
-    styles = (Tweak.master, Tweak.vanity, Tweak.horizon, Tweak.rot180, Tweak.rot090)
+    styles = (Tw.master, Tw.vanity, Tw.horizon, Tw.rot180, Tw.rot090)
     style = styles[parms[4]]
-    miner1 = Mazer(knot_work, Tweak.master)
-    miner1.enter(knot_work.entrance(Tweak(Tweak.master)))
+    miner1 = Mazer(knot_work, Tw.master)
+    miner1.enter(knot_work.entrance(Tweak(Tw.master)))
     knot_work.add_bod(miner1)
 
-    if style == Tweak.rot090 and parms[0] != parms[1]:
-        style = Tweak.rot180
-    if style != Tweak.master:
+    if style == Tw.rot090 and parms[0] != parms[1]:
+        style = Tw.rot180
+    if style != Tw.master:
         miner2 = Clone(knot_work, Tweak(style), miner1)
         miner2.enter(knot_work.entrance(miner2.tweak))
         knot_work.add_bod(miner2)
-    if style == Tweak.rot090:
-        miner3 = Clone(knot_work, Tweak(Tweak.rot180), miner1)
-        miner4 = Clone(knot_work, Tweak(Tweak.rot270), miner1)
+    if style == Tw.rot090:
+        miner3 = Clone(knot_work, Tweak(Tw.rot180), miner1)
+        miner4 = Clone(knot_work, Tweak(Tw.rot270), miner1)
         miner3.enter(knot_work.entrance(miner3.tweak))
         miner4.enter(knot_work.entrance(miner4.tweak))
         knot_work.add_bod(miner3)

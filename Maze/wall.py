@@ -1,7 +1,7 @@
 # encoding: utf-8
 import random
 from Maze.util import Com, Orientation
-from Maze.tweak import Tweak
+from Maze.tweak import Tw
 
 
 class Wall:
@@ -52,8 +52,8 @@ class Wall:
                 # This seems backward, but it's not.  The cell is already digging the opposite wall,
                 # and so doesn't need to worry about that part.  But the EW will look odd if unaffected by the mirror.
                 # It's still not a true mirror image, as types are always CCW oriented.
-                if (tweak is Tweak.horizon and self.orientation is Orientation.EW) or \
-                   (tweak is Tweak.vanity and self.orientation is Orientation.NS):
+                if (tweak is Tw.horizon and self.orientation is Orientation.EW) or \
+                   (tweak is Tw.vanity and self.orientation is Orientation.NS):
                     self.doors[cell_dir.opposite] = kind
                     self.doors[cell_dir] = opp[kind]
                 else:
