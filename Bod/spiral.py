@@ -1,11 +1,11 @@
 from Bod.mover import Mover
-from Maze.util import Com
+from Maze.com import Com
 
 
 class Spiral(Mover):
 
-    def __init__(self, maze, tweak):
-        super().__init__(maze, tweak)
+    def __init__(self, maze):
+        super().__init__(maze)
         self.is_miner = True
         self.face = None
         self.com = Com.N

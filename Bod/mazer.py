@@ -11,8 +11,8 @@ class Mazer(Mover):
     """
     cutoff = 15
 
-    def __init__(self, maze, tweak):
-        super().__init__(maze, tweak)
+    def __init__(self, maze):
+        super().__init__(maze)
         self.is_miner = True
         self.sequence = 0
         self.cell_index = None

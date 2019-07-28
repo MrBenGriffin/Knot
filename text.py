@@ -16,21 +16,17 @@ def maze(parms):
     Mazer.cutoff = max(2, parms[5])
     styles = (Tw.master, Tw.vanity, Tw.horizon, Tw.rot180, Tw.rot090)
     style = styles[parms[4]]
-    miner1 = Mazer(knot_work, Tw.master)
-    miner1.enter(knot_work.entrance(Tweak(Tw.master)))
+    miner1 = Mazer(knot_work)
     knot_work.add_bod(miner1)
 
     if style == Tw.rot090 and parms[0] != parms[1]:
         style = Tw.rot180
     if style != Tw.master:
-        miner2 = Clone(knot_work, Tweak(style), miner1)
-        miner2.enter(knot_work.entrance(miner2.tweak))
+        miner2 = Clone(knot_work, style, miner1)
         knot_work.add_bod(miner2)
     if style == Tw.rot090:
-        miner3 = Clone(knot_work, Tweak(Tw.rot180), miner1)
-        miner4 = Clone(knot_work, Tweak(Tw.rot270), miner1)
-        miner3.enter(knot_work.entrance(miner3.tweak))
-        miner4.enter(knot_work.entrance(miner4.tweak))
+        miner3 = Clone(knot_work, Tw.rot180, miner1)
+        miner4 = Clone(knot_work, Tw.rot270, miner1)
         knot_work.add_bod(miner3)
         knot_work.add_bod(miner4)
     knot_work.mine()

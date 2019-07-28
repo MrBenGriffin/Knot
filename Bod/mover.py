@@ -1,4 +1,6 @@
 from abc import ABCMeta, abstractmethod
+from Maze.tweak import Tweak, Tw
+from Maze.maze import Maze
 
 
 class Mover(object):
@@ -8,32 +10,26 @@ class Mover(object):
     def _run(self):
         pass
 
-    def __init__(self, maze, tweak):
+    # def face(self, com: Com) -> Com:
+
+    def __init__(self, maze: Maze, tweak: Tw = None, other=None):
+        self.other = other
+        if tweak is None or other is None:
+            self.tweak = Tweak(Tw.master, maze.cells_across, maze.cells_up)
+        else:
+            self.tweak = Tweak(tweak, maze.cells_across, maze.cells_up)
         self.track = []
         self.levels = 1
         self.is_miner = False
         self.maze = maze
-        self.entrance = None
-        self.tweak = tweak
+        self.entrance = maze.at(self.tweak.entry(maze.border))
+        self.dig(self.entrance)
 
     def run(self):
         if self.is_miner and not self.track and not self.maze.mined:
             self.maze.mined = True
         else:
             self._run()
-
-    '''
-    This isn't brilliant.
-    It could start at entrance and then trace through 
-    it's own maze until it finds a neighbour it's not joined to.
-    Currently, if the entrance is bounded by the miner, there will be nowhere to join.
-    '''
-    def final(self):
-        self.entrance.join()
-
-    def enter(self, cell):
-        self.entrance = cell
-        self.dig(self.entrance)
 
     def dig(self, cell):
         if not cell.mined:

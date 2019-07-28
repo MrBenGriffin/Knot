@@ -1,5 +1,5 @@
 # encoding: utf-8
-from Maze.util import Com
+from Maze.com import Com
 
 
 class Cell:
@@ -38,14 +38,6 @@ class Cell:
             if not wall.is_wall():
                 return wall.cells[com]
         return self
-
-    def join(self):
-        orig = self.code()
-        for compass, wall in self.walls.items():
-            other = wall.neighbour(compass)
-            if other and other.miner is not self.miner:
-                wall.make_door(compass, "X")
-        self.log(orig)
 
     def exits(self):
         list_of_exits = self.level_exits()

@@ -2,9 +2,8 @@
 from Maze.maze import Maze
 from Bod.clone import Clone
 from Bod.mazer import Mazer
-from Bod.spiral import Spiral
 # from App.config import Config
-from Maze.util import Tweak
+from Maze.tweak import Tweak
 
 
 class App(object):
