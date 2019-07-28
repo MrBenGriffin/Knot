@@ -17,12 +17,18 @@ class Maze:
             border = 0
         self.border = border
         self.mined = False
+        self.joined = False
         self.bods = []
         self.things = []
         self.level = Level(cells_across, cells_up, self.border)
 
     def mine(self):
         while not self.mined:
+            for bod in self.bods:
+                bod.run()
+
+    def join(self):
+        while not self.joined:
             for bod in self.bods:
                 bod.run()
 

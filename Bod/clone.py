@@ -26,3 +26,8 @@ class Clone(Mover):
         else:
             if not self.other.track:
                 self.track.clear()
+
+    def set_other(self, other):
+        self.other = other
+        self.track = []
+

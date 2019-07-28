@@ -3,8 +3,9 @@ import sys
 import random
 from Maze.maze import Maze
 from Bod.mazer import Mazer
+from Bod.joiner import Joiner
 from Bod.clone import Clone
-from Maze.tweak import Tweak, Tw
+from Maze.tweak import Tw
 from Maze.wall import Wall
 
 
@@ -30,6 +31,18 @@ def maze(parms):
         knot_work.add_bod(miner3)
         knot_work.add_bod(miner4)
     knot_work.mine()
+    # The clones won't touch anyone else if,
+    # if there is more than one miner AND
+    # if (1) there's a border OR
+    #    (2) if the edges are even
+    # Then we will need a joiner (and clones).
+    if len(knot_work.bods) > 1 and (knot_work.border > 0 or knot_work.cells_up % 2 is 0 or knot_work.cells_across % 2 is 0):
+        joiner = Joiner(knot_work)
+        knot_work.bods[0] = joiner
+        for bod in range(1, len(knot_work.bods)):
+            knot_work.bods[bod].set_other(joiner)
+        knot_work.join()
+
     print(knot_work.code())
 
 

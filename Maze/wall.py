@@ -34,7 +34,7 @@ class Wall:
             return None
         other = self.cells[cell_dir]
         if not self.blocked and other:
-            opp = {"I": "I", "X": "X", "H": "B", "B": "H"}
+            opp = {"O": "O", "I": "I", "X": "X", "H": "B", "B": "H"}
             self.door = " "
             other.mined = True
             if kind is None:

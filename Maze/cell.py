@@ -63,6 +63,17 @@ class Cell:
                 walls.append(compass)
         return walls
 
+    def neighbours(self):
+        """
+        :return: dict [Com: Neighbour] of neighbours
+        """
+        neighbours = {}
+        for compass, wall in self.walls.items():
+            neighbour = wall.neighbour(compass)
+            if neighbour:
+                neighbours[compass] = neighbour
+        return neighbours
+
     def walls_that_can_be_dug(self):
         """
         :return: list [Com] that may be dug..
@@ -80,7 +91,8 @@ class Cell:
     def make_door_in(self, com, miner, kind=None, tweak=None):
         cell = self.walls[com].make_door(com, kind, tweak)
         if cell:
-            cell.miner = miner
+            if not cell.miner:
+                cell.miner = miner
             Cell.last_mined = cell
         return cell
 
