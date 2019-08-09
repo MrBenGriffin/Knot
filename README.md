@@ -1,4 +1,5 @@
 # Knotwork 
+[![Coverage Status](https://coveralls.io/repos/github/MrBenGriffin/Knot/badge.svg?branch=master)](https://coveralls.io/github/MrBenGriffin/Knot?branch=master)
 ![Logo](assets/logo.png)
 
 # To Install Fonts onto IOS (iPhone or iPad)
