@@ -1,1 +1,2 @@
-random unittest pytest-cov python-coveralls
+pytest-cov
+python-coveralls
