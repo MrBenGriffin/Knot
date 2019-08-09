@@ -11,3 +11,6 @@ script:
 
 notifications:
   email: false
+
+after_success:
+  - coveralls
