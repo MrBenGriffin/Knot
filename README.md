@@ -1,4 +1,5 @@
 # Knotwork 
+[![Build Status](https://travis-ci.org/MrBenGriffin/Knot.svg?branch=master)](https://travis-ci.org/MrBenGriffin/Knot?branch=master) 
 [![Coverage Status](https://coveralls.io/repos/github/MrBenGriffin/Knot/badge.svg?branch=master)](https://coveralls.io/github/MrBenGriffin/Knot?branch=master)
 ![Logo](assets/logo.png)
 
