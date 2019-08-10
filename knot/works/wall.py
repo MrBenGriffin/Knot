@@ -16,16 +16,16 @@ class Wall:
 
     def __init__(self, orientation, x, y, blocked=False):
         self.blocked = blocked
+        self.door = False
         self.id = None
         self.x = x
         self.y = y
-        self.door = "▦"
         self.doors = {}
         self.cells = {}
         self.orientation = orientation
 
     def neighbour(self, cell_dir):
-        if self.blocked or cell_dir not in self.cells:
+        if cell_dir not in self.cells:
             return None
         return self.cells[cell_dir]
 
@@ -35,7 +35,7 @@ class Wall:
         other = self.cells[cell_dir]
         if not self.blocked and other:
             opp = {"O": "O", "I": "I", "X": "X", "H": "B", "B": "H"}
-            self.door = " "
+            self.door = True
             other.mined = True
             if kind is None:
                 # straights_balance; 0 = All twists, 1000=all straights
@@ -65,10 +65,10 @@ class Wall:
             return None
 
     def make_solid(self):
-        self.door = "▦"
+        self.door = False
 
     def is_wall(self) -> bool:
-        return self.door == "▦"
+        return not self.door
 
     def block(self):
         self.blocked = True

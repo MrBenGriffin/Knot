@@ -20,21 +20,11 @@ class Level:
         self.cells = [[
             Cell(Dim(i, j), self.ns_walls, self.ew_walls,
                  True if border > 0 and
-                     (border <= i < self.cells_across - border) and
-                     (border <= j < self.cells_up - border) else False
+                    (border <= i < self.cells_across - border) and
+                    (border <= j < self.cells_up - border) else False
                  )
             for j in range(self.cells_up)]
             for i in range(self.cells_across)]
-
-    def _ns_wall(self, across, up):
-        if across in range(self.cells_across) and up in range(self.cells_up + 1):
-            return self.ns_walls[across][up]
-        return None
-
-    def _ew_wall(self, across, up):
-        if across in range(0, self.cells_across + 1) and up in range(0, self.cells_up):
-            return self.ew_walls[across][up]
-        return None
 
     def cell(self, across, up):
         if across in range(0, self.cells_across) and up in range(0, self.cells_up):

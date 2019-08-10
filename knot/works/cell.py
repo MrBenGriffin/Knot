@@ -99,6 +99,9 @@ class Cell:
     def __str__(self):
         return self.code()
 
+    def __repr__(self):
+        return "Cell (" + str(self.dim) + " " + self.code() + ")"
+
     def code(self):
         if not self.mined:
             return "oooo"
