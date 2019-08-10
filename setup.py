@@ -1,9 +1,9 @@
 from distutils.core import setup
 
 setup(
-    name='Knot',
+    name='knot',
     version='2019.07.17',
-    packages=['Maze', 'App', 'Bod'],
+    packages=['knot'],
     url='https://github.com/MrBenGriffin/Knot',
     license='GPL 3.0',
     author='Ben Griffin',

@@ -1,6 +1,5 @@
 from abc import ABCMeta, abstractmethod
-from Maze.tweak import Tweak, Tw
-from Maze.maze import Maze
+from knot.works import Tweak, Tw, Structure
 
 
 class Mover(object):
@@ -12,22 +11,22 @@ class Mover(object):
 
     # def face(self, com: Com) -> Com:
 
-    def __init__(self, maze: Maze, tweak: Tw = None, other=None):
+    def __init__(self, structure: Structure, tweak: Tw = None, other=None):
         self.other = other
         if tweak is None or other is None:
-            self.tweak = Tweak(Tw.master, maze.cells_across, maze.cells_up)
+            self.tweak = Tweak(Tw.master, structure.cells_across, structure.cells_up)
         else:
-            self.tweak = Tweak(tweak, maze.cells_across, maze.cells_up)
+            self.tweak = Tweak(tweak, structure.cells_across, structure.cells_up)
         self.track = []
         self.levels = 1
         self.is_miner = False
-        self.maze = maze
-        self.entrance = maze.at(self.tweak.entry(maze.border))
+        self.structure = structure
+        self.entrance = structure.at(self.tweak.entry(structure.border))
         self.dig(self.entrance)
 
     def run(self):
-        if self.is_miner and not self.track and not self.maze.mined:
-            self.maze.mined = True
+        if self.is_miner and not self.track and not self.structure.mined:
+            self.structure.mined = True
         else:
             self._run()
 

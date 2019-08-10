@@ -1,5 +1,5 @@
 # encoding: utf-8
-from Maze.com import Com
+from .com import Com
 
 
 class Cell:

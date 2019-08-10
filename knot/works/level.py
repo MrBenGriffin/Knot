@@ -1,7 +1,7 @@
 # encoding: utf-8
-from Maze.util import Orientation, Dim
-from Maze.wall import Wall
-from Maze.cell import Cell
+from .orientation import Orientation, Dim
+from .wall import Wall
+from .cell import Cell
 
 
 class Level:

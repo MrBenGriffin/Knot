@@ -1,5 +1,5 @@
 import random
-from Bod.mover import Mover
+from .mover import Mover
 
 
 class Mazer(Mover):

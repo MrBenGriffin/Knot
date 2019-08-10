@@ -1,17 +1,13 @@
 import os
-import sys
 import random
-from Maze.maze import Maze
-from Bod.mazer import Mazer
-from Bod.joiner import Joiner
-from Bod.clone import Clone
-from Maze.tweak import Tw
-from Maze.wall import Wall
+import sys
+from knot.works import Structure, Wall, Tw
+from knot.actor import Mazer, Clone, Joiner
 
 
 def maze(parms):
     random.seed(os.urandom(6))
-    knot_work = Maze(parms[0], parms[1], parms[6])
+    knot_work = Structure(parms[0], parms[1], parms[6])
     Wall.straights_balance = parms[2]
     Wall.zoomorph_balance = parms[3]
     Mazer.cutoff = max(2, parms[5])

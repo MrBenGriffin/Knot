@@ -1,11 +1,11 @@
-from Bod.mover import Mover
-from Maze.com import Com
+from .mover import Mover
+from knot.works import Com
 
 
 class Spiral(Mover):
 
-    def __init__(self, maze):
-        super().__init__(maze)
+    def __init__(self, structure):
+        super().__init__(structure)
         self.is_miner = True
         self.face = None
         self.com = Com.N

@@ -1,9 +1,9 @@
-from Bod.mover import Mover
+from .mover import Mover
 
 
 class Clone(Mover):
-    def __init__(self, maze, tweak, other):
-        super().__init__(maze, tweak, other)
+    def __init__(self, structure, tweak, other):
+        super().__init__(structure, tweak, other)
         self.is_miner = True
         self.face = None
         self.clone_doors = True
@@ -11,7 +11,7 @@ class Clone(Mover):
     def _run(self):
         if len(self.other.track) > 1:
             master_cell = self.other.track[-2]
-            this_cell = self.maze.at(self.tweak.dim(master_cell.dim))
+            this_cell = self.structure.at(self.tweak.dim(master_cell.dim))
             if this_cell:
                 if not this_cell.mined:
                     self.dig(this_cell)

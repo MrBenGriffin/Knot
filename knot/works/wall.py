@@ -1,8 +1,8 @@
 # encoding: utf-8
 import random
-from Maze.util import Orientation
-from Maze.tweak import Tw
-from Maze.com import Com
+from .orientation import Orientation
+from .com import Com
+from .tw import Tw
 
 
 class Wall:

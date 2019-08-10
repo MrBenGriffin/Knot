@@ -1,12 +1,12 @@
 # encoding: utf-8
-from Maze.util import Dim
-from Maze.level import Level
-from Maze.cell import Cell
+from .orientation import Dim
+from .level import Level
+from .cell import Cell
 
 
-class Maze:
+class Structure:
     """
-        Maze is created as a rectangle of x * y cells.
+        works is created as a rectangle of x * y cells.
     """
 
     def __init__(self, cells_across, cells_up, border=0):
@@ -46,5 +46,3 @@ class Maze:
 
     def code(self):
         return self.level.code()
-
-

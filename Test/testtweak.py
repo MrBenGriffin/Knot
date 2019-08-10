@@ -1,8 +1,5 @@
 import unittest
-from Maze.tweak import Tweak, Tw
-from Maze.com import Com
-from Maze.util import Dim
-
+from knot.works import Tweak, Tw, Com, Dim
 
 class TestTweak(unittest.TestCase):
     tweaks = (Tw.master, Tw.horizon, Tw.vanity, Tw.mirror, Tw.rot000, Tw.rot090, Tw.rot270, Tw.rot180)

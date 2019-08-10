@@ -1,5 +1,4 @@
-from Bod.mover import Mover
-from Maze.cell import Cell
+from .mover import Mover
 
 
 class Joiner(Mover):
@@ -35,4 +34,4 @@ class Joiner(Mover):
                 else:
                     self.dead_ends.append(self.track.pop())
         else:
-            self.maze.joined = True
+            self.structure.joined = True

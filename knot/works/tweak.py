@@ -1,19 +1,8 @@
 # encoding: utf-8
 from math import floor, ceil
-from enum import IntFlag
-from Maze.util import Dim
-from Maze.com import Com
-
-
-class Tw(IntFlag):
-    master = 0x0000
-    horizon = 0x0001  # HMirror
-    vanity = 0x0002   # VMirror
-    mirror = 0x0003
-    rot000 = 0x0004  # rotate 0
-    rot090 = 0x0005  #
-    rot270 = 0x0006  #
-    rot180 = 0x0007  #
+from .orientation import Dim
+from .com import Com
+from .tw import Tw
 
 
 class Tweak:
