@@ -13,4 +13,5 @@ notifications:
   email: false
 
 after_success:
+  - coverage run --source=knot -m unittest discover -s .
   - coveralls
