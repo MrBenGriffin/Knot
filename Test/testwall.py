@@ -16,6 +16,10 @@ class TestWall(unittest.TestCase):
     """
 
     def setUp(self):
+        """
+        It's really hard to use walls without cells.
+        So here, we are initialising a group of 3x3 cells - the centre of which is Blocked.
+        """
         self.cells_across = 3
         self.cells_up = 3
         self.ns_walls = [[
@@ -75,6 +79,73 @@ class TestWall(unittest.TestCase):
                 nss_test = ns_wall.neighbour(Com.S)
                 nss_answer = nss_answers[j][i]
                 self.assertEqual(nss_test, nss_answer, str(Dim(i, j)) + " S: Bad Neighbour")
+
+    def test_code(self):
+        answers = {
+            Orientation.EW: (
+                ("O", "I", "I", "O"),
+                ("O", "O", "O", "O"),
+                ("O", "I", "I", "O")
+            ),
+            Orientation.NS: (
+                ("O", "O", "O"),
+                ("X", "O", "X"),
+                ("X", "O", "X"),
+                ("O", "O", "O")
+            )
+        }
+
+        for i in range(self.cells_across + 1):
+            for j in range(self.cells_up):
+                ew_wall = self.ew_walls[i][j]
+                self.assertEqual(ew_wall.code(Com.N), "O", "N Should be O for EW")
+                self.assertEqual(ew_wall.code(Com.S), "O", "S Should be O for EW")
+                self.assertEqual(ew_wall.code(Com.E), "O", "E Should be O while no doors are set")
+                self.assertEqual(ew_wall.code(Com.W), "O", "W Should be O while no doors are set")
+        for i in range(self.cells_across):
+            for j in range(self.cells_up + 1):
+                ns_wall = self.ns_walls[i][j]
+                self.assertEqual(ns_wall.code(Com.E), "O", "E Should be O for NS")
+                self.assertEqual(ns_wall.code(Com.W), "O", "W Should be O for NS")
+                self.assertEqual(ns_wall.code(Com.N), "O", "N Should be O while no doors are set")
+                self.assertEqual(ns_wall.code(Com.S), "O", "S Should be O while no doors are set")
+
+        for i in range(self.cells_across + 1):
+            for j in range(self.cells_up):
+                ew_wall = self.ew_walls[i][j]
+                if not ew_wall.is_edge():
+                    ew_wall.make_door(Com.E, "I")
+                    ew_wall.make_door(Com.W, "I")
+        for i in range(self.cells_across):
+            for j in range(self.cells_up + 1):
+                ns_wall = self.ns_walls[i][j]
+                if not ns_wall.is_edge():
+                    ns_wall.make_door(Com.N, "X")
+                    ns_wall.make_door(Com.S, "X")
+
+        for i in range(self.cells_across + 1):
+            for j in range(self.cells_up):
+                wall = self.ew_walls[i][j]
+                good = answers[Orientation.EW][j][i]
+                self.assertEqual(wall.code(Com.W), good, "W" + str(i) + str(j) + " Should be " + good)
+                self.assertEqual(wall.code(Com.E), good, "E" + str(i) + str(j) + " Should be " + good)
+        for i in range(self.cells_across):
+            for j in range(self.cells_up + 1):
+                wall = self.ns_walls[i][j]
+                good = answers[Orientation.NS][j][i]
+                self.assertEqual(wall.code(Com.N), good, "N" + str(i) + str(j) + " Should be " + good)
+                self.assertEqual(wall.code(Com.S), good, "S" + str(i) + str(j) + " Should be " + good)
+
+        # result = ""
+        # for j in reversed(range(self.cells_up)):  # reversed: print goes from top to bottom..
+        #     for i in range(self.cells_across):
+        #         result += self.cells[i][j].code()
+        #     result = result + "\n"
+        # print(result)
+
+#      OIXOOIOIOOXI
+#      XOXOooooXOXO
+#      XIOOOIOIXOOI
 
     # def test_make_solid(self):
     #     for i in range(self.cells_across):
