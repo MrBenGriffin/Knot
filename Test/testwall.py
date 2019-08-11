@@ -80,6 +80,55 @@ class TestWall(unittest.TestCase):
                 nss_answer = nss_answers[j][i]
                 self.assertEqual(nss_test, nss_answer, str(Dim(i, j)) + " S: Bad Neighbour")
 
+    def test_can_be_dug(self):
+        answers = {
+            Com.W: (
+                (False, True,  True,  True),
+                (False, False, False, True),
+                (False, True,  True,  True)
+            ),
+            Com.E: (
+                (True, True,  True,  False),
+                (True, False, False, False),
+                (True, True,  True,  False)
+            ),
+            Com.N: (
+                (True,  True,  True),
+                (True,  False, True),
+                (True,  False, True),
+                (False, False, False)
+            ),
+            Com.S: (
+                (False, False, False),
+                (True,  False, True),
+                (True,  False, True),
+                (True,  True,  True)
+            )
+        }
+        for i in range(self.cells_across + 1):
+            for j in range(self.cells_up):
+                wall = self.ew_walls[i][j]
+                w_ok = answers[Com.W][j][i]
+                e_ok = answers[Com.E][j][i]
+                w_ts = wall.can_be_dug(Com.W)
+                e_ts = wall.can_be_dug(Com.E)
+                n_ts = wall.can_be_dug(Com.N)
+                s_ts = wall.can_be_dug(Com.S)
+
+                self.assertEqual(w_ts, w_ok, "W" + str(i) + str(j) + " Should be " + str(w_ok))
+                self.assertEqual(e_ts, e_ok, "E" + str(i) + str(j) + " Should be " + str(e_ok))
+                self.assertEqual(n_ts, False, "N" + str(i) + str(j) + " Should not work on WE")
+                self.assertEqual(s_ts, False, "S" + str(i) + str(j) + " Should not work on WE")
+        for i in range(self.cells_across):
+            for j in range(self.cells_up + 1):
+                wall = self.ns_walls[i][j]
+                n_ok = answers[Com.N][j][i]
+                s_ok = answers[Com.S][j][i]
+                self.assertEqual(wall.can_be_dug(Com.N), n_ok, "N" + str(i) + str(j) + " Should be " + str(n_ok))
+                self.assertEqual(wall.can_be_dug(Com.S), s_ok, "S" + str(i) + str(j) + " Should be " + str(s_ok))
+                self.assertEqual(wall.can_be_dug(Com.W), False, "W" + str(i) + str(j) + " Should not work on NS")
+                self.assertEqual(wall.can_be_dug(Com.E), False, "E" + str(i) + str(j) + " Should not work on NS")
+
     def test_is_edge(self):
         answers = {
             Orientation.EW: (

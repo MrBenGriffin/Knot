@@ -87,9 +87,12 @@ class Wall:
         else:
             return (self.cells[Com.W] is None) or (self.cells[Com.E] is None)
 
-    def can_be_dug(self, com_from):
-        cell = self.cells[com_from]
-        return not self.blocked and cell and not cell.mined
+    def can_be_dug(self, com_from) -> bool:
+        if com_from not in self.cells:
+            return False
+        else:
+            cell = self.cells[com_from]
+            return False if not cell else not (self.blocked or cell.mined)
 
     def code(self, com):
         return "O" if com not in self.doors else self.doors[com]
