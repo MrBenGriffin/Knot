@@ -80,6 +80,31 @@ class TestWall(unittest.TestCase):
                 nss_answer = nss_answers[j][i]
                 self.assertEqual(nss_test, nss_answer, str(Dim(i, j)) + " S: Bad Neighbour")
 
+    def test_is_edge(self):
+        answers = {
+            Orientation.EW: (
+                (True, False, False, True),
+                (True,  True, True,  True),
+                (True, False, False, True)
+            ),
+            Orientation.NS: (
+                (True,  True, True),
+                (False, True, False),
+                (False, True, False),
+                (True,  True, True)
+            )
+        }
+        for i in range(self.cells_across + 1):
+            for j in range(self.cells_up):
+                wall = self.ew_walls[i][j]
+                good = answers[Orientation.EW][j][i]
+                self.assertEqual(wall.is_edge(), good, "EW" + str(i) + str(j) + " Should be " + str(good))
+        for i in range(self.cells_across):
+            for j in range(self.cells_up + 1):
+                wall = self.ns_walls[i][j]
+                good = answers[Orientation.NS][j][i]
+                self.assertEqual(wall.is_edge(), good, "ES" + str(i) + str(j) + " Should be " + str(good))
+
     def test_code(self):
         answers = {
             Orientation.EW: (
@@ -94,7 +119,6 @@ class TestWall(unittest.TestCase):
                 ("O", "O", "O")
             )
         }
-
         for i in range(self.cells_across + 1):
             for j in range(self.cells_up):
                 ew_wall = self.ew_walls[i][j]
