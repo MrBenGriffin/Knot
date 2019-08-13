@@ -1,6 +1,8 @@
 # encoding: utf-8
 from enum import IntFlag
 
+# TODO:  Com (Reverse) and Orientation - they are environmental definitions
+
 
 # Decorator class.
 class Reverse:

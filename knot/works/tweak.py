@@ -13,6 +13,8 @@ class Tweak:
     If the other is at dimension 0,0 what cell I be in?  dim()
     Given that the maze might be hollow in the middle, where should I start?
 
+    TODO:: Tweak and Tw aren't really part of works - they are behavioural aspects of actors.
+
     """
     def __str__(self):
         text = {Tw.master: "As is", Tw.horizon: "Horizon", Tw.vanity: "Vanity",
