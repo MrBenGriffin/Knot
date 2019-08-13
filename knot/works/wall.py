@@ -6,6 +6,7 @@ from .tw import Tw
 
 
 class Wall:
+    # TODO: These values belong to a Tool class for digging types of door.
     straights_balance = 333
     zoomorph_balance = 200
 
@@ -29,7 +30,7 @@ class Wall:
             return None
         return self.cells[cell_dir]
 
-   # TODO: Make a Tool class for digging types of door The work below isn't really about walls...
+    # TODO: Make a Tool class for digging types of door The work below isn't really about walls...
     def make_door(self, cell_dir, kind=None, tweak=None):
         if cell_dir not in self.cells:
             return None
