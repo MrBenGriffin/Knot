@@ -1,5 +1,6 @@
 # encoding: utf-8
 from knot.space import Com
+from knot.tool import Cut
 
 
 class Cell:
@@ -88,10 +89,12 @@ class Cell:
         return False
 
     # make_door_in is done on self's side.
-    def make_door_in(self, com, miner, kind=None, tweak=None):
-        cell = self.walls[com].make_door(com, kind, tweak)
+    # def make_door(self, cell_dir: Com, tool: Cutter, ):
+    def make_door_in(self, com, miner, cut: Cut = None):
+        cell = self.walls[com].make_door(com, miner.tool, cut)
         if cell:
             if not cell.miner:
+                cell.mined = True
                 cell.miner = miner
             Cell.last_mined = cell
         return cell

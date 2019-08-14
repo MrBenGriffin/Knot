@@ -4,17 +4,17 @@ import sys
 from knot.space import Tw
 from knot.works import Structure, Wall
 from knot.actor import Mazer, Clone, Joiner
+from knot.tool import Setting
 
 
 def maze(parms):
     random.seed(os.urandom(6))
     knot_work = Structure(parms[0], parms[1], parms[6])
-    Wall.straights_balance = parms[2]
-    Wall.zoomorph_balance = parms[3]
+    setting = Setting(parms[2], parms[3])
     Mazer.cutoff = max(2, parms[5])
     styles = (Tw.master, Tw.vanity, Tw.horizon, Tw.rot180, Tw.rot090)
     style = styles[parms[4]]
-    miner1 = Mazer(knot_work)
+    miner1 = Mazer(knot_work, setting)
     knot_work.add_bod(miner1)
 
     if style == Tw.rot090 and parms[0] != parms[1]:
@@ -34,7 +34,7 @@ def maze(parms):
     #    (2) if the edges are even
     # Then we will need a joiner (and clones).
     if len(knot_work.bods) > 1 and (knot_work.border > 0 or knot_work.cells_up % 2 is 0 or knot_work.cells_across % 2 is 0):
-        joiner = Joiner(knot_work)
+        joiner = Joiner(knot_work, setting)
         knot_work.bods[0] = joiner
         for bod in range(1, len(knot_work.bods)):
             knot_work.bods[bod].set_other(joiner)

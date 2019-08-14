@@ -1,14 +1,15 @@
 from .mover import Mover
 from knot.space import Com
+from knot.works import Structure
+from knot.tool import Setting
 
 
 class Spiral(Mover):
 
-    def __init__(self, structure):
+    def __init__(self, structure: Structure, setting: Setting):
         super().__init__(structure)
-        self.is_miner = True
-        self.face = None
         self.com = Com.N
+        self.select_tool(setting)
 
     def _run(self):
         self.face = None
@@ -23,7 +24,7 @@ class Spiral(Mover):
                     self.com = self.com.cw
                 if self.com in walls_to_dig:
                     self.face = self.com
-                    next_cell = this_cell.make_door_in(self.face)
+                    next_cell = this_cell.make_door_in(self.face, self)
                     self.dig(next_cell)
                 else:
                     self.track.pop()

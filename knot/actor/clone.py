@@ -4,9 +4,9 @@ from .mover import Mover
 class Clone(Mover):
     def __init__(self, structure, tweak, other):
         super().__init__(structure, tweak, other)
-        self.is_miner = True
-        self.face = None
         self.clone_doors = True
+        if other.is_miner:
+            self.select_tool(other.tool.setting)
 
     def _run(self):
         if len(self.other.track) > 1:

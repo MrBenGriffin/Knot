@@ -1,13 +1,14 @@
 from .mover import Mover
+from knot.works import Structure
+from knot.tool import Setting
 
 
 class Joiner(Mover):
-    def __init__(self, maze):
-        super().__init__(maze)
-        self.is_miner = True
-        self.face = None
+    def __init__(self, structure: Structure, setting: Setting):
+        super().__init__(structure)
         self.dead_ends = []
         self.collection = []
+        self.select_tool(setting)
 
     def _run(self):
         if self.track:

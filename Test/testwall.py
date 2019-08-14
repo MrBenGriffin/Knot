@@ -184,18 +184,20 @@ class TestWall(unittest.TestCase):
                 self.assertEqual(ns_wall.code(Com.N), "O", "N Should be O while no doors are set")
                 self.assertEqual(ns_wall.code(Com.S), "O", "S Should be O while no doors are set")
 
+        from knot.tool import Cutter, Cut
+        cutter = Cutter()
         for i in range(self.cells_across + 1):
             for j in range(self.cells_up):
                 ew_wall = self.ew_walls[i][j]
                 if not ew_wall.is_edge():
-                    ew_wall.make_door(Com.E, "I")
-                    ew_wall.make_door(Com.W, "I")
+                    ew_wall.make_door(Com.E, cutter, Cut.I)
+                    ew_wall.make_door(Com.W, cutter, Cut.I)
         for i in range(self.cells_across):
             for j in range(self.cells_up + 1):
                 ns_wall = self.ns_walls[i][j]
                 if not ns_wall.is_edge():
-                    ns_wall.make_door(Com.N, "X")
-                    ns_wall.make_door(Com.S, "X")
+                    ns_wall.make_door(Com.N, cutter, Cut.X)
+                    ns_wall.make_door(Com.S, cutter, Cut.X)
 
         for i in range(self.cells_across + 1):
             for j in range(self.cells_up):

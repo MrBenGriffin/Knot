@@ -1,5 +1,7 @@
 import random
 from .mover import Mover
+from knot.works import Structure
+from knot.tool import Setting
 
 
 class Mazer(Mover):
@@ -11,13 +13,12 @@ class Mazer(Mover):
     """
     cutoff = 15
 
-    def __init__(self, maze):
-        super().__init__(maze)
-        self.is_miner = True
+    def __init__(self, structure: Structure, setting: Setting):
+        super().__init__(structure)
         self.sequence = 0
         self.cell_index = None
-        self.face = None
         self.faces = []
+        self.select_tool(setting)
 
     def _run(self):
         self.sequence += 1
