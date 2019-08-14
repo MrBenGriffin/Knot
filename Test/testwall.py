@@ -34,6 +34,22 @@ class TestWall(unittest.TestCase):
             for j in range(self.cells_up)]
             for i in range(self.cells_across)]
 
+    def cutOut(self):
+        from knot.tool import Cutter, Cut
+        cutter = Cutter()
+        for i in range(self.cells_across + 1):
+            for j in range(self.cells_up):
+                ew_wall = self.ew_walls[i][j]
+                if not ew_wall.is_edge():
+                    ew_wall.make_door(Com.E, cutter, Cut.I)
+                    ew_wall.make_door(Com.W, cutter, Cut.I)
+        for i in range(self.cells_across):
+            for j in range(self.cells_up + 1):
+                ns_wall = self.ns_walls[i][j]
+                if not ns_wall.is_edge():
+                    ns_wall.make_door(Com.N, cutter, Cut.X)
+                    ns_wall.make_door(Com.S, cutter, Cut.X)
+
     def test_neighbour(self):
         ewe_answers = (
               (self.cells[0][0], self.cells[1][0], self.cells[2][0], None),
@@ -183,22 +199,7 @@ class TestWall(unittest.TestCase):
                 self.assertEqual(ns_wall.code(Com.W), "O", "W Should be O for NS")
                 self.assertEqual(ns_wall.code(Com.N), "O", "N Should be O while no doors are set")
                 self.assertEqual(ns_wall.code(Com.S), "O", "S Should be O while no doors are set")
-
-        from knot.tool import Cutter, Cut
-        cutter = Cutter()
-        for i in range(self.cells_across + 1):
-            for j in range(self.cells_up):
-                ew_wall = self.ew_walls[i][j]
-                if not ew_wall.is_edge():
-                    ew_wall.make_door(Com.E, cutter, Cut.I)
-                    ew_wall.make_door(Com.W, cutter, Cut.I)
-        for i in range(self.cells_across):
-            for j in range(self.cells_up + 1):
-                ns_wall = self.ns_walls[i][j]
-                if not ns_wall.is_edge():
-                    ns_wall.make_door(Com.N, cutter, Cut.X)
-                    ns_wall.make_door(Com.S, cutter, Cut.X)
-
+        self.cutOut()
         for i in range(self.cells_across + 1):
             for j in range(self.cells_up):
                 wall = self.ew_walls[i][j]
@@ -212,12 +213,52 @@ class TestWall(unittest.TestCase):
                 self.assertEqual(wall.code(Com.N), good, "N" + str(i) + str(j) + " Should be " + good)
                 self.assertEqual(wall.code(Com.S), good, "S" + str(i) + str(j) + " Should be " + good)
 
-        # result = ""
-        # for j in reversed(range(self.cells_up)):  # reversed: print goes from top to bottom..
-        #     for i in range(self.cells_across):
-        #         result += self.cells[i][j].code()
-        #     result = result + "\n"
-        # print(result)
+    def test_is_wall(self):
+        answers = {
+            Orientation.EW: (
+                (True, False, False, True),
+                (True, True,  True,  True),
+                (True, False, False, True)
+            ),
+            Orientation.NS: (
+                (True,  True,  True),
+                (False, True, False),
+                (False, True, False),
+                (True,  True,  True)
+            )
+        }
+        for i in range(self.cells_across + 1):
+            for j in range(self.cells_up):
+                wall = self.ew_walls[i][j]
+                good = True
+                self.assertEqual(wall.is_wall(), good, str(i) + str(j) + " EW Should be " + str(good))
+        for i in range(self.cells_across):
+            for j in range(self.cells_up + 1):
+                wall = self.ns_walls[i][j]
+                good = True
+                self.assertEqual(wall.is_wall(), good, str(i) + str(j) + " NS Should be " + str(good))
+        self.cutOut()
+        for i in range(self.cells_across + 1):
+            for j in range(self.cells_up):
+                wall = self.ew_walls[i][j]
+                good = answers[Orientation.EW][j][i]
+                self.assertEqual(wall.is_wall(), good, str(i) + str(j) + " EW Should be " + str(good))
+        for i in range(self.cells_across):
+            for j in range(self.cells_up + 1):
+                wall = self.ns_walls[i][j]
+                good = answers[Orientation.NS][j][i]
+                self.assertEqual(wall.is_wall(), good, str(i) + str(j) + " NS Should be " + str(good))
+
+    def test_make_solid(self):
+        self.cutOut()
+        for i in range(self.cells_across + 1):
+            for j in range(self.cells_up):
+                self.ew_walls[i][j].make_solid()
+                self.assertEqual(self.ew_walls[i][j].is_wall(), True, str(i) + str(j) + " EW Should be a wall")
+        for i in range(self.cells_across):
+            for j in range(self.cells_up + 1):
+                self.ns_walls[i][j].make_solid()
+                self.assertEqual(self.ns_walls[i][j].is_wall(), True, str(i) + str(j) + " NS Should be a wall")
 
 #      OIXOOIOIOOXI
 #      XOXOooooXOXO

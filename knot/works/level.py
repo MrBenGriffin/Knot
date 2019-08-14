@@ -4,6 +4,7 @@ from .wall import Wall
 from .cell import Cell
 
 
+# TODO:: Open up horizontal and vertical wrap-around options.
 class Level:
     def __init__(self, cells_across, cells_up, border):
         self.cells_across = cells_across
