@@ -31,7 +31,9 @@ class TestWall(unittest.TestCase):
             Wall(Orientation.EW, i, j)
             for j in range(self.cells_up)] for i in range(self.cells_across + 1)]
         self.cells = [[
-            Cell(Dim(i, j), self.ns_walls, self.ew_walls, True if i == 1 and j == 1 else False)
+            Cell(Dim(i, j),
+                 (self.ns_walls[i][j + 1], self.ew_walls[i + 1][j], self.ns_walls[i][j], self.ew_walls[i][j]),
+                 True if i == 1 and j == 1 else False)
             for j in range(self.cells_up)]
             for i in range(self.cells_across)]
 

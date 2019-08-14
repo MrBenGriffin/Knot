@@ -19,10 +19,12 @@ class Clone(Mover):
                     self.go(this_cell)
                 self.track.pop(0)
                 if self.other.face is not None:
-                    door = master_cell.walls[self.other.face].doors[self.other.face]
-                    self.face = self.tweak.face(self.other.face)
-                    next_cell = this_cell.make_door_in(self.face, self, door)
-                    self.dig(next_cell)
+                    door = master_cell.walls[self.other.face].door(self.other.face)
+                    if door:
+                        self.face = self.tweak.face(self.other.face)
+                        next_cell = this_cell.make_door_in(self.face, self, door)
+                        if next_cell:
+                            self.dig(next_cell)
         else:
             if not self.other.track:
                 self.track.clear()

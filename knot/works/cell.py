@@ -7,15 +7,11 @@ class Cell:
     last = None
     last_mined = None
 
-    def __init__(self, dim, wns, wew, blocked=False):
+    def __init__(self, dim, walls, blocked=False):
         self.miner = None
         self.dim = dim
         self.mined = False
-        self.walls = {Com.N: wns[dim.x][dim.y + 1],
-                      Com.E: wew[dim.x + 1][dim.y],
-                      Com.S: wns[dim.x][dim.y],
-                      Com.W: wew[dim.x][dim.y]
-                      }
+        self.walls = {Com.N: walls[0], Com.E: walls[1], Com.S: walls[2], Com.W: walls[3]}
         if blocked:
             self.walls[Com.N].block()
             self.walls[Com.E].block()

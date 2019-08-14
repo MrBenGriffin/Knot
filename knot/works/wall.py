@@ -25,13 +25,18 @@ class Wall:
             return None
         other = self.cells[cell_dir]
         if not self.blocked and other:
-            self.doors = tool.make(self, cell_dir, cut)
+            self.doors = tool.make(self.orientation, cell_dir, cut)
             return other
         else:
             return None
 
     def make_solid(self):
         self.doors = {}
+
+    def door(self, com: Com) -> [Cut, None]:
+        if com not in self.doors:
+            return None
+        return self.doors[com]
 
     def is_wall(self) -> bool:
         return not self.doors

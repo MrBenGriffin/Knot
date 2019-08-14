@@ -20,7 +20,7 @@ class Structure:
         self.joined = False
         self.bods = []
         self.things = []
-        self.level = Level(cells_across, cells_up, self.border)
+        self.level = Level(cells_across, cells_up, self.border, True, True)
 
     def mine(self):
         while not self.mined:
