@@ -1,5 +1,5 @@
 # encoding: utf-8
-from .orientation import Dim
+from knot.space import Dim
 from .level import Level
 from .cell import Cell
 

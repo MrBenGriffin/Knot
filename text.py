@@ -1,7 +1,8 @@
 import os
 import random
 import sys
-from knot.works import Structure, Wall, Tw
+from knot.space import Tw
+from knot.works import Structure, Wall
 from knot.actor import Mazer, Clone, Joiner
 
 

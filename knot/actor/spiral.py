@@ -1,5 +1,5 @@
 from .mover import Mover
-from knot.works import Com
+from knot.space import Com
 
 
 class Spiral(Mover):

@@ -1,5 +1,5 @@
 import unittest
-from knot.works import Com
+from knot.space import Com
 
 
 class TestCom(unittest.TestCase):

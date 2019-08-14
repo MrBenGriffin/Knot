@@ -1,8 +1,6 @@
 # encoding: utf-8
 from enum import IntFlag
 
-# TODO:  Com (Reverse), Orientation and Dim - they are dimensional definitions/constraints
-
 
 # Decorator class.
 class Reverse:

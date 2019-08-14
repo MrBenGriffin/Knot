@@ -1,7 +1,6 @@
 import unittest
-# import math
 
-from knot.works import Tweak, Tw, Com, Dim
+from knot.space import Tweak, Tw, Com, Dim
 
 
 class TestTweak(unittest.TestCase):

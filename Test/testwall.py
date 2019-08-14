@@ -1,5 +1,6 @@
 import unittest
-from knot.works import Wall, Orientation, Cell, Dim, Com
+from knot.works import Wall, Cell
+from knot.space import Orientation, Dim, Com
 
 
 class TestWall(unittest.TestCase):

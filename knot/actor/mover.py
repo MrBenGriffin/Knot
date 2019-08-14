@@ -1,5 +1,6 @@
 from abc import ABCMeta, abstractmethod
-from knot.works import Tweak, Tw, Structure
+from knot.works import Structure
+from knot.space import Tweak, Tw
 
 
 class Mover(object):

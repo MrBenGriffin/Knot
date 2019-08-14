@@ -1,8 +1,6 @@
 # encoding: utf-8
 import random
-from .orientation import Orientation
-from .com import Com
-from .tw import Tw
+from knot.space import Orientation, Com, Tw
 
 
 class Wall:

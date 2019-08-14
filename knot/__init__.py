@@ -5,11 +5,11 @@ from .actor.clone import Clone
 from .actor.spiral import Spiral
 
 from .works.cell import Cell
-from .works.com import Com
+from knot.space.com import Com
 from .works.level import Level
 from .works.structure import Structure
-from .works.tw import Tw
-from .works.tweak import Tweak
+from knot.space.tw import Tw
+from knot.space.tweak import Tweak
 from .works.wall import Wall
-from .works.orientation import Orientation, Dim
+from knot.space.orientation import Orientation, Dim
 
