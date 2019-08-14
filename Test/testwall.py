@@ -1,6 +1,7 @@
 import unittest
 from knot.works import Wall, Cell
 from knot.space import Orientation, Dim, Com
+from knot.tool import Cut, Cutter
 
 
 class TestWall(unittest.TestCase):
@@ -260,50 +261,41 @@ class TestWall(unittest.TestCase):
                 self.ns_walls[i][j].make_solid()
                 self.assertEqual(self.ns_walls[i][j].is_wall(), True, str(i) + str(j) + " NS Should be a wall")
 
-#      OIXOOIOIOOXI
-#      XOXOooooXOXO
-#      XIOOOIOIXOOI
-
-    # def test_make_solid(self):
-    #     for i in range(self.cells_across):
-    #         for x in range(self.cells_up):
-    #             for wall in self.ns_walls[i][j]:
-    #                 wall.make_solid()
-    #                 self.assertEqual(wall.door, False, "Wall is not a door")
-    #
-    # def test_is_wall(self):
-    #     for i in range(4):
-    #         for wall in self.sample[i]:
-    #             wall.make_solid()
-    #             self.assertEqual(wall.is_wall, True, "Wall is not a door")
-    #         for wall in self.sample[i]:
-    #             self.assertEqual(wall.is_wall, True, "Wall is not a door")
-    #
-    # def test_block(self):
-    #     self.blocked = True
-    #
-    # def test_set_cell(self, cell, com):
-    #     opp = com.opposite
-    #     self.cells[com] = cell
-    #     self.doors[com] = 'O'
-    #     self.doors[opp] = 'O'
-    #     if opp not in self.cells:
-    #         self.cells[opp] = None
-    #
-    # def test_is_edge(self):  # If on the edge, then one of my wall cells will be None.
-    #     if self.orientation == Orientation.NS:
-    #         return (self.cells[Com.N] is None) or (self.cells[Com.S] is None)
-    #     else:
-    #         return (self.cells[Com.W] is None) or (self.cells[Com.E] is None)
-    #
-    # def test_can_be_dug(self, com_from):
-    #     cell = self.cells[com_from]
-    #     return not self.blocked and cell and not cell.mined
-
-    # sample = (Com.N, Com.E, Com.S, Com.W, Com.C, Com.F, Com.X)
-    #
-    # def test_str(self):
-    #     self.assertEqual(str(Com.N), "North", "Should be North")
+    def test_make_door(self):
+        from unittest.mock import MagicMock
+        cell_a = MagicMock(spec=Cell)
+        cell_b = MagicMock(spec=Cell)
+        tool = MagicMock(spec=Cutter)
+        doors = {Com.N: Cut.X, Com.E: Cut.I}
+        tool.make.return_value = doors
+        ew = Wall(Orientation.EW, 1, 1, False)
+        border = Wall(Orientation.EW, 1, 1, False)
+        ns = Wall(Orientation.NS, 1, 1, False)
+        blocked = Wall(Orientation.EW, 1, 1, True)
+        ew.cells[Com.E] = cell_a
+        ew.cells[Com.W] = cell_b
+        ns.cells[Com.N] = cell_a
+        ns.cells[Com.S] = cell_b
+        blocked.cells[Com.E] = cell_a
+        blocked.cells[Com.W] = cell_b
+        border.cells[Com.E] = None
+        border.cells[Com.W] = cell_b
+        self.assertEqual(ew.make_door(Com.N, tool), None, "EW cannot cut a wall North.")
+        self.assertEqual(ew.make_door(Com.S, tool), None, "EW cannot cut a wall South.")
+        self.assertEqual(ew.make_door(Com.W, tool), cell_b, "EW can cut a wall West.")
+        self.assertEqual(ns.make_door(Com.E, tool), None, "NS cannot cut a wall East.")
+        self.assertEqual(ns.make_door(Com.W, tool), None, "NS cannot cut a wall West.")
+        self.assertEqual(ns.make_door(Com.S, tool), cell_b, "NS can cut a wall South.")
+        self.assertEqual(blocked.make_door(Com.E, tool), None, "blocked cannot cut a wall East.")
+        self.assertEqual(blocked.make_door(Com.W, tool), None, "blocked cannot cut a wall West.")
+        self.assertEqual(blocked.make_door(Com.S, tool), None, "blocked cannot cut a wall South.")
+        self.assertEqual(blocked.make_door(Com.E, tool), None, "blocked cannot cut a wall East.")
+        self.assertEqual(blocked.make_door(Com.W, tool), None, "blocked cannot cut a wall West.")
+        self.assertEqual(blocked.make_door(Com.S, tool), None, "blocked cannot cut a wall South.")
+        self.assertEqual(border.make_door(Com.E, tool), None, "border cannot cut a wall East.")
+        self.assertEqual(border.make_door(Com.S, tool), None, "border cannot cut a wall South.")
+        self.assertEqual(border.make_door(Com.W, tool), cell_b, "border can cut a wall West.")
+        self.assertEqual(border.doors, doors, "Doors should be set by make_door")
 
 
 if __name__ == '__main__':

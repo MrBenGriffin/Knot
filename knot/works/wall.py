@@ -1,6 +1,7 @@
 # encoding: utf-8
 from knot.space import Orientation, Com
 from knot.tool import Cutter, Cut
+from .cell import Cell
 
 
 class Wall:
@@ -14,12 +15,12 @@ class Wall:
         self.cells = {}
         self.orientation = orientation
 
-    def neighbour(self, cell_dir):
+    def neighbour(self, cell_dir) -> [Cell, None]:
         if cell_dir not in self.cells:
             return None
         return self.cells[cell_dir]
 
-    def make_door(self, cell_dir: Com, tool: Cutter, cut: Cut = None):
+    def make_door(self, cell_dir: Com, tool: Cutter, cut: Cut = None) -> [Cell, None]:
         if cell_dir not in self.cells:
             return None
         other = self.cells[cell_dir]
