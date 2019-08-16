@@ -1,5 +1,4 @@
-from .com import Com
-from .orientation import Orientation, Dim
+from .axes import Axis, Dim, Com
 from .tw import Tw
 from .tweak import Tweak
 

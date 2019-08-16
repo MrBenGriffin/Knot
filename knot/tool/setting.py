@@ -3,19 +3,26 @@ import random
 from .cut import Cut
 
 
+# zoomorph_balance;  0 = All twists, 1000=all Zoomorphs.
+# straights_balance; 0 = All twists, 1000=all Straights
+# So a setting of(0,1000) is all zoo.
 class Setting:
-    def __init__(self, straights_balance=333, zoo_balance=200):
+    def __init__(self, straights_balance=333, zoo_balance=200, rng=random):
         self.straights_balance = straights_balance
         self.zoomorph_balance = zoo_balance
+        self.rng = rng
+        self.hb_choice = (Cut.H, Cut.B)
 
     def choose(self) -> Cut:
         # straights_balance; 0 = All twists, 1000=all straights
         kind = Cut.I
-        straights = random.randint(0, 1000)
-        if straights < self.straights_balance:
+        straights = self.rng.randint(1, 1000)
+        if self.straights_balance < straights:
+            # need to do something if not straights..
             # zoomorph_balance; 0 = All twists, 1000=all Zoomorphs.
             kind = Cut.X
-            zoos = random.randint(0, 1000)
-            if zoos < self.zoomorph_balance:
-                kind = random.choice((Cut.H, Cut.B))
+            zoos = self.rng.randint(0, 999)
+            if self.zoomorph_balance > zoos:
+                # logic vs straights is switched because here we need to do something if zoo.
+                kind = self.rng.choice(self.hb_choice)
         return kind

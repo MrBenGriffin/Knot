@@ -4,19 +4,19 @@ from knot.space import Tweak, Tw, Com, Dim
 
 
 class TestTweak(unittest.TestCase):
-    tweaks = (Tw.master, Tw.horizon, Tw.vanity, Tw.mirror, Tw.rot000, Tw.rot090, Tw.rot270, Tw.rot180)
+    tweaks = (Tw.master, Tw.sunset, Tw.vanity, Tw.mirror, Tw.rot000, Tw.rot090, Tw.rot270, Tw.rot180)
     coms = (Com.S, Com.W, Com.N, Com.E)
 
     def test_str(self):
-        self.assertEqual(str(Tweak(Tw.horizon, 4, 4)), "Horizon", "Should be Horizon")
+        self.assertEqual(str(Tweak(Tw.sunset, 4, 4)), "Horizon", "Should be Horizon")
 
     def test_repr(self):
-        self.assertEqual(repr(Tweak(Tw.horizon, 3, 4)), "Horizon; Dim(x=2, y=3)", "Should be Horizon; Dim(x=2, y=3)")
+        self.assertEqual(repr(Tweak(Tw.sunset, 3, 4)), "Horizon; Dim(x=2, y=3)", "Should be Horizon; Dim(x=2, y=3)")
 
     def test_face(self):
         answer_set = {
             Tw.master: {Com.S: Com.S, Com.W: Com.W, Com.N: Com.N, Com.E: Com.E},
-            Tw.horizon: {Com.S: Com.N, Com.W: Com.W, Com.N: Com.S, Com.E: Com.E},
+            Tw.sunset: {Com.S: Com.N, Com.W: Com.W, Com.N: Com.S, Com.E: Com.E},
             Tw.vanity: {Com.S: Com.S, Com.W: Com.E, Com.N: Com.N, Com.E: Com.W},
             Tw.mirror: {Com.S: Com.N, Com.W: Com.E, Com.N: Com.S, Com.E: Com.W},
             Tw.rot000: {Com.S: Com.S, Com.W: Com.W, Com.N: Com.N, Com.E: Com.E},
@@ -35,7 +35,7 @@ class TestTweak(unittest.TestCase):
     def test_dim_even(self):
         answers = {
             Tw.master:  (Dim(0, 0), Dim(0, 1), Dim(1, 0), Dim(1, 1)),
-            Tw.horizon: (Dim(0, 1), Dim(0, 0), Dim(1, 1), Dim(1, 0)),
+            Tw.sunset: (Dim(0, 1), Dim(0, 0), Dim(1, 1), Dim(1, 0)),
             Tw.vanity:  (Dim(1, 0), Dim(1, 1), Dim(0, 0), Dim(0, 1)),
             Tw.mirror:  (Dim(1, 1), Dim(1, 0), Dim(0, 1), Dim(0, 0)),
             Tw.rot000:  (Dim(0, 0), Dim(0, 1), Dim(1, 0), Dim(1, 1)),
@@ -56,7 +56,7 @@ class TestTweak(unittest.TestCase):
     def test_dim_odd(self):
         answers = {
             Tw.master:  (Dim(0, 0), Dim(0, 1), Dim(0, 2), Dim(1, 0), Dim(1, 1), Dim(1, 2), Dim(2, 0), Dim(2, 1), Dim(2, 2)),
-            Tw.horizon: (Dim(0, 2), Dim(0, 1), Dim(0, 0), Dim(1, 2), Dim(1, 1), Dim(1, 0), Dim(2, 2), Dim(2, 1), Dim(2, 0)),
+            Tw.sunset: (Dim(0, 2), Dim(0, 1), Dim(0, 0), Dim(1, 2), Dim(1, 1), Dim(1, 0), Dim(2, 2), Dim(2, 1), Dim(2, 0)),
             Tw.vanity:  (Dim(2, 0), Dim(2, 1), Dim(2, 2), Dim(1, 0), Dim(1, 1), Dim(1, 2), Dim(0, 0), Dim(0, 1), Dim(0, 2)),
             Tw.mirror:  (Dim(2, 2), Dim(2, 1), Dim(2, 0), Dim(1, 2), Dim(1, 1), Dim(1, 0), Dim(0, 2), Dim(0, 1), Dim(0, 0)),
             Tw.rot000:  (Dim(0, 0), Dim(0, 1), Dim(0, 2), Dim(1, 0), Dim(1, 1), Dim(1, 2), Dim(2, 0), Dim(2, 1), Dim(2, 2)),
@@ -74,7 +74,7 @@ class TestTweak(unittest.TestCase):
     def test_entry(self):
         ans0 = {
             Tw.master:  {4: {4: Dim(2, 2), 5: Dim(2, 2)}, 5: {4: Dim(2, 2), 5: Dim(2, 2)}},
-            Tw.horizon: {4: {4: Dim(2, 1), 5: Dim(2, 2)}, 5: {4: Dim(2, 1), 5: Dim(2, 2)}},
+            Tw.sunset: {4: {4: Dim(2, 1), 5: Dim(2, 2)}, 5: {4: Dim(2, 1), 5: Dim(2, 2)}},
             Tw.vanity:  {4: {4: Dim(1, 2), 5: Dim(1, 2)}, 5: {4: Dim(2, 2), 5: Dim(2, 2)}},
             Tw.mirror:  {4: {4: Dim(1, 1), 5: Dim(1, 2)}, 5: {4: Dim(2, 1), 5: Dim(2, 2)}},
             Tw.rot000:  {4: {4: Dim(2, 2), 5: Dim(2, 2)}, 5: {4: Dim(2, 2), 5: Dim(2, 2)}},
@@ -84,7 +84,7 @@ class TestTweak(unittest.TestCase):
         }
         ans23 = {
             Tw.master:  {4: {4: Dim(2, 1), 5: Dim(2, 1)}, 5: {4: Dim(2, 1), 5: Dim(2, 1)}},
-            Tw.horizon: {4: {4: Dim(2, 2), 5: Dim(2, 3)}, 5: {4: Dim(2, 2), 5: Dim(2, 3)}},
+            Tw.sunset: {4: {4: Dim(2, 2), 5: Dim(2, 3)}, 5: {4: Dim(2, 2), 5: Dim(2, 3)}},
             Tw.vanity:  {4: {4: Dim(1, 1), 5: Dim(1, 1)}, 5: {4: Dim(2, 1), 5: Dim(2, 1)}},
             Tw.mirror:  {4: {4: Dim(1, 2), 5: Dim(1, 3)}, 5: {4: Dim(2, 2), 5: Dim(2, 3)}},
             Tw.rot000:  {4: {4: Dim(2, 1), 5: Dim(2, 1)}, 5: {4: Dim(2, 1), 5: Dim(2, 1)}},

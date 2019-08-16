@@ -1,7 +1,6 @@
 # encoding: utf-8
 from math import floor, ceil
-from .orientation import Dim
-from .com import Com
+from .axes import Com, Dim
 from .tw import Tw
 
 
@@ -17,13 +16,13 @@ class Tweak:
 
     """
     def __str__(self):
-        text = {Tw.master: "As is", Tw.horizon: "Horizon", Tw.vanity: "Vanity",
+        text = {Tw.master: "As is", Tw.sunset: "Horizon", Tw.vanity: "Vanity",
                 Tw.mirror: "Mirror", Tw.rot000: "Rotate 000", Tw.rot090: 'Rotate 090',
                 Tw.rot180: "Rotate 180", Tw.rot270: "Rotate 270"}
         return text[self.tweak]
 
     def __repr__(self):
-        text = {Tw.master: "As is", Tw.horizon: "Horizon", Tw.vanity: "Vanity",
+        text = {Tw.master: "As is", Tw.sunset: "Horizon", Tw.vanity: "Vanity",
                 Tw.mirror: "Mirror", Tw.rot000: "Rotate 000", Tw.rot090: 'Rotate 090',
                 Tw.rot180: "Rotate 180", Tw.rot270: "Rotate 270"}
         return text[self.tweak] + "; " + str(self._dim)
@@ -41,7 +40,7 @@ class Tweak:
             return com.ccw
         if (self.tweak == Tw.rot180) or \
                 (self.tweak == Tw.mirror) or \
-                (self.tweak == Tw.horizon and com in (Com.N, Com.S)) or \
+                (self.tweak == Tw.sunset and com in (Com.N, Com.S)) or \
                 (self.tweak == Tw.vanity and com in (Com.E, Com.W)):
             return com.opposite
         return com
@@ -56,7 +55,7 @@ class Tweak:
             x, y = y, x
         if self.tweak & Tw.vanity != 0:  # not 270, not horizon
             x = self._dim.x - x
-        if self.tweak & Tw.horizon != 0:  # not 90
+        if self.tweak & Tw.sunset != 0:  # not 90
             y = self._dim.y - y
         return Dim(x, y)
 

@@ -1,5 +1,5 @@
 # encoding: utf-8
-from knot.space import Orientation, Com
+from knot.space import Axis, Com
 from knot.tool import Cutter, Cut
 from .cell import Cell
 
@@ -25,7 +25,7 @@ class Wall:
             return None
         other = self.cells[cell_dir]
         if not self.blocked and other:
-            self.doors = tool.make(self.orientation, cell_dir, cut)
+            self.doors = tool.make(cell_dir, cut)
             return other
         else:
             return None
@@ -58,7 +58,7 @@ class Wall:
             self.cells[opp] = None
 
     def is_edge(self):  # If on the edge, then one of my wall cells will be None.
-        if self.orientation == Orientation.NS:
+        if self.orientation == Axis.NS:
             return (self.cells[Com.N] is None) or (self.cells[Com.S] is None)
         else:
             return (self.cells[Com.W] is None) or (self.cells[Com.E] is None)

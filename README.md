@@ -54,23 +54,26 @@ The GUI is not yet available! (When the GUI is working, you may need tkinter!)
 
 # Launching The application:
 ```bash
-python3 ./text.py 19 19 850 300 4
+python3 ./text.py 19 19 850 300 4 0 0 0 0 0
 ```
 This takes from two or more numeric parameters. Each one affects the knot work generated.
 
-* 1: Width.  The number of characters wide. It must be more than 1.
-* 2: Height. The number of characters high. It must be more than 1.
-* 3: Straights Balance. This is a value between 0 and 1000. 0 = All straights, 1000=all twists. Default is 150.
-* 4: Zoomorphic Balance (Only affects twists). This is a value between 0 and 1000. 0 = All twists, 1000=all Zoomorphs. Default is 300.
-* 5: Transform, 0: None; 1: Horizontal Mirror; 2: Vertical Mirror; 3: Rotate 180; 4: Rotate 90 (needs width and height to be the same. Default is Rotate.
-* 6: Border, 0: None; 1+ is the thickness of the border you want.  The centre will be space (filled with oooo). The border is within the boundary of the width and height!
-
+* 1: Width.  The number of characters wide. It must be more than 1. Default 9
+* 2: Height. The number of characters high. It must be more than 1. Default 9
+* 3: Straights Balance. This is a value between 0 and 1000. 0 = All twists, 1000=all straights. Default is 200.
+* 4: Zoomorph Balance (Only affects twists). This is a value between 0 and 1000. 0 = All twists, 1000=all Zoomorphs. Default is 200.
+* 5: Transform, 0: None; 1: Horizontal Mirror; 2: Vertical Mirror; 3: Rotate 180; 4: Rotate 90 (needs width and height to be the same). Default is 4.
+* 6: Border. If this is more than 0, then the knot-work will be a border this thick. Default is 0
+* 7: H Wrap. If this is set to 1 then the knot-work will tile horizontally. Default 0
+* 8: V Wrap. If this is set to 1 then the knot-work will tile vertically. Default 0
+* 9: Connectivity. Slightly adjusts connections, smaller makes more. Minimum is 2. Default is 12
+* 10: Seed. If this is set you should always get the same knot with the same parameters. Default 0
 
 You can still draw mazes also, by turning the Straights balance right up
 
 ![Maze](assets/maze.png)
 
-But this project is mainly for drawing celtic knotwork, with zoomorphics thrown in just for fun!
+But this project is mainly for drawing celtic knot-work, with zoomorphics thrown in just for fun!
 Parameters 3 and 4 have a very strong effect - have a look at some examples
 
 ![Samplers](assets/samples.png)

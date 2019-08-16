@@ -1,6 +1,6 @@
 import unittest
 from knot.works import Wall, Cell
-from knot.space import Orientation, Dim, Com
+from knot.space import Axis, Dim, Com
 from knot.tool import Cut, Cutter
 
 
@@ -25,10 +25,10 @@ class TestWall(unittest.TestCase):
         self.cells_across = 3
         self.cells_up = 3
         self.ns_walls = [[
-            Wall(Orientation.NS, i, j)
+            Wall(Axis.NS, i, j)
             for j in range(self.cells_up + 1)] for i in range(self.cells_across)]
         self.ew_walls = [[
-            Wall(Orientation.EW, i, j)
+            Wall(Axis.EW, i, j)
             for j in range(self.cells_up)] for i in range(self.cells_across + 1)]
         self.cells = [[
             Cell(Dim(i, j),
@@ -151,12 +151,12 @@ class TestWall(unittest.TestCase):
 
     def test_is_edge(self):
         answers = {
-            Orientation.EW: (
+            Axis.EW: (
                 (True, False, False, True),
                 (True,  True, True,  True),
                 (True, False, False, True)
             ),
-            Orientation.NS: (
+            Axis.NS: (
                 (True,  True, True),
                 (False, True, False),
                 (False, True, False),
@@ -166,22 +166,22 @@ class TestWall(unittest.TestCase):
         for i in range(self.cells_across + 1):
             for j in range(self.cells_up):
                 wall = self.ew_walls[i][j]
-                good = answers[Orientation.EW][j][i]
+                good = answers[Axis.EW][j][i]
                 self.assertEqual(wall.is_edge(), good, "EW" + str(i) + str(j) + " Should be " + str(good))
         for i in range(self.cells_across):
             for j in range(self.cells_up + 1):
                 wall = self.ns_walls[i][j]
-                good = answers[Orientation.NS][j][i]
+                good = answers[Axis.NS][j][i]
                 self.assertEqual(wall.is_edge(), good, "ES" + str(i) + str(j) + " Should be " + str(good))
 
     def test_code(self):
         answers = {
-            Orientation.EW: (
+            Axis.EW: (
                 ("O", "I", "I", "O"),
                 ("O", "O", "O", "O"),
                 ("O", "I", "I", "O")
             ),
-            Orientation.NS: (
+            Axis.NS: (
                 ("O", "O", "O"),
                 ("X", "O", "X"),
                 ("X", "O", "X"),
@@ -206,24 +206,24 @@ class TestWall(unittest.TestCase):
         for i in range(self.cells_across + 1):
             for j in range(self.cells_up):
                 wall = self.ew_walls[i][j]
-                good = answers[Orientation.EW][j][i]
+                good = answers[Axis.EW][j][i]
                 self.assertEqual(wall.code(Com.W), good, "W" + str(i) + str(j) + " Should be " + good)
                 self.assertEqual(wall.code(Com.E), good, "E" + str(i) + str(j) + " Should be " + good)
         for i in range(self.cells_across):
             for j in range(self.cells_up + 1):
                 wall = self.ns_walls[i][j]
-                good = answers[Orientation.NS][j][i]
+                good = answers[Axis.NS][j][i]
                 self.assertEqual(wall.code(Com.N), good, "N" + str(i) + str(j) + " Should be " + good)
                 self.assertEqual(wall.code(Com.S), good, "S" + str(i) + str(j) + " Should be " + good)
 
     def test_is_wall(self):
         answers = {
-            Orientation.EW: (
+            Axis.EW: (
                 (True, False, False, True),
                 (True, True,  True,  True),
                 (True, False, False, True)
             ),
-            Orientation.NS: (
+            Axis.NS: (
                 (True,  True,  True),
                 (False, True, False),
                 (False, True, False),
@@ -244,12 +244,12 @@ class TestWall(unittest.TestCase):
         for i in range(self.cells_across + 1):
             for j in range(self.cells_up):
                 wall = self.ew_walls[i][j]
-                good = answers[Orientation.EW][j][i]
+                good = answers[Axis.EW][j][i]
                 self.assertEqual(wall.is_wall(), good, str(i) + str(j) + " EW Should be " + str(good))
         for i in range(self.cells_across):
             for j in range(self.cells_up + 1):
                 wall = self.ns_walls[i][j]
-                good = answers[Orientation.NS][j][i]
+                good = answers[Axis.NS][j][i]
                 self.assertEqual(wall.is_wall(), good, str(i) + str(j) + " NS Should be " + str(good))
 
     def test_make_solid(self):
@@ -264,19 +264,19 @@ class TestWall(unittest.TestCase):
                 self.assertEqual(self.ns_walls[i][j].is_wall(), True, str(i) + str(j) + " NS Should be a wall")
 
     def test_door(self):
-        symm = Wall(Orientation.EW, 1, 1, False)
-        asym = Wall(Orientation.EW, 1, 1, False)
-        none = Wall(Orientation.EW, 1, 1, False)
-        blok = Wall(Orientation.EW, 1, 1, True)
+        symm = Wall(Axis.EW, 1, 1, False)
+        asym = Wall(Axis.EW, 1, 1, False)
+        none = Wall(Axis.EW, 1, 1, False)
+        blok = Wall(Axis.EW, 1, 1, True)
         cutter = Cutter()
-        symm.doors = cutter.make(Orientation.EW, Com.E, Cut.X)
-        asym.doors = cutter.make(Orientation.EW, Com.E, Cut.H)
+        symm.doors = cutter.make(Com.E, Cut.X)
+        asym.doors = cutter.make(Com.E, Cut.H)
         self.assertEqual(symm.door(Com.E), Cut.X, "Symm. E Should be an X")
         self.assertEqual(symm.door(Com.W), Cut.X, "Symm. W Should be an X")
         self.assertEqual(asym.door(Com.E), Cut.H, "Asym. E Should be an H")
         self.assertEqual(asym.door(Com.W), Cut.B, "Asym. W Should be an B")
         self.assertEqual(none.door(Com.E),  None, "None should be None")
-        self.assertEqual(blok.door(Com.E), None, "Blocked should be None")
+        self.assertEqual(blok.door(Com.E),  None, "Blocked should be None")
 
     def test_make_door(self):
         from unittest.mock import MagicMock
@@ -285,10 +285,10 @@ class TestWall(unittest.TestCase):
         tool = MagicMock(spec=Cutter)
         doors = {Com.N: Cut.X, Com.E: Cut.I}
         tool.make.return_value = doors
-        ew = Wall(Orientation.EW, 1, 1, False)
-        border = Wall(Orientation.EW, 1, 1, False)
-        ns = Wall(Orientation.NS, 1, 1, False)
-        blocked = Wall(Orientation.EW, 1, 1, True)
+        ew = Wall(Axis.EW, 1, 1, False)
+        border = Wall(Axis.EW, 1, 1, False)
+        ns = Wall(Axis.NS, 1, 1, False)
+        blocked = Wall(Axis.EW, 1, 1, True)
         ew.cells[Com.E] = cell_a
         ew.cells[Com.W] = cell_b
         ns.cells[Com.N] = cell_a

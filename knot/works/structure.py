@@ -8,8 +8,7 @@ class Structure:
     """
         works is created as a rectangle of x * y cells.
     """
-
-    def __init__(self, cells_across, cells_up, border=0):
+    def __init__(self, cells_across, cells_up, border=0, h_wrap=False, v_wrap=False):
         self.cells_across = cells_across
         self.cells_up = cells_up
         if border > cells_up/2 or border > cells_across/2:
@@ -20,7 +19,7 @@ class Structure:
         self.joined = False
         self.bods = []
         self.things = []
-        self.level = Level(cells_across, cells_up, self.border, True, True)
+        self.level = Level(cells_across, cells_up, self.border, h_wrap, v_wrap)
 
     def mine(self):
         while not self.mined:
