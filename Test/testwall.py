@@ -263,6 +263,21 @@ class TestWall(unittest.TestCase):
                 self.ns_walls[i][j].make_solid()
                 self.assertEqual(self.ns_walls[i][j].is_wall(), True, str(i) + str(j) + " NS Should be a wall")
 
+    def test_door(self):
+        symm = Wall(Orientation.EW, 1, 1, False)
+        asym = Wall(Orientation.EW, 1, 1, False)
+        none = Wall(Orientation.EW, 1, 1, False)
+        blok = Wall(Orientation.EW, 1, 1, True)
+        cutter = Cutter()
+        symm.doors = cutter.make(Orientation.EW, Com.E, Cut.X)
+        asym.doors = cutter.make(Orientation.EW, Com.E, Cut.H)
+        self.assertEqual(symm.door(Com.E), Cut.X, "Symm. E Should be an X")
+        self.assertEqual(symm.door(Com.W), Cut.X, "Symm. W Should be an X")
+        self.assertEqual(asym.door(Com.E), Cut.H, "Asym. E Should be an H")
+        self.assertEqual(asym.door(Com.W), Cut.B, "Asym. W Should be an B")
+        self.assertEqual(none.door(Com.E),  None, "None should be None")
+        self.assertEqual(blok.door(Com.E), None, "Blocked should be None")
+
     def test_make_door(self):
         from unittest.mock import MagicMock
         cell_a = MagicMock(spec=Cell)

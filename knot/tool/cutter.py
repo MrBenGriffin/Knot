@@ -6,7 +6,7 @@ from .cut import Cut
 
 class Cutter:
 
-    def __init__(self, setting: Setting = Setting, tweak: Tw = Tw.master):
+    def __init__(self, setting: Setting = Setting(), tweak: Tw = Tw.master):
         self.setting = setting
         self.tweak = tweak
 

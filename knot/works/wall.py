@@ -34,6 +34,13 @@ class Wall:
         self.doors = {}
 
     def door(self, com: Com) -> [Cut, None]:
+        """
+        Return the door Cut (or None), according to direction.
+        (Some cuts may appear different depending on what side of the wall
+        you are looking through).
+        :param com:
+        :return:
+        """
         if com not in self.doors:
             return None
         return self.doors[com]
