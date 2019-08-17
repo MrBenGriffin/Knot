@@ -1,6 +1,6 @@
 from abc import ABCMeta, abstractmethod
 from knot.works import Structure
-from knot.space import Tweak, Tw
+from knot.space import Tweak, Tw, Com
 from knot.tool import Setting, Cutter
 
 
@@ -24,7 +24,7 @@ class Mover(object):
         self.face = None
         self.structure = structure
         self.entrance = structure.at(self.tweak.entry(structure.border))
-        self.dig(self.entrance)
+        self.dig(self.entrance, Com.F)
 
     def select_tool(self, setting: Setting):
         self.is_miner = True
@@ -37,10 +37,8 @@ class Mover(object):
         else:
             self._run()
 
-    def dig(self, cell):
-        if not cell.mined:
-            cell.miner = self
-            cell.mined = True
+    def dig(self, cell, com=Com.X):
+        cell.open(self, com)
         self.go(cell)
 
     def go(self, cell):

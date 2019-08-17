@@ -40,20 +40,22 @@ class ComDecorator:
             enum[fwd].cw = enum[rot]
             enum[rot].ccw = enum[fwd]
         for com, axis in self.axis_map.items():
-            enum[com].axis = Axis[axis[0]]
-            if axis[1] is 0:
-                Axis[axis[0]].a = enum[com]
-            else:
-                Axis[axis[0]].b = enum[com]
+            if axis:
+                enum[com].axis = Axis[axis[0]]
+                if axis[1] is 0:
+                    Axis[axis[0]].a = enum[com]
+                else:
+                    Axis[axis[0]].b = enum[com]
         return enum
 
 
 @ComDecorator(
-    {'N': 'S', 'E': 'W', 'C': 'F'},
-    {'N': 'E', 'E': 'S', 'S': 'W', 'W': 'N', 'C': 'F', 'F': 'C'},
-    {'N': ['NS', 0], 'E': ['EW', 0], 'S': ['NS', 1], 'W': ['EW', 1], 'C': ['CF', 0], 'F': ['CF', 1]}
+    {'N': 'S', 'E': 'W', 'C': 'F', 'X': 'X'},
+    {'N': 'E', 'E': 'S', 'S': 'W', 'W': 'N', 'C': 'F', 'F': 'C', 'X': 'X'},
+    {'N': ['NS', 0], 'E': ['EW', 0], 'S': ['NS', 1], 'W': ['EW', 1], 'C': ['CF', 0], 'F': ['CF', 1], 'X': None}
 )
 class Com(IntFlag):
+    X = 0x0100
     W = 0x0001
     E = 0x0002
     N = 0x0004

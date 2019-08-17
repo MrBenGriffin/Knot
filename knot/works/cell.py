@@ -1,16 +1,15 @@
 # encoding: utf-8
 from knot.space import Com
-from knot.tool import Cut
+from knot.tool import Cut, Cutter
 
 
 class Cell:
     last = None
-    last_mined = None
 
     def __init__(self, dim, walls, blocked=False):
-        self.miner = None
+        self.tool = None
+        self.opened = None
         self.dim = dim
-        self.mined = False
         self.walls = {Com.N: walls[0], Com.E: walls[1], Com.S: walls[2], Com.W: walls[3]}
         if blocked:
             self.walls[Com.N].block()
@@ -28,6 +27,9 @@ class Cell:
 
     def name(self):
         return str(self.dim)
+
+    def mined(self) -> bool:
+        return self.opened is not None
 
     def move(self, com):
         if com in self.walls and self.walls[com]:
@@ -86,14 +88,13 @@ class Cell:
 
     # make_door_in is done on self's side.
     # def make_door(self, cell_dir: Com, tool: Cutter, ):
-    def make_door_in(self, com, miner, cut: Cut = None):
-        cell = self.walls[com].make_door(com, miner.tool, cut)
-        if cell:
-            if not cell.miner:
-                cell.mined = True
-                cell.miner = miner
-            Cell.last_mined = cell
-        return cell
+    def make_door_in(self, com, tool: Cutter, cut: Cut = None):
+        return self.walls[com].make_door(com, tool, cut)
+
+    def open(self, tool: Cutter, com):
+        if not self.tool:
+            self.opened = com
+            self.tool = tool
 
     def __str__(self):
         return self.code()

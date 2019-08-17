@@ -20,27 +20,30 @@ class Mazer(Mover):
         self.faces = []
         self.select_tool(setting)
 
+    def work(self, cell) -> bool:
+        walls = cell.walls_that_can_be_dug()
+        if walls:
+            face = random.choice(walls)
+            wall = cell.walls[face]
+            next_cell = wall.make_door(face, self.tool)
+            self.go(next_cell)
+            self.face = face.opposite
+            return True
+        else:
+            return False
+
     def _run(self):
         self.sequence += 1
         self.face = None
         if self.track:
             if self.sequence < Mazer.cutoff:
-                this_cell = self.track[-1]
-                walls_to_dig = this_cell.walls_that_can_be_dug()
-                if walls_to_dig:
-                    self.face = random.choice(walls_to_dig)
-                    next_cell = this_cell.make_door_in(self.face, self)
-                    self.dig(next_cell)
-                else:
+                cell = self.cell()
+                if not self.work(cell):
                     self.track.pop()
             else:
                 self.sequence = 0
                 self.cell_index = random.randrange(len(self.track))
-                this_cell = self.track[self.cell_index]
-                walls_to_dig = this_cell.walls_that_can_be_dug()
-                del self.track[self.cell_index]
-                if walls_to_dig:
-                    self.track.append(this_cell)
-                    self.face = random.choice(walls_to_dig)
-                    next_cell = this_cell.make_door_in(self.face, self)
-                    self.dig(next_cell)
+                cell = self.track[self.cell_index]
+                if not self.work(cell):
+                    del self.track[self.cell_index]
+

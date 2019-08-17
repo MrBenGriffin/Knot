@@ -3,7 +3,7 @@ import random
 import sys
 from knot.space import Tw
 from knot.works import Structure
-from knot.actor import Mazer, Clone, Joiner
+from knot.actor import Mazer, Clone, Joiner, Holer
 from knot.tool import Setting
 
 
@@ -12,11 +12,16 @@ def maze(parms):
         random.seed(os.urandom(7))
     else:
         random.seed(parms[9])
+
+#    0:9, 1:9, 2:200, 3:200, 4:4, 5:0, 6:0, 7:0, 8:12, 9:0
+
+#   0 cells_across, 1 cells_up,5 border,6 h_wrap,7 v_wrap
     knot_work = Structure(parms[0], parms[1], parms[5], parms[6], parms[7])
     setting = Setting(parms[2], parms[3])
     Mazer.cutoff = max(2, parms[8])
     styles = (Tw.master, Tw.vanity, Tw.sunset, Tw.rot180, Tw.rot090)
     style = styles[parms[4]]
+    # miner1 = Holer(knot_work, setting)
     miner1 = Mazer(knot_work, setting)
     knot_work.add_bod(miner1)
 
@@ -36,12 +41,12 @@ def maze(parms):
     # if (1) there's a border OR
     #    (2) if the edges are even
     # Then we will need a joiner (and clones).
-    if len(knot_work.bods) > 1 and (knot_work.border > 0 or knot_work.cells_up % 2 is 0 or knot_work.cells_across % 2 is 0):
-        joiner = Joiner(knot_work, setting)
-        knot_work.bods[0] = joiner
-        for bod in range(1, len(knot_work.bods)):
-            knot_work.bods[bod].set_other(joiner)
-        knot_work.join()
+    # if len(knot_work.bods) > 1 and (knot_work.border > 0 or knot_work.cells_up % 2 is 0 or knot_work.cells_across % 2 is 0):
+    #     joiner = Joiner(knot_work, setting)
+    #     knot_work.bods[0] = joiner
+    #     for bod in range(1, len(knot_work.bods)):
+    #         knot_work.bods[bod].set_other(joiner)
+    #     knot_work.join()
 
     print(knot_work.code())
 

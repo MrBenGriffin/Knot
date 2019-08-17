@@ -9,22 +9,18 @@ class Clone(Mover):
             self.select_tool(other.tool.setting)
 
     def _run(self):
-        if len(self.other.track) > 1:
-            master_cell = self.other.track[-2]
-            this_cell = self.structure.at(self.tweak.dim(master_cell.dim))
-            if this_cell:
-                if not this_cell.mined:
-                    self.dig(this_cell)
-                else:
-                    self.go(this_cell)
-                self.track.pop(0)
-                if self.other.face is not None:
-                    door = master_cell.walls[self.other.face].door(self.other.face)
-                    if door:
-                        self.face = self.tweak.face(self.other.face)
-                        next_cell = this_cell.make_door_in(self.face, self, door)
-                        if next_cell:
-                            self.dig(next_cell)
+        if self.other.track:
+            base = self.other.cell()
+            face = self.other.face
+            cell = self.structure.at(self.tweak.dim(base.dim))
+            if cell:
+                cell.open(self.tool, self.tweak.face(base.opened))
+                if face is not None:
+                    door = base.walls[face].door(face)
+                    self.face = self.tweak.face(face)
+                    next_cell = cell.walls[self.face].make_door(self.face, self.tool, door)
+                    # next_cell = cell.make_door_in(self.face, self.tool, door)
+                    self.go(next_cell)
         else:
             if not self.other.track:
                 self.track.clear()

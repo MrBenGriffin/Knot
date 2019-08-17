@@ -15,15 +15,14 @@ class Joiner(Mover):
             self.face = None
             cell = None
             this_cell = self.track[-1]
-            if this_cell.miner not in self.collection:
-                self.collection.append(this_cell.miner)
+            if this_cell.tool not in self.collection:
+                self.collection.append(this_cell.tool)
             neighbours = this_cell.neighbours()
             for com in neighbours:
                 neighbour = neighbours[com]
-                if neighbour.miner and neighbour.miner not in self.collection:
+                if neighbour.tool and neighbour.tool not in self.collection:
                     self.face = com
                     cell = this_cell.make_door_in(self.face, self)
-                    self.dig(cell)
             if not cell:
                 exits = this_cell.exits()
                 while exits and not cell:

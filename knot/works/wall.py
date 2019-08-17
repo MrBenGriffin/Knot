@@ -20,12 +20,13 @@ class Wall:
             return None
         return self.cells[cell_dir]
 
-    def make_door(self, cell_dir: Com, tool: Cutter, cut: Cut = None) -> [Cell, None]:
-        if cell_dir not in self.cells:
+    def make_door(self, com: Com, tool: Cutter, cut: Cut = None) -> [Cell, None]:
+        if com not in self.cells:
             return None
-        other = self.cells[cell_dir]
+        other = self.cells[com]
         if not self.blocked and other:
-            self.doors = tool.make(cell_dir, cut)
+            self.doors = tool.make(com, cut)
+            other.open(tool, com.opposite)
             return other
         else:
             return None
@@ -64,11 +65,10 @@ class Wall:
             return (self.cells[Com.W] is None) or (self.cells[Com.E] is None)
 
     def can_be_dug(self, com_from) -> bool:
-        if com_from not in self.cells:
-            return False
-        else:
-            cell = self.cells[com_from]
-            return False if not cell else not (self.blocked or cell.mined)
+        return not self.cells[com_from].mined() if self.can_be_door(com_from) else False
+
+    def can_be_door(self, com_from) -> bool:
+        return not self.doors and com_from in self.cells and self.cells[com_from] and not self.blocked
 
     def code(self, com):
         return "O" if com not in self.doors else str(self.doors[com])
