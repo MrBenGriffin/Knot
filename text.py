@@ -72,19 +72,19 @@ def make_knot(args: dict):
     # if (1) there's a border OR
     #    (2) if the edges are even
     # Then we will need a joiner (and clones).
-    # if len(knot_work.bods) > 1 and (knot_work.border > 0 or knot_work.cells_up % 2 is 0 or knot_work.cells_across % 2 is 0):
-    #     joiner = Joiner(knot_work, setting)
-    #     knot_work.bods[0] = joiner
-    #     for bod in range(1, len(knot_work.bods)):
-    #         knot_work.bods[bod].set_other(joiner)
-    #     knot_work.join()
+    if len(knot_work.bods) > 1 and (knot_work.border or knot_work.cells_up % 2 is 0 or knot_work.cells_across % 2 is 0):
+        joiner = Joiner(knot_work, setting)
+        knot_work.bods[0] = joiner
+        for bod in range(1, len(knot_work.bods)):
+            knot_work.bods[bod].set_other(joiner)
+        knot_work.join()
     print(knot_work.code())
 
 
 def do_args():
     # There is no need for an upper limit - but the choices here are breaking using range(1, 10**100000)
     bounds = ArgRange(2)
-    balance = ArgRange(0.0, 1.0, 3.0)
+    balance = ArgRange(0.0, 1.0)
     styles = {'N': Tw.master, 'V': Tw.vanity, 'H': Tw.sunset, 'F': Tw.rot180, 'R': Tw.rot090}
     parser = argparse.ArgumentParser(description="Calculate and print out knot-work. You will need the font 'KNOTS Zoo' installed with ligatures set for this to show what it is doing.")
     parser.add_argument("-x", "--width",  type=int, choices=bounds,  default=9, help="Width.  The number of cells wide. (default: %(default)s)")

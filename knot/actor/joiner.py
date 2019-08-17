@@ -14,15 +14,17 @@ class Joiner(Mover):
         if self.track:
             self.face = None
             cell = None
-            this_cell = self.track[-1]
+            this_cell = self.cell()
             if this_cell.tool not in self.collection:
                 self.collection.append(this_cell.tool)
             neighbours = this_cell.neighbours()
             for com in neighbours:
                 neighbour = neighbours[com]
                 if neighbour.tool and neighbour.tool not in self.collection:
-                    self.face = com
-                    cell = this_cell.make_door_in(self.face, self)
+                    self.face = com.opposite
+                    wall = this_cell.walls[com]
+                    cell = wall.make_door(com, self.tool)
+                    self.go(cell)
             if not cell:
                 exits = this_cell.exits()
                 while exits and not cell:
