@@ -14,18 +14,19 @@ class Spiral(Mover):
     def _run(self):
         self.face = None
         if self.track:
-            this_cell = self.track[-1]
-            walls_to_dig = this_cell.walls_that_can_be_dug()
-            if walls_to_dig:
+            cell = self.cell()
+            walls = cell.walls_that_can_be_dug()
+            if walls:
                 self.com = self.com.ccw
-                if self.com not in walls_to_dig:
+                if self.com not in walls:
                     self.com = self.com.cw
-                if self.com not in walls_to_dig:
+                if self.com not in walls:
                     self.com = self.com.cw
-                if self.com in walls_to_dig:
-                    self.face = self.com
-                    next_cell = this_cell.make_door_in(self.face, self)
-                    self.dig(next_cell)
+                if self.com in walls:
+                    self.face = self.com.opposite
+                    wall = cell.walls[self.com]
+                    neighbour = wall.make_door(self.com, self.tool)
+                    self.go(neighbour)
                 else:
                     self.track.pop()
             else:

@@ -1,9 +1,11 @@
 from .mover import Mover
 from knot.works import Structure
 from knot.tool import Setting
+import random
 
 
 class Holer(Mover):
+    balance = 0.0
 
     def __init__(self, structure: Structure, setting: Setting):
         super().__init__(structure)
@@ -23,5 +25,7 @@ class Holer(Mover):
                         self.go(neighbour)
                         self.face = com.opposite
                     wall.make_door(com, self.tool)
+                    return
+                if self.balance < random.random():
                     return
             self.track.pop()
