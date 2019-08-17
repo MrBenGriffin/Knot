@@ -9,9 +9,9 @@ class DummyRng:
         self.i_counter = seed
         self.c_counter = seed
 
-    def randint(self, x: int = 0, y: int = 1000) -> int:
+    def random(self) -> float:
         values = (0.0, 0.25, 0.5, 0.75, 1.0)
-        value = int(x + values[self.i_counter % 5] * (y-x))
+        value = values[self.i_counter % 5]
         self.i_counter += 1
         return value
 

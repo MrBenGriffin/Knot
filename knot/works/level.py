@@ -22,7 +22,7 @@ class Level:
         self.cells = [[
             Cell(Dim(i, j),
                  (self.ns(i, j + 1), self.ew(i + 1, j), self.ns(i, j), self.ew(i, j)),
-                 True if border > 0 and
+                 True if border and
                          (border <= i < self.cells_across - border) and
                          (border <= j < self.cells_up - border) else False
                  )

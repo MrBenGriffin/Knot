@@ -59,10 +59,10 @@ class Tweak:
             y = self._dim.y - y
         return Dim(x, y)
 
-    def entry(self, border: int = 0) -> Dim:
+    def entry(self, border: [int, None]) -> Dim:
         """
         Given that the structure might be hollow, where should an actor start?
         my x_off and y_off are the maximum indices of a grid.
         Normally I start at the centre of the grid at ceil((grid.x-1)/2),ceil((grid.x-1)/2)
         """
-        return self.dim(Dim(ceil(self._dim.x / 2), ceil(self._dim.y / 2) if border is 0 else floor(border / 2)))
+        return self.dim(Dim(ceil(self._dim.x / 2), ceil(self._dim.y / 2) if not border else floor(border / 2)))

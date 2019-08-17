@@ -4,10 +4,10 @@ from knot.tool import DummyRng
 
 class TestDummyRng(unittest.TestCase):
 
-    def test_randint(self):
+    def test_random(self):
         rng = DummyRng()
-        for i in range(5):
-            result = rng.randint(0, 4)
+        for i in (0.0, 0.25, 0.5, 0.75, 1.0):
+            result = rng.random()
             expect = i
             self.assertEqual(result, expect, "rng " + str(result) + " was expecting " + str(expect))
 
@@ -23,8 +23,8 @@ class TestDummyRng(unittest.TestCase):
         rng = DummyRng()
         for i in range(5):
             rng.seed(0)
-            result = rng.randint(0, 4)
-            expect = 0
+            result = rng.random()
+            expect = 0.0
             self.assertEqual(result, expect, "rng " + str(result) + " was expecting 0")
 
 

@@ -8,12 +8,15 @@ class Structure:
     """
         works is created as a rectangle of x * y cells.
     """
-    def __init__(self, cells_across, cells_up, border=0, h_wrap=False, v_wrap=False):
+    # {'width': 11, 'height': 11, 'straights': 0.2, 'zoo': 0.2, 'symmetry'
+    #  : < Tw.rot090: 5 >, 'border': None, 'htile': True, 'vtile': True, 'connectivity': 12, 'random': 1337}
+
+    def __init__(self, cells_across: int, cells_up: int, border: [None, int], h_wrap: bool = False, v_wrap: bool = False):
         self.cells_across = cells_across
         self.cells_up = cells_up
-        if border > cells_up/2 or border > cells_across/2:
-            print("Border is too large for width and height. Setting to Border to 0")
-            border = 0
+        if border and (border > cells_up/2 or border > cells_across/2):
+            print("Border is too large for width and height.")
+            border = None
         self.border = border
         self.mined = False
         self.joined = False
