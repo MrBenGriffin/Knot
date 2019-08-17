@@ -10,7 +10,7 @@ class DummyRng:
         self.c_counter = seed
 
     def random(self) -> float:
-        values = (0.0, 0.25, 0.5, 0.75, 1.0)
+        values = (0.0, 0.25, 0.5, 0.75, 0.999)
         value = values[self.i_counter % 5]
         self.i_counter += 1
         return value

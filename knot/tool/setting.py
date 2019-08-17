@@ -17,12 +17,12 @@ class Setting:
         # straights_balance; 0 = All twists, 1.000=all straights
         kind = Cut.I
         straights = self.rng.random()
-        if self.straights_balance < straights:
+        if straights >= self.straights_balance:
             # need to do something if not straights..
             # zoomorph_balance; 0 = All twists, 1.000=all Zoomorphs.
             kind = Cut.X
             zoos = self.rng.random()
-            if self.zoomorph_balance > zoos:
+            if zoos < self.zoomorph_balance:
                 # logic vs straights is switched because here we need to do something if zoo.
                 kind = self.rng.choice(self.hb_choice)
         return kind

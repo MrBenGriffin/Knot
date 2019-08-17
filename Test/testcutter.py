@@ -8,7 +8,7 @@ class TestCutter(unittest.TestCase):
     def setUp(self):
         # Setting 0 : straights_balance; 0 = All twists, 1000=all Straights
         # Setting 1 : zoomorph_balance;  0 = All twists, 1000=all Zoomorphs.
-        self.setting = Setting(0, 1000, DummyRng())  # All zoomorphs - chosen for the asymmetry.
+        self.setting = Setting(0, 1.00, DummyRng())  # All zoomorphs - chosen for the asymmetry.
         self.axes = (Axis.EW, Axis.NS)
         self.tweaks = (Tw.master, Tw.sunset, Tw.vanity, Tw.mirror, Tw.rot000, Tw.rot090, Tw.rot270, Tw.rot180)
 
@@ -66,7 +66,9 @@ class TestCutter(unittest.TestCase):
                 for tweak in self.tweaks:
                     answer = tweak_answers[tweak]
                     cutter = Cutter(self.setting, tweak)
-                    self.assertEqual(answer, cutter.make(axis.a, cut), str(cut) + ":" + str(axis) + ":" + str(tweak) + " Wall should have been " + str(answer))
+                    value = cutter.make(axis.a, cut)
+                    self.assertEqual(answer, value, str(cut) + ":" + str(axis) + ":" + str(tweak) + " Wall should have been " + str(answer))
+
 
 if __name__ == '__main__':
     unittest.main()

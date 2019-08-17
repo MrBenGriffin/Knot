@@ -6,7 +6,7 @@ class TestDummyRng(unittest.TestCase):
 
     def test_random(self):
         rng = DummyRng()
-        for i in (0.0, 0.25, 0.5, 0.75, 1.0):
+        for i in (0.0, 0.25, 0.5, 0.75, 0.999):
             result = rng.random()
             expect = i
             self.assertEqual(result, expect, "rng " + str(result) + " was expecting " + str(expect))
