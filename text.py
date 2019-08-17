@@ -96,7 +96,7 @@ def do_args():
     parser.add_argument("-ht", "--htile", action="store_true", help="The knot-work will tile horizontally. (default: %(default)s)")
     parser.add_argument("-vt", "--vtile", action="store_true", help="The knot-work will tile vertically. (default: %(default)s)")
     parser.add_argument("-c", "--connectivity", type=int, default=12, choices=bounds, help="Slightly adjusts connections. Larger numbers make longer threads. (default: %(default)s)")
-    parser.add_argument("-r", "--random", type=int, default=os.urandom(7), help="Random seed. If this is non-zero you should always get the same knot for the parameters. (default: %(default)s)")
+    parser.add_argument("-r", "--random", type=int, default=os.urandom(7), help="Random seed. If this is non-zero you should always get the same knot for the parameters. (default: os.urandom)")
     args = parser.parse_args()
     arg_dict = vars(args)
     arg_dict['symmetry'] = styles[arg_dict['symmetry']]

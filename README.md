@@ -54,21 +54,39 @@ The GUI is not yet available! (When the GUI is working, you may need tkinter!)
 
 # Launching The application:
 ```bash
-python3 ./text.py 19 19 850 300 4 0 0 0 0 0
+python3 ./text.py -x11 -y11 
 ```
-This takes from two or more numeric parameters. Each one affects the knot work generated.
+This takes any of the following parameters. Each one affects the knot work generated.
 
-* 1: Width.  The number of characters wide. It must be more than 1. Default 9
-* 2: Height. The number of characters high. It must be more than 1. Default 9
-* 3: Straights Balance. This is a value between 0 and 1000. 0 = All twists, 1000=all straights. Default is 200.
-* 4: Zoomorph Balance (Only affects twists). This is a value between 0 and 1000. 0 = All twists, 1000=all Zoomorphs. Default is 200.
-* 5: Transform, 0: None; 1: Horizontal Mirror; 2: Vertical Mirror; 3: Rotate 180; 4: Rotate 90 (needs width and height to be the same). Default is 4.
-* 6: Border. If this is more than 0, then the knot-work will be a border this thick. Default is 0
-* 7: H Wrap. If this is set to 1 then the knot-work will tile horizontally. Default 0
-* 8: V Wrap. If this is set to 1 then the knot-work will tile vertically. Default 0
-* 9: Connectivity. Slightly adjusts connections, smaller makes more. Minimum is 2. Default is 12
-* 10: Seed. If this is set you should always get the same knot with the same parameters. Default 0
-
+```bash
+  -h, --help            show this help message and exit
+  -x {...Infinity}, --width {...Infinity}
+                        Width. The number of cells wide. (default: 9)
+  -y {...Infinity}, --height {...Infinity}
+                        Height. The number of cells high. (default: 9)
+  -sb {0.0}, --straights {0.0}
+                        Balance between Twists and Straights. 0.0 = twists,
+                        1.00 = straights. (default: 0.2)
+  -zb {0.0}, --zoo {0.0}
+                        Balance between Twists and Zoomorphs. 0.0 = twists,
+                        1.00 = zoomorphs. (default: 0.2)
+  -s {N,H,V,F,R}, --symmetry {N,H,V,F,R}
+                        N: None; H: Horizontal Mirror; V: Vertical Mirror; F:
+                        Flip (rotate 180); R: Rotate 90 (when width and height
+                        are the same). (default: R)
+  -b BORDER, --border BORDER
+                        If this is set, then the knot-work will be a border
+                        this thick. (default: None)
+  -ht, --htile          The knot-work will tile horizontally. (default: False)
+  -vt, --vtile          The knot-work will tile vertically. (default: False)
+  -c {...Infinity}, --connectivity {...Infinity}
+                        Slightly adjusts connections. Larger numbers make
+                        longer threads. (default: 12)
+  -r RANDOM, --random RANDOM
+                        Random seed. If this is non-zero you should always get
+                        the same knot for the parameters. (default:
+                        os.urandom)
+```
 You can still draw mazes also, by turning the Straights balance right up
 
 ![Maze](assets/maze.png)
