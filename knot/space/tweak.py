@@ -12,7 +12,7 @@ class Tweak:
     If the other is at dimension 0,0 what cell I be in?  dim()
     Given that the maze might be hollow in the middle, where should I start?
 
-    TODO:: Add an optional Dim offset..
+    TODO:: Add an optional Dim offset for clones.
 
     """
     def __str__(self):

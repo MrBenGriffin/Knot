@@ -4,19 +4,23 @@ from enum import Enum
 
 
 # Decorator class.
-class Reverse:
-    def __init__(self, reverse_map):
+class CutDecorator:
+    def __init__(self, reverse_map, unicode_map):
         self.reverse_map = reverse_map
+        self.unicode_map = unicode_map
 
     def __call__(self, enum):
         for fwd, rev in self.reverse_map.items():
             enum[fwd].opposite = enum[rev]
             enum[rev].opposite = enum[fwd]
+        for x, uni in self.unicode_map.items():
+            enum[x].uni = uni
         return enum
 
 
-@Reverse(
-    {'O': 'O', 'I': 'I', 'X': 'X', 'H': 'B'}
+@CutDecorator(
+    {'O': 'O', 'I': 'I', 'X': 'X', 'H': 'B'},
+    {'O': 0, 'I': 2, 'X': 1, 'H': 3, 'B': 4}
 )
 class Cut(Enum):
     O = 1
