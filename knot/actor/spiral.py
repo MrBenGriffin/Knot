@@ -8,7 +8,7 @@ class Spiral(Mover):
 
     def __init__(self, structure: Structure, setting: Setting):
         super().__init__(structure)
-        self.com = Com.N
+        self.com = Com.S
         self.select_tool(setting)
 
     def _run(self):

@@ -93,7 +93,7 @@ class Cell:
 
     def open(self, tool: Cutter, com):
         if not self.tool:
-            self.opened = com
+            self.opened = com if com is not None else True
             self.tool = tool
 
     def __str__(self):

@@ -82,7 +82,12 @@ This takes any of the following parameters. Each one affects the knot work gener
   -c {...Infinity}, --connectivity {...Infinity}
                         Slightly adjusts connections. Larger numbers make
                         longer threads. (default: 12)
-  -r RANDOM, --random RANDOM
+  
+   -w {M,S,F}, --worker {M,S,F}
+                        Miner builds corridors, Spiral makes spirals, Filler
+                        is a full network (default: M)
+
+   -r RANDOM, --random RANDOM
                         Random seed. If this is non-zero you should always get
                         the same knot for the parameters. (default:
                         os.urandom)
