@@ -24,7 +24,7 @@ class CutDecorator:
 @CutDecorator(
     {'O': 'O', 'I': 'I', 'X': 'X', 'H': 'B'},
     {'O': 0, 'I': 2, 'X': 1, 'H': 3, 'B': 4},
-    {'N': 0, 'E': 1, 'S': 2, 'W': 3}
+    {'N': 3, 'E': 2, 'S': 1, 'W': 0}
 )
 class Cut(Enum):
     O = 1
