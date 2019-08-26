@@ -14,7 +14,7 @@ class Clone(Mover):
             face = self.other.face
             cell = self.structure.at(self.tweak.dim(base.dim))
             if cell:
-                cell.open(self.tool, self.tweak.face(base.opened))
+                cell.open(self.tool, self.tweak.face(base.opened_from))
                 if face is not None:
                     door = base.walls[face].door(face)
                     self.face = self.tweak.face(face)

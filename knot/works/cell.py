@@ -8,7 +8,8 @@ class Cell:
 
     def __init__(self, dim, walls, blocked=False):
         self.tool = None
-        self.opened = None
+        self.opened = False
+        self.opened_from = None
         self.dim = dim
         self.walls = {Com.N: walls[0], Com.E: walls[1], Com.S: walls[2], Com.W: walls[3]}
         if blocked:
@@ -29,7 +30,7 @@ class Cell:
         return str(self.dim)
 
     def mined(self) -> bool:
-        return self.opened is not None
+        return self.opened
 
     def move(self, com):
         if com in self.walls and self.walls[com]:
@@ -93,7 +94,8 @@ class Cell:
 
     def open(self, tool: Cutter, com):
         if not self.tool:
-            self.opened = com if com is not None else True
+            self.opened = True
+            self.opened_from = com
             self.tool = tool
 
     def __str__(self):
