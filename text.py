@@ -79,8 +79,8 @@ def make_knot(args: dict):
         for bod in range(1, len(knot_work.bods)):
             knot_work.bods[bod].set_other(joiner)
         knot_work.join()
-    print(knot_work.code())
-    print(knot_work.unicode())
+    result = knot_work.code() if args['encoding'] == 'HIBOX' else knot_work.unicode()
+    print(result)
 
 
 def do_args():
@@ -101,6 +101,7 @@ def do_args():
     parser.add_argument("-vt", "--vtile", action="store_true", help="The knot-work will tile vertically. (default: %(default)s)")
     parser.add_argument("-cb", "--connectivity", type=float, default=0.2, choices=balance, help="Balance of connections. Larger numbers make longer threads. (default: %(default)s)")
     parser.add_argument("-r", "--random", type=int, default=os.urandom(7), help="Random seed. If this is non-zero you should always get the same knot for the parameters. (default: os.urandom)")
+    parser.add_argument("-e", "--encoding", type=str, choices=['HIBOX', 'E000'], default='HIBOX', help="Output encoding - either HIBOX ligatures or Unicode PUA 0xE000")
     args = parser.parse_args()
     arg_dict = vars(args)
     arg_dict['symmetry'] = styles[arg_dict['symmetry']]
