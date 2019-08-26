@@ -48,3 +48,6 @@ class Structure:
 
     def code(self):
         return self.level.code()
+
+    def unicode(self):
+        return self.level.unicode()

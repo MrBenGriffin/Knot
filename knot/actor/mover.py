@@ -24,7 +24,7 @@ class Mover(object):
         self.face = None
         self.structure = structure
         self.entrance = structure.at(self.tweak.entry(structure.border))
-        self.dig(self.entrance, Com.F)
+        self.dig(self.entrance, None)
 
     def select_tool(self, setting: Setting):
         self.is_miner = True
@@ -37,7 +37,7 @@ class Mover(object):
         else:
             self._run()
 
-    def dig(self, cell, com=Com.X):
+    def dig(self, cell, com=None):
         cell.open(self, com)
         self.go(cell)
 

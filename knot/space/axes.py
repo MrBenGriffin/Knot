@@ -18,11 +18,10 @@ class AxesDecorator:
         return enum
 
 
-@AxesDecorator({'NS': [], 'EW': [], 'CF': []})
+@AxesDecorator({'NS': [], 'EW': []})
 class Axis(IntFlag):
     NS = 0x0100
     EW = 0x0200
-    CF = 0x0400
 
 
 # Com Decorator class.
@@ -50,19 +49,16 @@ class ComDecorator:
 
 
 @ComDecorator(
-    {'N': 'S', 'E': 'W', 'C': 'F', 'X': 'X'},
-    {'N': 'E', 'E': 'S', 'S': 'W', 'W': 'N', 'C': 'F', 'F': 'C', 'X': 'X'},
-    {'N': ['NS', 0], 'E': ['EW', 0], 'S': ['NS', 1], 'W': ['EW', 1], 'C': ['CF', 0], 'F': ['CF', 1], 'X': None}
+    {'N': 'S', 'E': 'W'},
+    {'N': 'E', 'E': 'S', 'S': 'W', 'W': 'N'},
+    {'N': ['NS', 0], 'E': ['EW', 0], 'S': ['NS', 1], 'W': ['EW', 1]}
 )
 class Com(IntFlag):
-    X = 0x0100
-    W = 0x0001
+    N = 0x0001
     E = 0x0002
-    N = 0x0004
-    S = 0x0008
-    C = 0x0010
-    F = 0x0020
+    S = 0x0004
+    W = 0x0008
 
     def __str__(self):
-        text = {Com.N: "North", Com.E: "East", Com.S: "South", Com.W: "West", Com.C: "Ceiling", Com.F: 'Floor'}
+        text = {Com.N: "North", Com.E: "East", Com.S: "South", Com.W: "West"}
         return text[self._value_]

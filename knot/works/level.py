@@ -51,9 +51,11 @@ class Level:
         return None
 
     def code(self):
-        result = ""
-        for j in reversed(range(self.cells_up)):  # reversed: print goes from top to bottom..
-            for i in range(self.cells_across):
-                result += self.cell(i, j).code()
-            result = result + "\n"
-        return result
+        return "\n".join(
+            ["".join([self.cell(i, j).code() for i in range(self.cells_across)]) for j in range(self.cells_up - 1, -1, -1)]
+        )
+
+    def unicode(self):
+        return "\n".join(
+            ["".join([self.cell(i, j).unicode() for i in range(self.cells_across)]) for j in range(self.cells_up - 1, -1, -1)]
+        )

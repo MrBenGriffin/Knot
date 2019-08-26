@@ -105,10 +105,13 @@ class Cell:
     def code(self):
         if not self.mined:
             return "oooo"
-        return self.walls[Com.N].code(Com.N) + \
-               self.walls[Com.E].code(Com.E) + \
-               self.walls[Com.S].code(Com.S) + \
-               self.walls[Com.W].code(Com.W)
+        return ''.join([self.walls[c].code(c) for c in Com])
+
+    def unicode(self):
+        final = 0xE100
+        if self.mined:
+            final += sum(self.walls[c].unicode(c) for c in Com)
+        return chr(final)
 
     def __cmp__(self, other):
         return self.dim == other.dim

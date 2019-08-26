@@ -80,6 +80,7 @@ def make_knot(args: dict):
             knot_work.bods[bod].set_other(joiner)
         knot_work.join()
     print(knot_work.code())
+    print(knot_work.unicode())
 
 
 def do_args():

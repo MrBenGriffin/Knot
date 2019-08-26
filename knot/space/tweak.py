@@ -31,7 +31,9 @@ class Tweak:
         self.tweak = tweak
         self._dim = Dim(max(0, width - 1), max(0, height - 1))
 
-    def face(self, com: Com) -> Com:
+    def face(self, com: Com) -> [Com, None]:
+        if com is None:
+            return None
         if self.tweak == Tw.master or self.tweak == Tw.rot000:
             return com
         if self.tweak == Tw.rot090:

@@ -71,4 +71,9 @@ class Wall:
         return not self.doors and com_from in self.cells and self.cells[com_from] and not self.blocked
 
     def code(self, com):
+        """ Return cut for the door on a particular side """
         return "O" if com not in self.doors else str(self.doors[com])
+
+    def unicode(self, com):
+        """ Return the unicode value for the cut on a particular side"""
+        return 0x00 if com not in self.doors else com.mux * self.doors[com].uni
