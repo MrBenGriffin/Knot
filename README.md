@@ -86,6 +86,10 @@ This takes any of the following parameters. Each one affects the knot work gener
                         Random seed. If this is non-zero you should always get
                         the same knot for the parameters. (default:
                         os.urandom)
+  -e {HIBOX,E000}, --encoding {HIBOX,E000}
+                        Output encoding - either HIBOX ligatures or Unicode
+                        PUA 0xE000
+
 ```
 You can still draw mazes also, by turning the Straights balance right up
 
