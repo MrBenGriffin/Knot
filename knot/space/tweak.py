@@ -12,6 +12,9 @@ class Tweak:
     If the other is at dimension 0,0 what cell I be in?  dim()
     Given that the maze might be hollow in the middle, where should I start?
 
+    TODO:: Bearing in mind I'm working on hex-tiles, this is currently -very- orthographic in it's assumptions.
+           It is probably far better to rename rot090 to 'cw', or 'cw[0]' or cw.0 
+           It should be even better to define this in accordance with the count of Com.
     TODO:: Add an optional Dim offset for clones.
 
     """
