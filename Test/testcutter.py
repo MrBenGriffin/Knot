@@ -1,5 +1,5 @@
 import unittest
-from knot.space import Com, Tw, Axis
+from knot.space import Com, Wallpaper, Axis
 from knot.tool import Setting, Cut, Cutter, DummyRng
 
 
@@ -10,52 +10,52 @@ class TestCutter(unittest.TestCase):
         # Setting 1 : zoomorph_balance;  0 = All twists, 1000=all Zoomorphs.
         self.setting = Setting(0, 1.00, DummyRng())  # All zoomorphs - chosen for the asymmetry.
         self.axes = (Axis.EW, Axis.NS)
-        self.tweaks = (Tw.master, Tw.sunset, Tw.vanity, Tw.mirror, Tw.rot000, Tw.rot090, Tw.rot270, Tw.rot180)
+        self.tweaks = (Wallpaper.master, Wallpaper.sunset, Wallpaper.vanity, Wallpaper.mirror, Wallpaper.rot000, Wallpaper.rot090, Wallpaper.rot270, Wallpaper.rot180)
 
     def test_make(self):
         answers = {
             None: {
                 Axis.EW: {
-                    Tw.master: {Com.E: Cut.H, Com.W: Cut.B},
-                    Tw.sunset: {Com.E: Cut.B, Com.W: Cut.H},
-                    Tw.vanity: {Com.E: Cut.H, Com.W: Cut.B},
-                    Tw.mirror: {Com.E: Cut.B, Com.W: Cut.H},
-                    Tw.rot000: {Com.E: Cut.H, Com.W: Cut.B},
-                    Tw.rot090: {Com.E: Cut.B, Com.W: Cut.H},
-                    Tw.rot270: {Com.E: Cut.H, Com.W: Cut.B},
-                    Tw.rot180: {Com.E: Cut.B, Com.W: Cut.H}
+                    Wallpaper.master: {Com.E: Cut.H, Com.W: Cut.B},
+                    Wallpaper.sunset: {Com.E: Cut.B, Com.W: Cut.H},
+                    Wallpaper.vanity: {Com.E: Cut.H, Com.W: Cut.B},
+                    Wallpaper.mirror: {Com.E: Cut.B, Com.W: Cut.H},
+                    Wallpaper.rot000: {Com.E: Cut.H, Com.W: Cut.B},
+                    Wallpaper.rot090: {Com.E: Cut.B, Com.W: Cut.H},
+                    Wallpaper.rot270: {Com.E: Cut.H, Com.W: Cut.B},
+                    Wallpaper.rot180: {Com.E: Cut.B, Com.W: Cut.H}
                 },
                 Axis.NS: {
-                    Tw.master: {Com.N: Cut.H, Com.S: Cut.B},
-                    Tw.sunset: {Com.N: Cut.B, Com.S: Cut.H},
-                    Tw.vanity: {Com.N: Cut.H, Com.S: Cut.B},
-                    Tw.mirror: {Com.N: Cut.B, Com.S: Cut.H},
-                    Tw.rot000: {Com.N: Cut.H, Com.S: Cut.B},
-                    Tw.rot090: {Com.N: Cut.B, Com.S: Cut.H},
-                    Tw.rot270: {Com.N: Cut.H, Com.S: Cut.B},
-                    Tw.rot180: {Com.N: Cut.B, Com.S: Cut.H}
+                    Wallpaper.master: {Com.N: Cut.H, Com.S: Cut.B},
+                    Wallpaper.sunset: {Com.N: Cut.B, Com.S: Cut.H},
+                    Wallpaper.vanity: {Com.N: Cut.H, Com.S: Cut.B},
+                    Wallpaper.mirror: {Com.N: Cut.B, Com.S: Cut.H},
+                    Wallpaper.rot000: {Com.N: Cut.H, Com.S: Cut.B},
+                    Wallpaper.rot090: {Com.N: Cut.B, Com.S: Cut.H},
+                    Wallpaper.rot270: {Com.N: Cut.H, Com.S: Cut.B},
+                    Wallpaper.rot180: {Com.N: Cut.B, Com.S: Cut.H}
                 }
             },
             Cut.H: {
                 Axis.EW: {
-                    Tw.master: {Com.E: Cut.H, Com.W: Cut.B},
-                    Tw.sunset: {Com.E: Cut.B, Com.W: Cut.H},
-                    Tw.vanity: {Com.E: Cut.H, Com.W: Cut.B},
-                    Tw.mirror: {Com.E: Cut.H, Com.W: Cut.B},
-                    Tw.rot000: {Com.E: Cut.H, Com.W: Cut.B},
-                    Tw.rot090: {Com.E: Cut.H, Com.W: Cut.B},
-                    Tw.rot270: {Com.E: Cut.H, Com.W: Cut.B},
-                    Tw.rot180: {Com.E: Cut.H, Com.W: Cut.B}
+                    Wallpaper.master: {Com.E: Cut.H, Com.W: Cut.B},
+                    Wallpaper.sunset: {Com.E: Cut.B, Com.W: Cut.H},
+                    Wallpaper.vanity: {Com.E: Cut.H, Com.W: Cut.B},
+                    Wallpaper.mirror: {Com.E: Cut.H, Com.W: Cut.B},
+                    Wallpaper.rot000: {Com.E: Cut.H, Com.W: Cut.B},
+                    Wallpaper.rot090: {Com.E: Cut.H, Com.W: Cut.B},
+                    Wallpaper.rot270: {Com.E: Cut.H, Com.W: Cut.B},
+                    Wallpaper.rot180: {Com.E: Cut.H, Com.W: Cut.B}
                 },
                 Axis.NS: {
-                    Tw.master: {Com.N: Cut.H, Com.S: Cut.B},
-                    Tw.sunset: {Com.N: Cut.H, Com.S: Cut.B},
-                    Tw.vanity: {Com.N: Cut.B, Com.S: Cut.H},
-                    Tw.mirror: {Com.N: Cut.H, Com.S: Cut.B},
-                    Tw.rot000: {Com.N: Cut.H, Com.S: Cut.B},
-                    Tw.rot090: {Com.N: Cut.H, Com.S: Cut.B},
-                    Tw.rot270: {Com.N: Cut.H, Com.S: Cut.B},
-                    Tw.rot180: {Com.N: Cut.H, Com.S: Cut.B}
+                    Wallpaper.master: {Com.N: Cut.H, Com.S: Cut.B},
+                    Wallpaper.sunset: {Com.N: Cut.H, Com.S: Cut.B},
+                    Wallpaper.vanity: {Com.N: Cut.B, Com.S: Cut.H},
+                    Wallpaper.mirror: {Com.N: Cut.H, Com.S: Cut.B},
+                    Wallpaper.rot000: {Com.N: Cut.H, Com.S: Cut.B},
+                    Wallpaper.rot090: {Com.N: Cut.H, Com.S: Cut.B},
+                    Wallpaper.rot270: {Com.N: Cut.H, Com.S: Cut.B},
+                    Wallpaper.rot180: {Com.N: Cut.H, Com.S: Cut.B}
                 }
             }
         }

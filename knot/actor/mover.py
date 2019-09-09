@@ -1,7 +1,6 @@
 from abc import ABCMeta, abstractmethod
-from knot.works import Structure
-from knot.space import Tweak, Tw, Com
-from knot.tool import Setting, Cutter
+from ..works import Structure
+from ..tool import Setting, Cutter
 
 
 class Mover(object):
@@ -11,25 +10,25 @@ class Mover(object):
     def _run(self):
         pass
 
-    def __init__(self, structure: Structure, tweak: Tw = None, other=None):
+    def __init__(self, structure: Structure, other=None):
+        self.work_number = 0
         self.other = other
-        if tweak is None or other is None:
-            self.tweak = Tweak(Tw.master, structure.cells_across, structure.cells_up)
-        else:
-            self.tweak = Tweak(tweak, structure.cells_across, structure.cells_up)
+        self.shape = structure.shape
         self.track = []
         self.levels = 1
         self.is_miner = False
         self.tool = None
         self.face = None
         self.structure = structure
-        self.entrance = structure.at(self.tweak.entry(structure.border))
-        self.dig(self.entrance, None)
+        if other is None:
+            self.tweak = self.shape.tweak(self.shape.wallpaper.identity(), structure.size())
+            self.entrance = structure.at(self.tweak.entry(structure.border))
+            self.dig(self.entrance, None)
 
     def select_tool(self, setting: Setting):
         self.is_miner = True
         self.face = None
-        self.tool = Cutter(setting, self.tweak.tweak)
+        self.tool = Cutter(setting, self.shape.wallpaper, self.work_number, self.shape.com)
 
     def run(self):
         if self.is_miner and not self.track and not self.structure.mined:

@@ -1,5 +1,5 @@
 from .cell import Cell
-from .level import Level
+from .lattice import Lattice
 from .structure import Structure
 from .wall import Wall
 

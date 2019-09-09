@@ -2,11 +2,15 @@ from .mover import Mover
 
 
 class Clone(Mover):
-    def __init__(self, structure, tweak, other):
-        super().__init__(structure, tweak, other)
+    def __init__(self, structure, other, paper, number):
+        super().__init__(structure, other)
         self.clone_doors = True
+        self.clone_number = number
         if other.is_miner:
             self.select_tool(other.tool.setting)
+        self.tweak = self.shape.tweak(paper, structure.size())
+        self.entrance = structure.at(self.tweak.entry(structure.border))
+        self.dig(self.entrance, None)
 
     def _run(self):
         if self.other.track:

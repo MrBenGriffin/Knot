@@ -1,4 +1,6 @@
-from .axes import Axis, Dim, Com
-from .tw import Tw
-from .tweak import Tweak
-
+from .shape import Shape
+from .square.square import Square
+from .square.tweak import Tweak
+from .square.axes import Axis, Com, Paper
+from .square.dim import Dim
+from .crs import Tweak, Coords, CRS

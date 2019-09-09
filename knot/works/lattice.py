@@ -4,7 +4,7 @@ from .wall import Wall
 from .cell import Cell
 
 
-class Level:
+class Lattice:
     def __init__(self, cells_across, cells_up, border, h_wrap=False, v_wrap=False):
         self.cells_across = cells_across
         self.cells_up = cells_up
@@ -21,7 +21,7 @@ class Level:
             for j in range(self.cells_up)] for i in range(self.h_range)]
         self.cells = [[
             Cell(Dim(i, j),
-                 (self.ns(i, j + 1), self.ew(i + 1, j), self.ns(i, j), self.ew(i, j)),
+                 (self.ns(Dim(i, j + 1)), self.ew(Dim(i + 1, j)), self.ns(Dim(i, j)), self.ew(Dim(i, j))),
                  True if border and
                          (border <= i < self.cells_across - border) and
                          (border <= j < self.cells_up - border) else False
@@ -29,33 +29,28 @@ class Level:
             for j in range(self.cells_up)]
             for i in range(self.cells_across)]
 
-    def ns(self, across, up):
-        x = across % self.h_range if self.h_wrap else across
-        y = up % self.v_range if self.v_wrap else up
+    def pole(self, index: Dim, map_to_use):
+        x = index.x % self.h_range if self.h_wrap else index.x
+        y = index.y % self.v_range if self.v_wrap else index.y
         if x in range(0, self.h_range) and y in range(0, self.v_range):
-            return self.ns_walls[x][y]
+            return map_to_use[x][y]
         return None
 
-    def ew(self, across, up):
-        x = across % self.h_range if self.h_wrap else across
-        y = up % self.v_range if self.v_wrap else up
-        if x in range(0, self.h_range) and y in range(0, self.v_range):
-            return self.ew_walls[x][y]
-        return None
+    def ns(self, index: Dim):
+        return self.pole(index, self.ns_walls)
 
-    def cell(self, across, up):
-        x = across % self.cells_across if self.h_wrap else across
-        y = up % self.cells_up if self.v_wrap else up
-        if x in range(0, self.cells_across) and y in range(0, self.cells_up):
-            return self.cells[x][y]
-        return None
+    def ew(self, index: Dim):
+        return self.pole(index, self.ew_walls)
+
+    def cell(self, index: Dim):
+        return self.pole(index, self.cells)
 
     def code(self):
         return "\n".join(
-            ["".join([self.cell(i, j).code() for i in range(self.cells_across)]) for j in range(self.cells_up - 1, -1, -1)]
+            ["".join([self.cell(Dim(i, j)).code() for i in range(self.cells_across)]) for j in range(self.cells_up - 1, -1, -1)]
         )
 
     def unicode(self):
         return "\n".join(
-            ["".join([self.cell(i, j).unicode() for i in range(self.cells_across)]) for j in range(self.cells_up - 1, -1, -1)]
+            ["".join([self.cell(Dim(i, j)).unicode() for i in range(self.cells_across)]) for j in range(self.cells_up - 1, -1, -1)]
         )
