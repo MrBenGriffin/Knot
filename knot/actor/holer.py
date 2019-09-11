@@ -19,13 +19,8 @@ class Holer(Mover):
             for com in walls:
                 wall = walls[com]
                 if wall.can_be_door(com):
-                    self.face = com
-                    neighbour = wall.neighbour(com)
-                    if not neighbour.mined():
-                        self.go(neighbour)
-                        self.face = com.opposite
+                    self.go(wall.neighbour(com))
+                    self.face = com.opposite
                     wall.make_door(com, self.tool)
-                    return
-                if self.balance < random.random():
                     return
             self.track.pop()

@@ -13,15 +13,16 @@ class Tweak(CRSTweak):
     If the other is at dimension 0,0 what cell I be in?  dim()
     Given that the maze might be hollow in the middle, where should I start?
     """
-    def __init__(self, paper: Paper, idx: Dim, worker: int = 0):
+
+    def __init__(self, paper: Paper, idx: Dim, worker_no: int = 0):
         """
         :param paper: The wallpaper being used in the lattice. e.g. Paper.sunset
         :param idx: The index within the lattice of the master cell that this is a transform of.
-        :param worker: The worker number that this paper is identifying with (0..3)
+        :param worker_no: The worker number that this paper is identifying with (0..3)
         """
-        super().__init__(paper, idx, worker)
+        super().__init__(paper, idx, worker_no)
         self.paper = paper
-        self.worker = worker
+        self.workerNo = worker_no
         self._dim = Dim(max(0, idx.x - 1), max(0, idx.y - 1))
 
     def __str__(self):
@@ -29,14 +30,14 @@ class Tweak(CRSTweak):
 
     def __repr__(self):
         text = str(self.paper)
-        return text + str(self.worker) + "; " + str(self._dim)
+        return text + str(self.workerNo) + "; " + str(self._dim)
 
     def face(self, com: Com) -> [Com, None]:
         if com is None:
             return None
-        if self.worker == 0:
+        if self.workerNo == 0:
             return com
-        if self.worker == 1:
+        if self.workerNo == 1:
             if self.paper == Paper.rotate:
                 return com.cw
             if (self.paper == Paper.mirror) \
@@ -44,9 +45,9 @@ class Tweak(CRSTweak):
                     or (self.paper == Paper.vanity and com in (Com.E, Com.W)):
                 return com.opposite
             return com
-        if self.paper == Paper.rotate and self.worker == 2:
+        if self.paper == Paper.rotate and self.workerNo == 2:
             return com.opposite
-        if self.paper == Paper.rotate and self.worker == 3:
+        if self.paper == Paper.rotate and self.workerNo == 3:
             return com.ccw
         return None
 
@@ -60,11 +61,13 @@ class Tweak(CRSTweak):
         return w1[self.paper]
 
     def dim(self, basis: Dim) -> Dim:
-        if self.worker == 0:
+        if self.workerNo == 0:
             return basis
         if self.paper == Paper.rotate:
-            if self.worker in (1, 3):
+            if self.workerNo == 1:
                 return Dim(basis.y, basis.x)
+            if self.workerNo == 3:
+                return Dim(self._dim.y - basis.y, self._dim.x - basis.x)
         return self.dim_mirror(basis)
 
     def entry(self, border: [int, None]) -> Dim:

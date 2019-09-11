@@ -26,7 +26,10 @@ class Wall:
         other = self.cells[com]
         if not self.blocked and other:
             self.doors = tool.make(com, cut)
-            other.open(tool, com.opposite)
+            if not other.opened:
+                other.open(tool, com.opposite)
+            if not self.cells[com.opposite].opened:
+                self.cells[com.opposite].open(tool, com)
             return other
         else:
             return None

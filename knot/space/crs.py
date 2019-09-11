@@ -49,7 +49,7 @@ class Coords(ABC):
 
 class Tweak(ABC):
     @abstractmethod
-    def __init__(self, paper: Enum, idx: Coords, worker: int = 0):
+    def __init__(self, paper: Enum, idx: Coords, worker_no: int = 0):
         pass
 
     @abstractmethod

@@ -89,8 +89,8 @@ class Cell:
 
     # make_door_in is done on self's side.
     # def make_door(self, cell_dir: Com, tool: Cutter, ):
-    def make_door_in(self, com, tool: Cutter, cut: Cut = None):
-        return self.walls[com].make_door(com, tool, cut)
+    # def make_door_in(self, com, tool: Cutter, cut: Cut = None):
+    #     return self.walls[com].make_door(com, tool, cut)
 
     def open(self, tool: Cutter, com):
         if not self.tool:

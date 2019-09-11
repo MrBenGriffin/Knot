@@ -18,7 +18,7 @@ class Mover(object):
         self.levels = 1
         self.is_miner = False
         self.tool = None
-        self.face = None
+        self.face = None  # This is the com from where I came.
         self.structure = structure
         if other is None:
             self.tweak = self.shape.tweak(self.shape.wallpaper.identity(), structure.size())
