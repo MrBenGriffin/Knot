@@ -55,24 +55,24 @@ class TestCutter(unittest.TestCase):
             },
             Cut.H: {
                 axis.EW: {
-                    (sp.master, 0): {com.E: Cut.H, com.W: Cut.B},
-                    (sp.sunset, 1): {com.E: Cut.B, com.W: Cut.H},
-                    (sp.vanity, 1): {com.E: Cut.H, com.W: Cut.B},
-                    (sp.mirror, 1): {com.E: Cut.H, com.W: Cut.B},
-                    (sp.rotate, 0): {com.E: Cut.H, com.W: Cut.B},
-                    (sp.rotate, 1): {com.E: Cut.H, com.W: Cut.B},
-                    (sp.rotate, 3): {com.E: Cut.H, com.W: Cut.B},
-                    (sp.rotate, 2): {com.E: Cut.H, com.W: Cut.B}
+                    (sp.master, 0): {com.E: Cut.B, com.W: Cut.H},
+                    (sp.sunset, 1): {com.E: Cut.H, com.W: Cut.B},
+                    (sp.vanity, 1): {com.E: Cut.B, com.W: Cut.H},
+                    (sp.mirror, 1): {com.E: Cut.B, com.W: Cut.H},
+                    (sp.rotate, 0): {com.E: Cut.B, com.W: Cut.H},
+                    (sp.rotate, 1): {com.E: Cut.B, com.W: Cut.H},
+                    (sp.rotate, 3): {com.E: Cut.B, com.W: Cut.H},
+                    (sp.rotate, 2): {com.E: Cut.B, com.W: Cut.H}
                 },
                 axis.NS: {
-                    (sp.master, 0): {com.N: Cut.H, com.S: Cut.B},
-                    (sp.sunset, 1): {com.N: Cut.H, com.S: Cut.B},
-                    (sp.vanity, 1): {com.N: Cut.B, com.S: Cut.H},
-                    (sp.mirror, 1): {com.N: Cut.H, com.S: Cut.B},
-                    (sp.rotate, 0): {com.N: Cut.H, com.S: Cut.B},
-                    (sp.rotate, 1): {com.N: Cut.H, com.S: Cut.B},
-                    (sp.rotate, 3): {com.N: Cut.H, com.S: Cut.B},
-                    (sp.rotate, 2): {com.N: Cut.H, com.S: Cut.B}
+                    (sp.master, 0): {com.N: Cut.B, com.S: Cut.H},
+                    (sp.sunset, 1): {com.N: Cut.B, com.S: Cut.H},
+                    (sp.vanity, 1): {com.N: Cut.H, com.S: Cut.B},
+                    (sp.mirror, 1): {com.N: Cut.B, com.S: Cut.H},
+                    (sp.rotate, 0): {com.N: Cut.B, com.S: Cut.H},
+                    (sp.rotate, 1): {com.N: Cut.B, com.S: Cut.H},
+                    (sp.rotate, 3): {com.N: Cut.B, com.S: Cut.H},
+                    (sp.rotate, 2): {com.N: Cut.B, com.S: Cut.H}
                 }
             }
         }
