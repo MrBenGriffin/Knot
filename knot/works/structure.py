@@ -30,10 +30,13 @@ class Structure:
         return self.dim(self.cells_across, self.cells_up)
 
     def mine(self):
-        # for i in range(2):
         while not self.mined:
             for bod in self.bods:
                 bod.run()
+        # self.bods[0].run()
+        # self.bods[3].run()
+        # self.bods[0].run()
+        # self.bods[3].run()
 
     def join(self):
         while not self.joined:

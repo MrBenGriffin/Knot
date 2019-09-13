@@ -34,45 +34,17 @@ class Tweak(CRSTweak):
     def face(self, com: Com) -> [Com, None]:
         if com is None:
             return None
-        if self.worker_no == 0:
-            return com
-        if self.worker_no == 1:
-            if self.paper == Paper.rotate:
-                return com.cw
-            if self.paper == Paper.mirror or self.paper.symmetry == com.axis.perp:
-                return com.opposite
-            return com
-        if self.paper == Paper.rotate and self.worker_no == 2:
-            return com.opposite
-        if self.paper == Paper.rotate and self.worker_no == 3:
-            return com.ccw
-        return None
-
-    def dim_mirror(self, basis: Dim) -> Dim:
-        w1 = {
-            Paper.sunset: Dim(basis.x, self._dim.y - basis.y),
-            Paper.vanity: Dim(self._dim.x - basis.x, basis.y),
-            Paper.mirror: Dim(self._dim.x - basis.x, self._dim.y - basis.y),
-            Paper.rotate: Dim(self._dim.x - basis.x, self._dim.y - basis.y),
-        }
-        return w1[self.paper]
+        return com if self.worker_no == 0 else com.opposite
 
     def dim(self, basis: Dim) -> Dim:
         if self.worker_no == 0:
             return basis
-        if self.paper == Paper.rotate:
-            if self.worker_no == 1:
-                # X = x cos(Theta) + y sin(theta), Y= y cos(theta) - x sin(theta)
-                # sin(90) = 1; cos(90) = 0; sin(-90) = -1; cos(-90) = 0
-                # so X = +y, Y= -x
-                # However, the centre of the rotation is at the centre of _dim.
-                # because otherwise (0,0) --> (0,0)
-                # eg on a 2x2 grid,
-                return Dim(basis.y, self._dim.x - basis.x)
-            if self.worker_no == 3:
-                return Dim(self._dim.y - basis.y, basis.x)
-                # return Dim(self._dim.y - basis.y, self._dim.x - basis.x)
-        return self.dim_mirror(basis)
+        w1 = {
+            Paper.sunset: Dim(basis.x, self._dim.y - basis.y),
+            Paper.vanity: Dim(self._dim.x - basis.x, basis.y),
+            Paper.mirror: Dim(self._dim.x - basis.x, self._dim.y - basis.y)
+        }
+        return w1[self.paper]
 
     def entry(self, border: [int, None]) -> Dim:
         """

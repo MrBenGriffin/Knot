@@ -1,6 +1,6 @@
 # encoding: utf-8
 import typing
-from ..space.crs import Wallpaper, Coords
+from ..space.crs import Wallpaper
 from .setting import Setting
 from .cut import Cut
 
@@ -20,15 +20,11 @@ class Cutter:
             result[cell_dir] = cut
             result[cell_dir.opposite] = cut.opposite
         else:
-            # TODO:: I need to fix this
-            # This seems backward, but it's not.  The cell is already digging the opposite wall,
-            # and so doesn't need to worry about that part.  But the EW will look odd if unaffected by the mirror.
             # It's still not a true mirror image, as types are always CCW oriented.
-            # if (self.paper is Wallpaper.sunset and cell_dir.axis is Axis.EW) or \
-            #         (self.paper is Wallpaper.vanity and cell_dir.axis is Axis.NS):
-            #     result[cell_dir.opposite] = cut
-            #     result[cell_dir] = cut.opposite
-            # else:
-            result[cell_dir] = cut
-            result[cell_dir.opposite] = cut.opposite
+            if self.paper.symmetry == cell_dir.axis.para:
+                result[cell_dir] = cut
+                result[cell_dir.opposite] = cut.opposite
+            else:
+                result[cell_dir] = cut.opposite
+                result[cell_dir.opposite] = cut
         return result

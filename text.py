@@ -2,7 +2,7 @@
 import os
 import random
 import argparse
-from knot.space.crs import Tweak
+from knot.space.crs import Symmetry
 from knot.space.shape import Shape
 from knot.works import Structure
 from knot.actor import Mazer, Clone, Joiner, Holer, Spiral
@@ -49,17 +49,17 @@ def make_knot(args: dict):
     # print(args)
     random.seed(args['random'])
     shape = None
-    style = None
 
     if not args['hex']:
         if args['width'] == args['height']:
             shape = Shape.squared
-            style = shape.wallpaper.select(args['symmetry'])
+        else:
+            shape = Shape.rectangle
 
+    style = shape.wallpaper.select(args['symmetry'])
     if not style or not shape:
         print("Style / symmetry is currently not available")
         exit(0)
-
     knot_work = Structure(args['width'], args['height'], args['border'], shape,  args['htile'], args['vtile'])
     setting = Setting(args['straights'], args['zoo'])
     Mazer.cutoff = int(20.0 * args['connectivity'])
@@ -70,11 +70,6 @@ def make_knot(args: dict):
         miner = Clone(knot_work, master, style, w)
         knot_work.add_bod(miner)
     knot_work.mine()
-    # The clones won't touch anyone else if,
-    # if there is more than one miner AND
-    # if (1) there's a border OR
-    #    (2) if the edges are even
-    # Then we will need a joiner (and clones).
 
     # TODO:: Uncomment this when ready..
     # if len(knot_work.bods) > 1 and args['worker'] is Mazer and (knot_work.border or knot_work.cells_up % 2 is 0 or knot_work.cells_across % 2 is 0):
@@ -97,7 +92,7 @@ def do_args():
     parser.add_argument("-y", "--height", type=int, choices=bounds, default=0, help="Height. The number of cells high. (default: same as -x")
     parser.add_argument("-sb", "--straights", type=float, default=0.2, choices=balance, help="Balance between Twists and Straights. 0.0 = twists, 1.00 = straights. (default: %(default)s)")
     parser.add_argument("-zb", "--zoo", type=float, default=0.2, choices=balance, help="Balance between Twists and Zoomorphs. 0.0 = twists, 1.00 = zoomorphs. (default: %(default)s)")
-    parser.add_argument("-s", "--symmetry", type=str, default='R', choices=['N', 'H', 'V', 'F', 'R'], help="N: None; H: Horizontal Mirror; V: Vertical Mirror; F: Flip (rotate 180); R: Rotate 90 (when width and height are the same). (default: %(default)s)")
+    parser.add_argument("-s", "--symmetry", type=str, default='R', choices=Symmetry.choices(), help="N: None; H: Horizontal Mirror; V: Vertical Mirror; F: Flip (rotate 180); R: Rotate 90 (when width and height are the same). (default: %(default)s)")
     parser.add_argument("-b", "--border", type=int, help="If this is set, then the knot-work will be a border this thick. (default: %(default)s)")
     parser.add_argument("-w", "--worker", type=str, default='M', choices=['M', 'S', 'F'], help="Miner builds corridors, Spiral makes spirals, Filler is a full network (default: %(default)s)")
     parser.add_argument("-6", "--hex", action="store_true", help="The knot-work will use hexagonal hex-map. (default: square tiling)")

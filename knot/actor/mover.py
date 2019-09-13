@@ -11,7 +11,6 @@ class Mover(object):
         pass
 
     def __init__(self, structure: Structure, other=None):
-        self.work_number = 0
         self.other = other
         self.shape = structure.shape
         self.track = []
@@ -28,7 +27,7 @@ class Mover(object):
     def select_tool(self, setting: Setting):
         self.is_miner = True
         self.face = None
-        self.tool = Cutter(setting, self.shape.wallpaper, self.work_number, self.shape.com)
+        self.tool = Cutter(setting, self.tweak.paper, self.tweak.worker_no, self.shape.com)
 
     def run(self):
         if self.is_miner and not self.track and not self.structure.mined:

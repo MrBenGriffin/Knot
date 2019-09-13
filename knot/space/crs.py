@@ -3,6 +3,23 @@ from abc import ABC, abstractmethod
 from enum import Enum
 
 
+class Symmetry(Enum):
+    N = 1
+    H = 2
+    V = 3
+    F = 4
+    R = 5
+
+    def __str__(self):
+        text = {Symmetry.N: "normal", Symmetry.H: "horizontal semi-mirror",
+                Symmetry.V: "vertical semi-mirror", Symmetry.F: "flipped symmetry", Symmetry.R: "rotated symmetry"}
+        return text[self]
+
+    @staticmethod
+    def choices() -> tuple:
+        return 'N', 'H', 'V', 'F', 'R'
+
+
 class Wallpaper(Enum):
     """
     https://en.wikipedia.org/wiki/Wallpaper_group
@@ -33,17 +50,33 @@ class Wallpaper(Enum):
     p6m  = p6 with mirror - hexagonal
     """
     @staticmethod
-    def select(val: str):
+    def select(val: Symmetry):
         pass
 
     @classmethod
     def identity(cls):
-        return Wallpaper.select('N')
+        return Wallpaper.select(Symmetry.N)
+
+    @abstractmethod
+    def __str__(self):
+        pass
 
 
 class Coords(ABC):
     @abstractmethod
     def __init__(self, *args):
+        pass
+
+    @abstractmethod
+    def __str__(self):
+        pass
+
+    @abstractmethod
+    def __eq__(self, other):
+        pass
+
+    @abstractmethod
+    def __ne__(self, other):
         pass
 
 
@@ -92,25 +125,32 @@ class CRS(ABC):
 
 
 class WallpaperDecorator:
-    def __init__(self, wp_map):
+    def __init__(self, wp_map, sym_map):
         self.wp_map = wp_map
+        self.sym_map = sym_map
 
     def __call__(self, enum):
         for thing, workers in self.wp_map.items():
             enum[thing].workers = workers
+        for thing, symmetry in self.sym_map.items():
+            enum[thing].symmetry = symmetry
         return enum
 
 
 class AxesDecorator:
     point_map = {}
 
-    def __init__(self, point_map):
+    def __init__(self, point_map, parallel_map):
         AxesDecorator.point_map = point_map
+        self.parallel_map = parallel_map
 
     def __call__(self, enum):
         for axis, idx in AxesDecorator.point_map.items():
             enum[axis].a = None
             enum[axis].b = None
+        for axis, symmetry in self.parallel_map.items():
+            enum[axis].para = symmetry[0]
+            enum[axis].perp = symmetry[1]
         return enum
 
 

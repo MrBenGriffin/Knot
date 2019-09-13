@@ -1,8 +1,12 @@
 import unittest
-from knot.space import Com, Axis
+from knot.space.crs import Symmetry
+from knot.space.square.axes import Com, Axis, Paper
 
 
-class TestCom(unittest.TestCase):
+class TestAxes(unittest.TestCase):
+
+    def test_axes_str(self):
+        self.assertEqual(str(Axis.NS), "NS", "Should be NS")
 
     def test_str(self):
         self.assertEqual(str(Com.N), "North", "Should be North")
@@ -40,6 +44,21 @@ class TestCom(unittest.TestCase):
         for i in Axis:
             self.assertEqual(ans_a[i], i.a, "Axis of " + str(i) + " should be " + str(ans_a[i]))
             self.assertEqual(ans_b[i], i.b, "Axis of " + str(i) + " should be " + str(ans_b[i]))
+
+    def test_paper_str(self):
+        answer = {Paper.master: "Master", Paper.sunset: "Sunset",
+                  Paper.vanity: "Vanity", Paper.mirror: "Mirror", Paper.rotate: "Rotate"}
+        for item in Paper:
+            self.assertEqual(str(item), answer[item], "Should be " + answer[item])
+
+    def test_paper_identity(self):
+        self.assertEqual(Paper.identity(), Paper.master, "Should be master")
+
+    def test_paper_select(self):
+        answer = {"N": "Master", "H": "Sunset",
+                  "V": "Vanity", "F": "Mirror", "R": "Rotate"}
+        for item in Symmetry.choices():
+            self.assertEqual(str(Paper.select(item)), answer[item], "Should be " + answer[item])
 
 
 if __name__ == '__main__':

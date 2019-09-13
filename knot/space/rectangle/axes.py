@@ -33,19 +33,18 @@ class Com(Enum):
 
 
 @WallpaperDecorator(
-    {'master': 1, 'sunset': 2, 'vanity': 2, 'mirror': 2, 'rotate': 4},
-    {'master': None, 'sunset': Symmetry.H, 'vanity': Symmetry.V, 'mirror': None, 'rotate': None},
+    {'master': 1, 'sunset': 2, 'vanity': 2, 'mirror': 2},
+    {'master': None, 'sunset': Symmetry.H, 'vanity': Symmetry.V, 'mirror': None},
 )
 class Paper(Wallpaper):
     master = 1
     sunset = 2
     vanity = 3
     mirror = 4
-    rotate = 5
 
     @staticmethod
     def select(val: str):
-        sel = {'N': Paper.master, 'H': Paper.sunset, 'V': Paper.vanity, 'F': Paper.mirror, 'R': Paper.rotate}
+        sel = {'N': Paper.master, 'H': Paper.sunset, 'V': Paper.vanity, 'F': Paper.mirror, 'R': Paper.mirror}
         return sel[val]
 
     @classmethod
@@ -54,6 +53,6 @@ class Paper(Wallpaper):
 
     def __str__(self):
         text = {Paper.master: "Master", Paper.sunset: "Sunset",
-                Paper.vanity: "Vanity", Paper.mirror: "Mirror", Paper.rotate: "Rotate"}
+                Paper.vanity: "Vanity", Paper.mirror: "Mirror"}
         return text[self]
 

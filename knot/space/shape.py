@@ -1,6 +1,7 @@
 # encoding: utf-8
 from enum import Enum
 from .square.square import Square
+from .rectangle.rectangle import Rectangle
 
 """
 cf. https://www.redblobgames.com/grids/hexagons/
@@ -23,10 +24,10 @@ class ShapeDecorator:
         return enum
 
 
-@ShapeDecorator({'squared': Square, 'rectang': Square})
+@ShapeDecorator({'squared': Square, 'rectangle': Rectangle})
 class Shape(Enum):
     squared = 1  # square map.
-    rectang = 2  # rectangular map.
+    rectangle = 2  # rectangular map.
     # hex_map = 3  # a even-odd rectangle (hexagons - allows mirror - using 'even-q' coordinates.)
     # rhombus = 4  # a twisted rectangle (hexagons - allows mirror)
     # hexagon = 5  # a hexagon of hexagons (allows 6-rotation)
