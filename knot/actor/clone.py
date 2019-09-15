@@ -5,7 +5,7 @@ class Clone(Mover):
     def __init__(self, structure, other, paper, number):
         super().__init__(structure, other)
         self.clone_doors = True
-        self.tweak = self.shape.tweak(paper, structure.size(), number)
+        self.tweak = self.shape.tweak(paper, structure.size, number)
         if other.is_miner:
             self.select_tool(other.tool.setting)
         self.entrance = structure.at(self.tweak.entry(structure.border))

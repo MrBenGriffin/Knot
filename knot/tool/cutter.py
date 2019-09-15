@@ -1,5 +1,5 @@
 # encoding: utf-8
-import typing
+# import typing
 from ..space.crs import Wallpaper
 from .setting import Setting
 from .cut import Cut

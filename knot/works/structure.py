@@ -1,7 +1,5 @@
 # encoding: utf-8
-from knot.space import Coords, Shape
-from .lattice import Lattice
-from .cell import Cell
+from knot.space import Coords, Shape, Cell
 
 
 class Structure:
@@ -10,33 +8,27 @@ class Structure:
     """
     # {'width': 11, 'height': 11, 'straights': 0.2, 'zoo': 0.2, 'symmetry'
     #  : < Wallpaper.rot090: 5 >, 'border': None, 'htile': True, 'vtile': True, 'connectivity': 12, 'random': 1337}
-
-    def __init__(self, cells_across: int, cells_up: int, border: [None, int], shape: Shape = None,  h_wrap: bool = False, v_wrap: bool = False):
-        self.cells_across = cells_across
-        self.cells_up = cells_up
+    # shape, args['dimensions']
+    def __init__(self, shape: Shape, size: tuple, border: [None, int], wrap: tuple):
         self.shape = shape
-        self.dim = shape.dim
-        if border and (border > cells_up/2 or border > cells_across/2):
-            print("Border is too large for width and height.")
-            border = None
-        self.border = border
+        self.size = size
+        if border:
+            for axis in self.size:
+                if border > axis / 2:
+                    border = min(0, int(axis/2 - 1))
+                    print("Border was too large for width and height. Resized to " + str(border))
+        self.border = None if not border or border == 0 else border
         self.mined = False
         self.joined = False
         self.bods = []
         self.things = []
-        self.level = Lattice(cells_across, cells_up, self.border, h_wrap, v_wrap)
-
-    def size(self):
-        return self.dim(self.cells_across, self.cells_up)
+        self.level = shape.lattice(size, wrap)
+    #     TODO:: Border is not managed.
 
     def mine(self):
         while not self.mined:
             for bod in self.bods:
                 bod.run()
-        # self.bods[0].run()
-        # self.bods[3].run()
-        # self.bods[0].run()
-        # self.bods[3].run()
 
     def join(self):
         while not self.joined:

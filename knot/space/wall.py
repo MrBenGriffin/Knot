@@ -1,26 +1,20 @@
 # encoding: utf-8
-from knot.space import Axis, Com
-from knot.tool import Cutter, Cut
 from .cell import Cell
 
 
 class Wall:
 
-    def __init__(self, orientation, x, y, blocked=False):
-        self.blocked = blocked
-        self.id = None
-        self.x = x
-        self.y = y
+    def __init__(self):
+        self.blocked = False
         self.doors = {}
         self.cells = {}
-        self.orientation = orientation
 
     def neighbour(self, cell_dir) -> [Cell, None]:
         if cell_dir not in self.cells:
             return None
         return self.cells[cell_dir]
 
-    def make_door(self, com: Com, tool: Cutter, cut: Cut = None) -> [Cell, None]:
+    def make_door(self, com, tool, cut=None) -> [Cell, None]:
         if com not in self.cells:
             return None
         other = self.cells[com]
@@ -37,7 +31,7 @@ class Wall:
     def make_solid(self):
         self.doors = {}
 
-    def door(self, com: Com) -> [Cut, None]:
+    def door(self, com):
         """
         Return the door Cut (or None), according to direction.
         (Some cuts may appear different depending on what side of the wall
@@ -62,10 +56,7 @@ class Wall:
             self.cells[opp] = None
 
     def is_edge(self):  # If on the edge, then one of my wall cells will be None.
-        if self.orientation == Axis.NS:
-            return (self.cells[Com.N] is None) or (self.cells[Com.S] is None)
-        else:
-            return (self.cells[Com.W] is None) or (self.cells[Com.E] is None)
+        return len(self.cells) != 2
 
     def can_be_dug(self, com_from) -> bool:
         return not self.cells[com_from].mined() if self.can_be_door(com_from) else False

@@ -1,7 +1,7 @@
 from .mover import Mover
 from knot.works import Structure
 from knot.tool import Setting
-import random
+# import random
 
 
 class Holer(Mover):

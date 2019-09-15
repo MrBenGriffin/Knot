@@ -51,7 +51,7 @@ def make_knot(args: dict):
     shape = None
 
     if not args['hex']:
-        if args['width'] == args['height']:
+        if len(args['dimensions']) == 1 or args['dimensions'][0] == args['dimensions'][1]:
             shape = Shape.squared
         else:
             shape = Shape.rectangle
@@ -60,7 +60,7 @@ def make_knot(args: dict):
     if not style or not shape:
         print("Style / symmetry is currently not available")
         exit(0)
-    knot_work = Structure(args['width'], args['height'], args['border'], shape,  args['htile'], args['vtile'])
+    knot_work = Structure(shape, args['dimensions'], args['border'], args['tiling'])
     setting = Setting(args['straights'], args['zoo'])
     Mazer.cutoff = int(20.0 * args['connectivity'])
     Holer.balance = args['connectivity']
@@ -88,24 +88,23 @@ def do_args():
     balance = ArgRange(0.0, 1.0)
     workers = {'M': Mazer, 'S': Spiral, 'F': Holer}
     parser = argparse.ArgumentParser(description="Calculate and print out knot-work. You will need the font 'KNOTS Zoo' installed with ligatures set for this to show what it is doing.")
-    parser.add_argument("-x", "--width",  type=int, choices=bounds,  default=9, help="Width.  The number of cells wide. (default: %(default)s)")
-    parser.add_argument("-y", "--height", type=int, choices=bounds, default=0, help="Height. The number of cells high. (default: same as -x")
-    parser.add_argument("-sb", "--straights", type=float, default=0.2, choices=balance, help="Balance between Twists and Straights. 0.0 = twists, 1.00 = straights. (default: %(default)s)")
-    parser.add_argument("-zb", "--zoo", type=float, default=0.2, choices=balance, help="Balance between Twists and Zoomorphs. 0.0 = twists, 1.00 = zoomorphs. (default: %(default)s)")
+    parser.add_argument("-d", "--dimensions", nargs='+', type=int, default=[9, 9], help="Dimensions. Size of each axis (eg, x, y). (default: %(default)s)")
+    parser.add_argument("-t", "--tiling", nargs='+', type=bool, default=[False, False], help="Tiling (wrapping) options along each axis (eg, x, y)")
     parser.add_argument("-s", "--symmetry", type=str, default='R', choices=Symmetry.choices(), help="N: None; H: Horizontal Mirror; V: Vertical Mirror; F: Flip (rotate 180); R: Rotate 90 (when width and height are the same). (default: %(default)s)")
     parser.add_argument("-b", "--border", type=int, help="If this is set, then the knot-work will be a border this thick. (default: %(default)s)")
     parser.add_argument("-w", "--worker", type=str, default='M', choices=['M', 'S', 'F'], help="Miner builds corridors, Spiral makes spirals, Filler is a full network (default: %(default)s)")
-    parser.add_argument("-6", "--hex", action="store_true", help="The knot-work will use hexagonal hex-map. (default: square tiling)")
-    parser.add_argument("-ht", "--htile", action="store_true", help="The knot-work will tile horizontally. (default: %(default)s)")
-    parser.add_argument("-vt", "--vtile", action="store_true", help="The knot-work will tile vertically. (default: %(default)s)")
+    parser.add_argument("-sb", "--straights", type=float, default=0.2, choices=balance, help="Balance between Twists and Straights. 0.0 = twists, 1.00 = straights. (default: %(default)s)")
+    parser.add_argument("-zb", "--zoo", type=float, default=0.2, choices=balance, help="Balance between Twists and Zoomorphs. 0.0 = twists, 1.00 = zoomorphs. (default: %(default)s)")
+    parser.add_argument("-x", "--hex", action="store_true", help="The knot-work will use hexagonal hex-map. (default: square tiling)")
     parser.add_argument("-cb", "--connectivity", type=float, default=0.2, choices=balance, help="Balance of connections. Larger numbers make longer threads. (default: %(default)s)")
     parser.add_argument("-r", "--random", type=int, default=os.urandom(7), help="Random seed. If this is non-zero you should always get the same knot for the parameters. (default: os.urandom)")
     parser.add_argument("-e", "--encoding", type=str, choices=['HIBOX', 'E000'], default='HIBOX', help="Output encoding - either HIBOX ligatures or Unicode PUA 0xE000")
     args = parser.parse_args()
     arg_dict = vars(args)
 
-    arg_dict['height'] = arg_dict['width'] if arg_dict['height'] == 0 else arg_dict['height']
     arg_dict['worker'] = workers[arg_dict['worker']]
+    arg_dict['dimensions'] = tuple(args.dimensions)
+    arg_dict['tiling'] = tuple(args.tiling)
     make_knot(arg_dict)
 
 

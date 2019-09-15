@@ -1,5 +1,5 @@
 from .mover import Mover
-from knot.space import Com
+from knot.space import Coords as Com
 from knot.works import Structure
 from knot.tool import Setting
 

@@ -1,6 +1,7 @@
 import typing
 from abc import ABC, abstractmethod
 from enum import Enum
+from .lattice import Lattice
 
 
 class Symmetry(Enum):
@@ -57,14 +58,57 @@ class Wallpaper(Enum):
     def identity(cls):
         return Wallpaper.select(Symmetry.N)
 
-    @abstractmethod
     def __str__(self):
-        pass
+        return str(self.paper) + ' w' + str(self.worker_no)
+
+    def __repr__(self):
+        return str(self.paper) + ' w' + str(self.worker_no) + "; under " + str(self._dim)
 
 
 class Coords(ABC):
     @abstractmethod
     def __init__(self, *args):
+        pass
+
+    @classmethod
+    @abstractmethod
+    def adopt(cls, values: tuple):
+        pass
+
+    @classmethod
+    @abstractmethod
+    def adjust(cls, values: tuple) -> tuple:
+        pass
+
+    @classmethod
+    @abstractmethod
+    def axis(cls, key: int):
+        pass
+
+    @abstractmethod
+    def tuple(self) -> tuple:
+        pass
+
+    @classmethod
+    @abstractmethod
+    def __len__(cls):
+        pass
+
+    @classmethod
+    @abstractmethod
+    def com(cls) -> typing.Type[Enum]:
+        pass
+
+    @abstractmethod
+    def going(self, com, limits, wraps):
+        pass
+
+    @abstractmethod
+    def edge(self, com, limits, wraps):
+        pass
+
+    @abstractmethod
+    def __getitem__(self, key):
         pass
 
     @abstractmethod
@@ -82,7 +126,7 @@ class Coords(ABC):
 
 class Tweak(ABC):
     @abstractmethod
-    def __init__(self, paper: Enum, idx: Coords, worker_no: int = 0):
+    def __init__(self, paper: Wallpaper, idx: tuple, worker_no: int = 0):
         pass
 
     @abstractmethod
@@ -121,6 +165,10 @@ class CRS(ABC):
 
     @abstractmethod
     def paper(self) -> typing.Type[Wallpaper]:
+        pass
+
+    @abstractmethod
+    def lattice(self, size: tuple, wrap: tuple) -> Lattice:
         pass
 
 

@@ -20,7 +20,7 @@ class Mover(object):
         self.face = None  # This is the com from where I came.
         self.structure = structure
         if other is None:
-            self.tweak = self.shape.tweak(self.shape.wallpaper.identity(), structure.size())
+            self.tweak = self.shape.tweak(self.shape.wallpaper.identity(), structure.size, 0)
             self.entrance = structure.at(self.tweak.entry(structure.border))
             self.dig(self.entrance, None)
 

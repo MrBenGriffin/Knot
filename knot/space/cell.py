@@ -1,33 +1,24 @@
 # encoding: utf-8
-from knot.space import Com
-from knot.tool import Cut, Cutter
+# from .crs import Coords
+# from .shape import Shape
+# from .wall import Wall
 
 
 class Cell:
     last = None
 
-    def __init__(self, dim, walls, blocked=False):
+    def __init__(self, dim, walls):
+        self.dim = dim
         self.tool = None
         self.opened = False
         self.opened_from = None
-        self.dim = dim
-        self.walls = {Com.N: walls[0], Com.E: walls[1], Com.S: walls[2], Com.W: walls[3]}
-        if blocked:
-            self.walls[Com.N].block()
-            self.walls[Com.E].block()
-            self.walls[Com.S].block()
-            self.walls[Com.W].block()
-        else:
-            self.walls[Com.N].set_cell(self, Com.S)
-            self.walls[Com.E].set_cell(self, Com.W)
-            self.walls[Com.S].set_cell(self, Com.N)
-            self.walls[Com.W].set_cell(self, Com.E)
-
-    def log(self, orig):
-        print(str(" " + self.name() + ":" + orig + "->" + self.code()))
+        self.walls = walls
+        for com, wall in self.walls.items():
+            wall.set_cell(self, com.opposite)
 
     def name(self):
-        return str(self.dim)
+        pass
+        # return str(self.dim)
 
     def mined(self) -> bool:
         return self.opened
@@ -92,28 +83,28 @@ class Cell:
     # def make_door_in(self, com, tool: Cutter, cut: Cut = None):
     #     return self.walls[com].make_door(com, tool, cut)
 
-    def open(self, tool: Cutter, com):
+    def open(self, tool, com):
         if not self.tool:
             self.opened = True
             self.opened_from = com
             self.tool = tool
 
     def __str__(self):
-        return self.code()
+        return str(self.dim) + " " + self.code()
 
     def __repr__(self):
         return "Cell (" + str(self.dim) + " " + self.code() + ")"
 
     def code(self):
         if not self.mined:
-            return "oooo"
-        return ''.join([self.walls[c].code(c) for c in Com])
+            return "o" * len(self.walls)
+        return ''.join([w.code(c) for c, w in self.walls.items()])
 
     def unicode(self):
         final = 0xE100
         if self.mined:
-            final += sum(self.walls[c].unicode(c) for c in Com)
+            final += sum(w.unicode(c) for c, w in self.walls.items())
         return chr(final)
 
     def __cmp__(self, other):
-        return self.dim == other.dim
+        return self.walls == other.walls
