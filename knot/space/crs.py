@@ -58,11 +58,13 @@ class Wallpaper(Enum):
     def identity(cls):
         return Wallpaper.select(Symmetry.N)
 
+    @abstractmethod
     def __str__(self):
-        return str(self.paper) + ' w' + str(self.worker_no)
+        pass
 
+    @abstractmethod
     def __repr__(self):
-        return str(self.paper) + ' w' + str(self.worker_no) + "; under " + str(self._dim)
+        pass
 
 
 class Coords(ABC):
@@ -139,6 +141,14 @@ class Tweak(ABC):
 
     @abstractmethod
     def entry(self, border: [int, None]):
+        pass
+
+    @abstractmethod
+    def __repr__(self):
+        pass
+
+    @abstractmethod
+    def __str__(self):
         pass
 
 

@@ -1,19 +1,22 @@
 import unittest
-from knot.space.square.dim import Dim
-from knot.space.square.axes import Com, Paper
-from knot.space.square.tweak import Tweak
+from knot.space.rectilinear.axes import Com
+from knot.space.rectilinear.dim import Dim
+from knot.space.rectilinear.square import Paper, Tweak
 
 
 class TestTweak(unittest.TestCase):
-    workers = ((Paper.rotate, 1), (Paper.sunset, 1), (Paper.master, 0), (Paper.vanity, 1), (Paper.mirror, 1),
-               (Paper.rotate, 0), (Paper.rotate, 3), (Paper.rotate, 2))
+    workers = ((Paper.master, 0), (Paper.sunset, 1), (Paper.vanity, 1), (Paper.mirror, 1),
+               (Paper.rotate, 0), (Paper.rotate, 1), (Paper.rotate, 3), (Paper.rotate, 2))
 
     def test_str(self):
-        self.assertEqual(str(Tweak(Paper.sunset, Dim(4, 4), 1)), "Sunset w1", "Should be Sunset w1")
+        answer = "Sunset w1"
+        tw_str = str(Tweak(Paper.sunset, (4, 4), 1))
+        self.assertEqual(tw_str, answer, "Should be " + answer)
 
     def test_repr(self):
-        self.assertEqual(repr(Tweak(Paper.sunset, Dim(3, 4), 1)), "Sunset w1; under (2,3)",
-                         "Should be Sunset w1; under (2,3)")
+        answer = "Sunset w1; under (2,3)"
+        tw_repr = repr(Tweak(Paper.sunset, (3, 4), 1))
+        self.assertEqual(tw_repr, answer, "Should be " + answer)
 
     def test_face(self):
         answer_set = {
@@ -27,16 +30,20 @@ class TestTweak(unittest.TestCase):
             (Paper.rotate, 2): {Com.S: Com.N, Com.W: Com.E, Com.N: Com.S, Com.E: Com.W}
         }
         for tweak in self.workers:
-            test = Tweak(tweak[0], Dim(2, 2), tweak[1])
+            test = Tweak(tweak[0], (2, 2), tweak[1])
             for com in Com:
-                self.assertEqual(test.face(com), answer_set[tweak][com],
-                                 "Face " + str(tweak) + ":" + str(com) + " expected " + str(answer_set[tweak][com]))
-            test = Tweak(tweak[0], Dim(3, 3), tweak[1])
+                answer = answer_set[tweak][com]
+                result = test.face(com)
+                self.assertEqual(result, answer,
+                                 "Under (2,2); Face " + str(tweak) + ":" + str(com) + " expected " + str(answer_set[tweak][com]))
+            test = Tweak(tweak[0], (3, 3), tweak[1])
             for com in Com:
-                self.assertEqual(test.face(com), answer_set[tweak][com],
-                                 "Face " + str(tweak) + ":" + str(com) + " expected " + str(answer_set[tweak][com]))
+                answer = answer_set[tweak][com]
+                result = test.face(com)
+                self.assertEqual(result, answer,
+                                 "Under (3,3); Face " + str(tweak) + ":" + str(com) + " expected " + str(answer_set[tweak][com]))
 
-    def tweak_test(self, tweak: tuple, basis: Dim, dim: Dim, offset: int, answers: dict):
+    def tweak_test(self, tweak: tuple, basis: tuple, dim: tuple, offset: int, answers: dict):
         tweaks = str(tweak[0]) + ' w' + str(tweak[1]) + " under " + str(basis) + " for " + str(dim) + "; expected:"
         test = Tweak(tweak[0], basis, tweak[1])
         part_a = test.dim(dim)
@@ -54,10 +61,10 @@ class TestTweak(unittest.TestCase):
             (Paper.rotate, 3): (Dim(1, 0), Dim(0, 0), Dim(1, 1), Dim(0, 1)),
             (Paper.rotate, 2): (Dim(1, 1), Dim(1, 0), Dim(0, 1), Dim(0, 0))
         }
-        basis = Dim(2, 2)
+        basis = (2, 2)
         for x in range(2):
             for y in range(2):
-                dim = Dim(x, y)
+                dim = tuple((x, y))
                 for tweak in self.workers:
                     self.tweak_test(tweak, basis, dim, x*2+y, answers)
 
@@ -72,10 +79,10 @@ class TestTweak(unittest.TestCase):
             (Paper.rotate, 1): (Dim(0, 2), Dim(1, 2), Dim(2, 2), Dim(0, 1), Dim(1, 1), Dim(2, 1), Dim(0, 0), Dim(1, 0), Dim(2, 0)),
             (Paper.rotate, 3): (Dim(2, 0), Dim(1, 0), Dim(0, 0), Dim(2, 1), Dim(1, 1), Dim(0, 1), Dim(2, 2), Dim(1, 2), Dim(0, 2))
         }
-        basis = Dim(3, 3)
+        basis = (3, 3)
         for x in range(3):
             for y in range(3):
-                dim = Dim(x, y)
+                dim = tuple((x, y))
                 for tweak in self.workers:
                     self.tweak_test(tweak, basis, dim, x*3+y, answers)
 
@@ -135,7 +142,7 @@ class TestTweak(unittest.TestCase):
         for border in range(5):
             for tweak in self.workers:
                 for sz in range(4, 7):
-                    basis = Dim(sz, sz)
+                    basis = tuple((sz, sz))
                     test = Tweak(tweak[0], basis, tweak[1])
                     tweaks = str(tweak[0]) + ' w' + str(tweak[1]) + " in " + str(basis) + " with border " + str(border)
                     ace = (answers[border])[tweak][sz]

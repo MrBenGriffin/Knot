@@ -9,11 +9,6 @@ class TestCutter(unittest.TestCase):
 
     def setUp(self):
         self.shape = Shape.squared
-        # enum[name].tweak = crs.tweak()
-        # enum[name].dim = crs.dim()
-        # enum[name].axis = crs.axis()
-        # enum[name].com = crs.com()
-        # enum[name].wallpaper = crs.paper()
         self.axes = self.shape.axis
         self.paper = self.shape.wallpaper
         # Currently only tests against SQUARE.
@@ -84,7 +79,9 @@ class TestCutter(unittest.TestCase):
                     answer = tweak_answers[worker]
                     cutter = Cutter(self.setting, worker[0], worker[1], self.shape.com)
                     value = cutter.make(axis.a, cut)
-                    self.assertEqual(answer, value, str(cut) + ":" + str(axis) + ":" + str(worker) + " Wall should have been " + str(answer))
+                    worker_str = str(worker[0]) + '_' + str(worker[1])
+                    answer_str = str(answer)
+                    self.assertEqual(answer, value, str(cut) + ":" + str(axis) + ":" + worker_str + " Wall should have been " + answer_str)
 
 
 if __name__ == '__main__':

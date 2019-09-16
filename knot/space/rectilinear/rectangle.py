@@ -1,7 +1,30 @@
 import typing
 from ..crs import Wallpaper, WallpaperDecorator, Symmetry
 from .rectilinear import Rectilinear
-from .tweak import Tweak
+from .tweak import Tweak as RTweak
+from .axes import Com
+from .dim import Dim
+
+
+class Tweak(RTweak):
+
+    def face(self, com: Com) -> [Com, None]:
+        if com is None:
+            return None
+        if self.worker_no != 0 and self.paper == self.paper.mirror or self.paper.symmetry == com.axis.perp:
+            return com.opposite
+        return com
+
+    def dim(self, index: tuple) -> Dim:
+        basis = Dim.adopt(index)
+        if self.worker_no == 0:
+            return basis
+        w1 = {
+            self.paper.sunset: Dim(basis.x, self._dim.y - basis.y),
+            self.paper.vanity: Dim(self._dim.x - basis.x, basis.y),
+            self.paper.mirror: Dim(self._dim.x - basis.x, self._dim.y - basis.y)
+        }
+        return w1[self.paper]
 
 
 @WallpaperDecorator(
@@ -28,6 +51,9 @@ class Paper(Wallpaper):
                 Paper.vanity: "Vanity", Paper.mirror: "Mirror"}
         return text[self]
 
+    def __repr__(self):
+        return self.__str__()
+
 
 class Rectangle(Rectilinear):
 
@@ -36,4 +62,3 @@ class Rectangle(Rectilinear):
 
     def tweak(self) -> typing.Type[Tweak]:
         return Tweak
-

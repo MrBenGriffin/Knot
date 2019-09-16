@@ -1,11 +1,12 @@
 # encoding: utf-8
+from abc import ABC, abstractmethod
 from math import floor, ceil
 from knot.space.crs import Tweak as CRSTweak, Wallpaper
 from .axes import Com
 from .dim import Dim
 
 
-class Tweak(CRSTweak):
+class Tweak(CRSTweak, ABC):
     """
     Tweak provides the information for clones. It answers the following questions from a clone.
     What is my orientation to the other (self.paper).
@@ -25,21 +26,13 @@ class Tweak(CRSTweak):
         self.worker_no = worker_no
         self._dim = Dim.adopt((max(0, idx[0] - 1), max(0, idx[1] - 1)))
 
+    @abstractmethod
     def face(self, com: Com) -> [Com, None]:
-        if com is None:
-            return None
-        return com if self.worker_no == 0 else com.opposite
+        pass
 
+    @abstractmethod
     def dim(self, index: tuple) -> Dim:
-        basis = Dim.adopt(index)
-        if self.worker_no == 0:
-            return basis
-        w1 = {
-            self.paper.sunset: Dim(basis.x, self._dim.y - basis.y),
-            self.paper.vanity: Dim(self._dim.x - basis.x, basis.y),
-            self.paper.mirror: Dim(self._dim.x - basis.x, self._dim.y - basis.y)
-        }
-        return w1[self.paper]
+        pass
 
     def entry(self, border: [int, None]) -> Dim:
         """
@@ -48,3 +41,12 @@ class Tweak(CRSTweak):
         Normally I start at the centre of the grid at ceil((grid.x-1)/2),ceil((grid.x-1)/2)
         """
         return self.dim(tuple((ceil(self._dim.x / 2), ceil(self._dim.y / 2) if not border else floor(border / 2))))
+
+    #    Sunset w1; under (2,3)
+    def __repr__(self):
+        return str(self.paper) + " w" + str(self.worker_no) + "; under " + str(self._dim)
+
+    #    Sunset w1
+    def __str__(self):
+        return str(self.paper) + " w" + str(self.worker_no)
+
