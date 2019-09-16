@@ -17,17 +17,23 @@ class Structure:
         self.things = []
         self.lattice = shape.lattice(size, wrap)
         self.size = self.lattice.size
-        self.border = self.lattice.border(border)
+        self.border = self.lattice.set_border(border)
 
     def mine(self):
         while not self.mined:
+            self.mined = True
             for bod in self.bods:
-                bod.run()
+                if not bod.finished:
+                    self.mined = False
+                    bod.run()
 
     def join(self):
         while not self.joined:
+            self.joined = True
             for bod in self.bods:
-                bod.run()
+                if not bod.finished:
+                    self.joined = False
+                    bod.run()
 
     def do_mined(self):
         self.mined = True

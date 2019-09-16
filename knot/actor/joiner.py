@@ -1,30 +1,33 @@
 from .mover import Mover
-from knot.works import Structure
-from knot.tool import Setting
+from knot.space import Lattice
 
 
 class Joiner(Mover):
-    def __init__(self, structure: Structure, setting: Setting):
-        super().__init__(structure)
+    def __init__(self, lattice: Lattice, other: Mover):
+        super().__init__(lattice)
         self.dead_ends = []
         self.collection = []
-        self.select_tool(setting)
+        self.tool = other.tool
+        self.collection.append(self.tool)
+        self.entrance = other.entrance
+        self.dig(self.entrance, None)
 
     def _run(self):
-        if self.track:
+        if not self.finished and self.track:
             self.face = None
             cell = None
             this_cell = self.cell()
             if this_cell.tool not in self.collection:
                 self.collection.append(this_cell.tool)
-            neighbours = this_cell.neighbours()
-            for com in neighbours:
-                neighbour = neighbours[com]
-                if neighbour.tool and neighbour.tool not in self.collection:
+            walls = this_cell.walls
+            for com in walls:
+                neighbour = walls[com].cell(com)
+                if neighbour and neighbour.tool not in self.collection:
+                    self.go(neighbour)
+                    cell = walls[com].make_door(com, self.tool)
                     self.face = com.opposite
-                    wall = this_cell.walls[com]
-                    cell = wall.make_door(com, self.tool)
-                    self.go(cell)
+                    self.finished = True
+                    break  # because we can only have one face for clones.
             if not cell:
                 exits = this_cell.exits()
                 while exits and not cell:
@@ -36,4 +39,4 @@ class Joiner(Mover):
                 else:
                     self.dead_ends.append(self.track.pop())
         else:
-            self.structure.joined = True
+            self.finished = True

@@ -5,7 +5,7 @@ from ..lattice import Lattice as CRSLattice
 
 class Lattice(CRSLattice):
 
-    def border(self, border: [None, int]):
+    def set_border(self, border: [None, int]):
         if border and border > 0:
             x0 = border
             y0 = border
@@ -18,6 +18,7 @@ class Lattice(CRSLattice):
             for xi in range(x0, xn):
                 self.cells[xi, y0].wall(Com.S).block()
                 self.cells[xi, yn].wall(Com.S).block()
+            self.border = border
             return border
         return None
 

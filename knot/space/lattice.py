@@ -7,7 +7,10 @@ from .wall import Wall
 # https://en.wikipedia.org/wiki/Wallpaper_group#The_seventeen_groups
 class Lattice(ABC):
 
-    def __init__(self, dim, size: tuple, wrap: tuple):
+    def __init__(self, crs, size: tuple, wrap: tuple):
+        self.border = None
+        self.crs = crs
+        dim = crs.dim()
         self.size = dim.adjust(size)
         a_wrap = dim.adjust(wrap)
         a_range = tuple(val if wrap[idx] else val + 1 for idx, val in enumerate(self.size))
@@ -26,7 +29,7 @@ class Lattice(ABC):
         return None if idx not in self.cells else self.cells[idx]
 
     @abstractmethod
-    def border(self, size: [None, int]):
+    def set_border(self, size: [None, int]):
         pass
 
     @abstractmethod

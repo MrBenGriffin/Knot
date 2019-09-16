@@ -1,8 +1,7 @@
 # encoding: utf-8
-from enum import Enum
 from .rectilinear.square import Square
 from .rectilinear.rectangle import Rectangle
-
+from enum import Enum
 """
 cf. https://www.redblobgames.com/grids/hexagons/
     https://www.redblobgames.com/grids/hexagons/implementation.html

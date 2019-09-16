@@ -1,14 +1,17 @@
+from knot.space import Lattice, Wallpaper
 from .mover import Mover
 
 
 class Clone(Mover):
-    def __init__(self, structure, other, paper, number):
-        super().__init__(structure, other)
+    def __init__(self, lattice: Lattice, other: Mover, paper: Wallpaper, number):
+        super().__init__(lattice, other)
         self.clone_doors = True
-        self.tweak = self.shape.tweak(paper, structure.size, number)
-        if other.is_miner:
+        self.lattice = lattice
+        tweak = lattice.crs.tweak()
+        self.tweak = tweak(paper, lattice.size, number)
+        if other.tool:
             self.select_tool(other.tool.setting)
-        self.entrance = structure.at(self.tweak.entry(structure.border))
+        self.entrance = lattice.cell(self.tweak.entry(lattice.border))
         self.dig(self.entrance, None)
 
     def _run(self):
@@ -24,7 +27,7 @@ class Clone(Mover):
                 # Now Get the tweaked coordinates
                 work_dim = self.tweak.dim(base.dim)
                 # Now get the cell.
-                cell = self.structure.at(work_dim)
+                cell = self.lattice.cell(work_dim)
                 if cell:
                     self.track.clear()
                     self.go(cell)
@@ -35,11 +38,13 @@ class Clone(Mover):
                     # The two opposites DO NOT cancel each other out!
                     self.face = self.tweak.face(base_dir.opposite).opposite
                     cell.walls[self.face].make_door(self.face, self.tool, cut)
+                self.finished = self.other.finished
         else:
             if not self.other.track:
                 self.track.clear()
 
     def set_other(self, other):
         self.other = other
+        self.finished = False
         self.track = []
 

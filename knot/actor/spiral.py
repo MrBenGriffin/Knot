@@ -1,15 +1,16 @@
 from .mover import Mover
-from knot.space import Coords as Com
-from knot.works import Structure
+from knot.space import Lattice
 from knot.tool import Setting
 
 
 class Spiral(Mover):
 
-    def __init__(self, structure: Structure, setting: Setting):
-        super().__init__(structure)
-        self.com = Com.S
+    def __init__(self, lattice: Lattice, setting: Setting):
+        super().__init__(lattice)
+        com = lattice.crs.com()
+        self.com = com.S
         self.select_tool(setting)
+        self.dig(self.entrance, None)
 
     def _run(self):
         self.face = None

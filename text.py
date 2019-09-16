@@ -64,20 +64,20 @@ def make_knot(args: dict):
     setting = Setting(args['straights'], args['zoo'])
     Mazer.cutoff = int(20.0 * args['connectivity'])
     Holer.balance = args['connectivity']
-    master = args['worker'](knot_work, setting)
+    master = args['worker'](knot_work.lattice, setting)
     knot_work.add_bod(master)
     for w in range(1, style.workers):
-        miner = Clone(knot_work, master, style, w)
-        knot_work.add_bod(miner)
+        clone = Clone(knot_work.lattice, master, style, w)
+        knot_work.add_bod(clone)
     knot_work.mine()
-
-    # TODO:: Uncomment this when ready..
-    # if len(knot_work.bods) > 1 and args['worker'] is Mazer and (knot_work.border or knot_work.cells_up % 2 is 0 or knot_work.cells_across % 2 is 0):
-    #     joiner = Joiner(knot_work, setting)
-    #     knot_work.bods[0] = joiner
-    #     for bod in range(1, len(knot_work.bods)):
-    #         knot_work.bods[bod].set_other(joiner)
-    #     knot_work.join()
+    if len(knot_work.bods) > 1:
+        knot_work.bods.clear()
+        joiner = Joiner(knot_work.lattice, master)
+        knot_work.add_bod(joiner)
+        for w in range(1, style.workers):
+            clone = Clone(knot_work.lattice, joiner, style, w)
+            knot_work.add_bod(clone)
+        knot_work.join()
     result = knot_work.code() if args['encoding'] == 'HIBOX' else knot_work.unicode()
     print(result)
 

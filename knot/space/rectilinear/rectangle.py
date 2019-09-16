@@ -1,6 +1,7 @@
 import typing
-from ..crs import Wallpaper, WallpaperDecorator, Symmetry
+from ..crs import Wallpaper, WallpaperDecorator, Symmetry, Lattice as CRSLattice
 from .rectilinear import Rectilinear
+from .lattice import Lattice
 from .tweak import Tweak as RTweak
 from .axes import Com
 from .dim import Dim
@@ -62,3 +63,7 @@ class Rectangle(Rectilinear):
 
     def tweak(self) -> typing.Type[Tweak]:
         return Tweak
+
+    def lattice(self, size: tuple, wrap: tuple) -> CRSLattice:
+        return Lattice(self, size, wrap)
+

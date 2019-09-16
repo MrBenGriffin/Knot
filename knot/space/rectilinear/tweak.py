@@ -40,7 +40,8 @@ class Tweak(CRSTweak, ABC):
         my x_off and y_off are the maximum indices of a grid.
         Normally I start at the centre of the grid at ceil((grid.x-1)/2),ceil((grid.x-1)/2)
         """
-        return self.dim(tuple((ceil(self._dim.x / 2), ceil(self._dim.y / 2) if not border else floor(border / 2))))
+        xy = ceil(self._dim.x / 2) if not border else floor(border / 2), ceil(self._dim.y / 2) if not border else floor(border / 2)
+        return self.dim(xy)
 
     #    Sunset w1; under (2,3)
     def __repr__(self):

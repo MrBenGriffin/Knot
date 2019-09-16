@@ -59,7 +59,7 @@ class Cell:
         """
         neighbours = {}
         for compass, wall in self.walls.items():
-            neighbour = wall.neighbour(compass)
+            neighbour = wall.cell(compass)
             if neighbour:
                 neighbours[compass] = neighbour
         return neighbours

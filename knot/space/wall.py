@@ -9,10 +9,10 @@ class Wall:
         self.doors = {}
         self.cells = {}
 
-    def neighbour(self, cell_dir) -> [Cell, None]:
-        if cell_dir not in self.cells:
+    def cell(self, com) -> [Cell, None]:
+        if com not in self.cells:
             return None
-        return self.cells[cell_dir]
+        return self.cells[com]
 
     def make_door(self, com, tool, cut=None) -> [Cell, None]:
         # Make door towards com (from com.opposite)

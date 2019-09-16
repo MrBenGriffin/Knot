@@ -1,6 +1,6 @@
 import random
 from .mover import Mover
-from knot.works import Structure
+from knot.space import Lattice
 from knot.tool import Setting
 
 
@@ -13,12 +13,13 @@ class Mazer(Mover):
     """
     cutoff = 15
 
-    def __init__(self, structure: Structure, setting: Setting):
-        super().__init__(structure)
+    def __init__(self, lattice: Lattice, setting: Setting):
+        super().__init__(lattice)
         self.sequence = 0
         self.cell_index = None
         self.faces = []
         self.select_tool(setting)
+        self.dig(self.entrance, None)
 
     def work(self, cell) -> bool:
         walls = cell.walls_that_can_be_dug()

@@ -1,10 +1,9 @@
 import typing
 from abc import ABC
 from enum import Enum
-from ..crs import CRS, Coords, Lattice as CRSLattice
+from ..crs import CRS, Coords
 from .axes import Axis, Com
 from .dim import Dim
-from .lattice import Lattice
 
 
 class Rectilinear(CRS, ABC):
@@ -17,7 +16,4 @@ class Rectilinear(CRS, ABC):
 
     def com(self) -> typing.Type[Enum]:
         return Com
-
-    def lattice(self, size: tuple, wrap: tuple) -> CRSLattice:
-        return Lattice(Dim, size, wrap)
 

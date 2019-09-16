@@ -1,6 +1,7 @@
 import typing
-from knot.space.crs import Wallpaper, WallpaperDecorator, Symmetry
+from ..crs import Wallpaper, WallpaperDecorator, Symmetry, Lattice as CRSLattice
 from .rectilinear import Rectilinear
+from .lattice import Lattice
 from .tweak import Tweak as RTweak
 from .axes import Com
 from .dim import Dim
@@ -79,3 +80,7 @@ class Square(Rectilinear):
 
     def paper(self) -> typing.Type[Wallpaper]:
         return Paper
+
+    def lattice(self, size: tuple, wrap: tuple) -> CRSLattice:
+        return Lattice(self, size, wrap)
+

@@ -74,23 +74,23 @@ class TestWall(unittest.TestCase):
         # for i in range(self.cells_across + 1):
         #     for j in range(self.cells_up):
         #         ew_wall = self.ew_walls[i][j]
-        #         self.assertEqual(ew_wall.neighbour(Com.N), None, "EW Wall doesn't know North")
-        #         self.assertEqual(ew_wall.neighbour(Com.S), None, "EW Wall doesn't know South")
-        #         ewe_test = ew_wall.neighbour(Com.E)
+        #         self.assertEqual(ew_wall.cell(Com.N), None, "EW Wall doesn't know North")
+        #         self.assertEqual(ew_wall.cell(Com.S), None, "EW Wall doesn't know South")
+        #         ewe_test = ew_wall.cell(Com.E)
         #         ewe_answer = ewe_answers[j][i]
         #         self.assertEqual(ewe_test, ewe_answer, str(Dim(i, j)) + " E: Bad Neighbour")
-        #         eww_test = ew_wall.neighbour(Com.W)
+        #         eww_test = ew_wall.cell(Com.W)
         #         eww_answer = eww_answers[j][i]
         #         self.assertEqual(eww_test, eww_answer, str(Dim(i, j)) + " W: Bad Neighbour")
         # for i in range(self.cells_across):
         #     for j in range(self.cells_up + 1):
         #         ns_wall = self.ns_walls[i][j]
-        #         self.assertEqual(ns_wall.neighbour(Com.E), None, "NS Wall doesn't know East")
-        #         self.assertEqual(ns_wall.neighbour(Com.W), None, "NS Wall doesn't know West")
-        #         nsn_test = ns_wall.neighbour(Com.N)
+        #         self.assertEqual(ns_wall.cell(Com.E), None, "NS Wall doesn't know East")
+        #         self.assertEqual(ns_wall.cell(Com.W), None, "NS Wall doesn't know West")
+        #         nsn_test = ns_wall.cell(Com.N)
         #         nsn_answer = nsn_answers[j][i]
         #         self.assertEqual(nsn_test, nsn_answer, str(Dim(i, j)) + " N: Bad Neighbour")
-        #         nss_test = ns_wall.neighbour(Com.S)
+        #         nss_test = ns_wall.cell(Com.S)
         #         nss_answer = nss_answers[j][i]
         #         self.assertEqual(nss_test, nss_answer, str(Dim(i, j)) + " S: Bad Neighbour")
 

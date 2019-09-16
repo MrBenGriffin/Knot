@@ -1,5 +1,5 @@
 from abc import ABCMeta, abstractmethod
-from ..works import Structure
+from ..space import Lattice
 from ..tool import Setting, Cutter
 
 
@@ -10,19 +10,20 @@ class Mover(object):
     def _run(self):
         pass
 
-    def __init__(self, structure: Structure, other=None):
+    def __init__(self, lattice: Lattice, other=None):
         self.other = other
-        self.shape = structure.shape
         self.track = []
         self.levels = 1
         self.is_miner = False
+        self.finished = False
         self.tool = None
         self.face = None  # This is the com from where I came.
-        self.structure = structure
+        self.lattice = lattice
         if other is None:
-            self.tweak = self.shape.tweak(self.shape.wallpaper.identity(), structure.size, 0)
-            self.entrance = structure.at(self.tweak.entry(structure.border))
-            self.dig(self.entrance, None)
+            tweak = lattice.crs.tweak()
+            paper = lattice.crs.paper()
+            self.tweak = tweak(paper.identity(), lattice.size, 0)
+            self.entrance = lattice.cell(self.tweak.entry(lattice.border))
 
     def select_tool(self, setting: Setting):
         self.is_miner = True
@@ -30,20 +31,17 @@ class Mover(object):
         self.tool = Cutter(self.tweak.paper, setting, self.tweak.worker_no)
 
     def run(self):
-        if self.is_miner and not self.track and not self.structure.mined:
-            self.structure.mined = True
+        if self.is_miner and not self.track:
+            self.finished = True
         else:
             self._run()
 
     def dig(self, cell, com=None):
-        cell.open(self, com)
+        cell.open(self.tool, com)
         self.go(cell)
 
     def go(self, cell):
         self.track.append(cell)
-
-    def finished(self):
-        return not self.track
 
     def cell(self):
         if not self.track:
