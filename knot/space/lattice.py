@@ -17,8 +17,17 @@ class Lattice(ABC):
         walls = {dim.axis(i): {j: Wall() for j in l} for i, l in enumerate(wall_coords)}
         self.cells = {i: Cell(i, {c: (walls[c.axis][dim.adopt(i).edge(c, wall_dims, a_wrap).tuple()]) for c in dim.com()}) for i in cell_coords}
 
+    def wall(self, index, com) -> [None, Wall]:
+        idx = index if isinstance(index, tuple) else index.tuple()
+        return None if idx not in self.cells else self.cells[idx].wall(com)
+
     def cell(self, index) -> [None, Cell]:
-        return None if index.tuple() not in self.cells else self.cells[index.tuple()]
+        idx = index if isinstance(index, tuple) else index.tuple()
+        return None if idx not in self.cells else self.cells[idx]
+
+    @abstractmethod
+    def border(self, size: [None, int]):
+        pass
 
     @abstractmethod
     def code(self) -> str:

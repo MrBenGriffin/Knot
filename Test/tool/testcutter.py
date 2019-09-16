@@ -77,7 +77,7 @@ class TestCutter(unittest.TestCase):
                 tweak_answers = axis_answers[axis]
                 for worker in self.workers:
                     answer = tweak_answers[worker]
-                    cutter = Cutter(self.setting, worker[0], worker[1], self.shape.com)
+                    cutter = Cutter(worker[0], self.setting, worker[1])
                     value = cutter.make(axis.a, cut)
                     worker_str = str(worker[0]) + '_' + str(worker[1])
                     answer_str = str(answer)

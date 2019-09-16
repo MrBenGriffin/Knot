@@ -27,7 +27,7 @@ class Mover(object):
     def select_tool(self, setting: Setting):
         self.is_miner = True
         self.face = None
-        self.tool = Cutter(setting, self.tweak.paper, self.tweak.worker_no, self.shape.com)
+        self.tool = Cutter(self.tweak.paper, setting, self.tweak.worker_no)
 
     def run(self):
         if self.is_miner and not self.track and not self.structure.mined:

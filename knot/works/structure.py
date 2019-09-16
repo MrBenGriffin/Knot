@@ -11,19 +11,13 @@ class Structure:
     # shape, args['dimensions']
     def __init__(self, shape: Shape, size: tuple, border: [None, int], wrap: tuple):
         self.shape = shape
-        if border:
-            for axis in self.size:
-                if border > axis / 2:
-                    border = min(0, int(axis/2 - 1))
-                    print("Border was too large for width and height. Resized to " + str(border))
-        self.border = None if not border or border == 0 else border
         self.mined = False
         self.joined = False
         self.bods = []
         self.things = []
-        self.level = shape.lattice(size, wrap)
-        self.size = self.level.size
-    #     TODO:: Border is not managed.
+        self.lattice = shape.lattice(size, wrap)
+        self.size = self.lattice.size
+        self.border = self.lattice.border(border)
 
     def mine(self):
         while not self.mined:
@@ -39,13 +33,13 @@ class Structure:
         self.mined = True
 
     def at(self, index: Coords) -> Cell:
-        return self.level.cell(index)
+        return self.lattice.cell(index)
 
     def add_bod(self, bod):
         self.bods.append(bod)
 
     def code(self):
-        return self.level.code()
+        return self.lattice.code()
 
     def unicode(self):
-        return self.level.unicode()
+        return self.lattice.unicode()

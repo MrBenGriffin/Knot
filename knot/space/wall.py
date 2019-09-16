@@ -15,18 +15,15 @@ class Wall:
         return self.cells[cell_dir]
 
     def make_door(self, com, tool, cut=None) -> [Cell, None]:
-        if com not in self.cells:
+        # Make door towards com (from com.opposite)
+        if self.doors or self.blocked or not self.cells[com] or not self.cells[com.opposite]:
             return None
         other = self.cells[com]
-        if not self.blocked and other:
-            self.doors = tool.make(com, cut)
-            if not other.opened:
-                other.open(tool, com.opposite)
-            if not self.cells[com.opposite].opened:
-                self.cells[com.opposite].open(tool, com)
-            return other
-        else:
-            return None
+        start = self.cells[com.opposite]
+        self.doors = tool.make(com, cut)
+        other.open(tool, com.opposite)
+        start.open(tool, com)
+        return other
 
     def make_solid(self):
         self.doors = {}

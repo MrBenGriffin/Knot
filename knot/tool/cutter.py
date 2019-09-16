@@ -7,11 +7,10 @@ from .cut import Cut
 
 class Cutter:
 
-    def __init__(self, setting: Setting = Setting(), paper: Wallpaper = None, work_number: int = 0, com=None):
+    def __init__(self, paper: Wallpaper = None, setting: Setting = Setting(), work_number: int = 0):
+        self.paper = paper
         self.work_number = work_number
         self.setting = setting
-        self.paper = paper
-        self.com = com
 
     def make(self, cell_dir, cut: Cut = None) -> dict:
         result = {}

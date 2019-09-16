@@ -18,7 +18,6 @@ class Cell:
 
     def name(self):
         pass
-        # return str(self.dim)
 
     def mined(self) -> bool:
         return self.opened
@@ -78,16 +77,15 @@ class Cell:
             return len(exits) == 2 and exits[0] == exits[1].opposite
         return False
 
-    # make_door_in is done on self's side.
-    # def make_door(self, cell_dir: Com, tool: Cutter, ):
-    # def make_door_in(self, com, tool: Cutter, cut: Cut = None):
-    #     return self.walls[com].make_door(com, tool, cut)
-
     def open(self, tool, com):
-        if not self.tool:
+        # Open FROM direction com.
+        if not self.opened and not self.tool:
             self.opened = True
             self.opened_from = com
             self.tool = tool
+
+    def wall(self, com):
+        return None if com not in self.walls else self.walls[com]
 
     def __str__(self):
         return str(self.dim) + " " + self.code()
