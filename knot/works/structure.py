@@ -11,7 +11,6 @@ class Structure:
     # shape, args['dimensions']
     def __init__(self, shape: Shape, size: tuple, border: [None, int], wrap: tuple):
         self.shape = shape
-        self.size = size
         if border:
             for axis in self.size:
                 if border > axis / 2:
@@ -23,6 +22,7 @@ class Structure:
         self.bods = []
         self.things = []
         self.level = shape.lattice(size, wrap)
+        self.size = self.level.size
     #     TODO:: Border is not managed.
 
     def mine(self):

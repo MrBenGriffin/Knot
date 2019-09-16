@@ -4,6 +4,7 @@ from .cell import Cell
 from .wall import Wall
 
 
+# https://en.wikipedia.org/wiki/Wallpaper_group#The_seventeen_groups
 class Lattice(ABC):
 
     def __init__(self, dim, size: tuple, wrap: tuple):
