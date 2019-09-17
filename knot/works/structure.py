@@ -1,5 +1,6 @@
 # encoding: utf-8
-from knot.space import Coords, CRS, Cell
+from ..space import Coords, CRS, Cell
+from ..actor.mover import Mover
 
 
 class Structure:
@@ -41,7 +42,7 @@ class Structure:
     def at(self, index: Coords) -> Cell:
         return self.lattice.cell(index)
 
-    def add_bod(self, bod):
+    def add_bod(self, bod: Mover):
         self.bods.append(bod)
 
     def code(self):

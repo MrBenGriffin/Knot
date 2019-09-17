@@ -1,5 +1,5 @@
 import unittest
-from knot.space.rectilinear.axes import Com, Axis
+from knot.space.rectilinear import Axis, Com
 
 
 class TestAxes(unittest.TestCase):

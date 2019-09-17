@@ -7,8 +7,7 @@ class Clone(Mover):
         super().__init__(lattice, other)
         self.clone_doors = True
         self.lattice = lattice
-        tweak = lattice.crs.tweak()
-        self.tweak = tweak(paper, lattice.size, number)
+        self.tweak = lattice.crs.tweak(paper, lattice.size, number)
         if other.tool:
             self.select_tool(other.tool.setting)
         self.entrance = lattice.cell(self.tweak.entry(lattice.border))

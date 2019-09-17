@@ -20,9 +20,8 @@ class Mover(object):
         self.face = None  # This is the com from where I came.
         self.lattice = lattice
         if other is None:
-            tweak = lattice.crs.tweak()
             paper = lattice.crs.paper()
-            self.tweak = tweak(paper.identity(), lattice.size, 0)
+            self.tweak = lattice.crs.tweak(paper.identity(), lattice.size, 0)
             self.entrance = lattice.cell(self.tweak.entry(lattice.border))
 
     def select_tool(self, setting: Setting):

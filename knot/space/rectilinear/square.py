@@ -1,10 +1,9 @@
-import typing
-from ..crs import Wallpaper, WallpaperDecorator, Symmetry, Lattice as CRSLattice
-from .rectilinear import Rectilinear
+from typing import Type
+from enum import Enum
+from ..crs import CRS, Coords, Wallpaper, WallpaperDecorator, Symmetry, Lattice as CRSLattice
 from .lattice import Lattice
 from .tweak import Tweak as RTweak
-from .axes import Com
-from .dim import Dim
+from .dim import Axis, Com, Dim
 
 
 @WallpaperDecorator(
@@ -60,27 +59,36 @@ class Tweak(RTweak):
             return basis
         if self.paper == self.paper.rotate:
             wx = {
-                1: Dim(basis.y, self._dim.x - basis.x),
-                2: Dim(self._dim.x - basis.x, self._dim.y - basis.y),
-                3: Dim(self._dim.y - basis.y, basis.x)
+                1: Dim(basis.y, self.coords.x - basis.x),
+                2: Dim(self.coords.x - basis.x, self.coords.y - basis.y),
+                3: Dim(self.coords.y - basis.y, basis.x)
             }
             return wx[self.worker_no]
         w1 = {
-            self.paper.sunset: Dim(basis.x, self._dim.y - basis.y),
-            self.paper.vanity: Dim(self._dim.x - basis.x, basis.y),
-            self.paper.mirror: Dim(self._dim.x - basis.x, self._dim.y - basis.y),
+            self.paper.sunset: Dim(basis.x, self.coords.y - basis.y),
+            self.paper.vanity: Dim(self.coords.x - basis.x, basis.y),
+            self.paper.mirror: Dim(self.coords.x - basis.x, self.coords.y - basis.y),
          }
         return w1[self.paper]
 
 
-class Square(Rectilinear):
+class Square(CRS):
 
-    def tweak(self) -> typing.Type[Tweak]:
-        return Tweak
+    def tweak(self, paper: Wallpaper, index: tuple, worker_no: int = 0) -> Tweak:
+        return Tweak(paper, index, worker_no)
 
-    def paper(self) -> typing.Type[Wallpaper]:
+    def paper(self) -> Type[Wallpaper]:
         return Paper
 
     def lattice(self, size: tuple, wrap: tuple) -> CRSLattice:
         return Lattice(self, size, wrap)
+
+    def dim(self) -> Type[Coords]:
+        return Dim
+
+    def axis(self) -> Type[Enum]:
+        return Axis
+
+    def com(self) -> Type[Enum]:
+        return Com
 

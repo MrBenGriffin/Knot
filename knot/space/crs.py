@@ -1,4 +1,4 @@
-import typing
+from typing import Type
 from abc import ABC, abstractmethod
 from enum import Enum
 from .lattice import Lattice
@@ -98,7 +98,7 @@ class Coords(ABC):
 
     @classmethod
     @abstractmethod
-    def com(cls) -> typing.Type[Enum]:
+    def com(cls) -> Type[Enum]:
         pass
 
     @abstractmethod
@@ -128,28 +128,28 @@ class Coords(ABC):
 
 class Tweak(ABC):
     @abstractmethod
-    def __init__(self, paper: Wallpaper, idx: tuple, worker_no: int = 0):
-        pass
+    def __init__(self, paper: Wallpaper, coords: Coords, worker_no: int = 0):
+        self.paper = paper
+        self.worker_no = worker_no
+        self.coords = coords
 
     @abstractmethod
     def face(self, com: Enum):
         pass
 
     @abstractmethod
-    def dim(self, basis: typing.NamedTuple) -> typing.NamedTuple:
+    def dim(self, basis: tuple) -> Coords:
         pass
 
     @abstractmethod
     def entry(self, border: [int, None]):
         pass
 
-    @abstractmethod
     def __repr__(self):
-        pass
+        return str(self.paper) + " w" + str(self.worker_no) + "; under " + str(self.coords)
 
-    @abstractmethod
     def __str__(self):
-        pass
+        return str(self.paper) + " w" + str(self.worker_no)
 
 
 class CRS(ABC):
@@ -158,23 +158,23 @@ class CRS(ABC):
     """
 
     @abstractmethod
-    def tweak(self) -> typing.Type[Tweak]:
+    def tweak(self, paper: Wallpaper, index: tuple, worker_no: int = 0) -> Tweak:
         pass
 
     @abstractmethod
-    def dim(self) -> typing.Type[Coords]:
+    def dim(self) -> Type[Coords]:
         pass
 
     @abstractmethod
-    def axis(self) -> typing.Type[Enum]:
+    def axis(self) -> Type[Enum]:
         pass
 
     @abstractmethod
-    def com(self) -> typing.Type[Enum]:
+    def com(self) -> Type[Enum]:
         pass
 
     @abstractmethod
-    def paper(self) -> typing.Type[Wallpaper]:
+    def paper(self) -> Type[Wallpaper]:
         pass
 
     @abstractmethod

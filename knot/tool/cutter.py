@@ -3,9 +3,10 @@
 from ..space.crs import Wallpaper
 from .setting import Setting
 from .cut import Cut
+from .tool import Tool
 
 
-class Cutter:
+class Cutter(Tool):
 
     def __init__(self, paper: Wallpaper = None, setting: Setting = Setting(), work_number: int = 0):
         self.paper = paper

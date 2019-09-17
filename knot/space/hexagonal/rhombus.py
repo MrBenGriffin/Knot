@@ -1,10 +1,8 @@
-import typing
-from ..crs import Wallpaper, WallpaperDecorator, Symmetry, Lattice as CRSLattice
-from .rectilinear import Rectilinear
+from typing import Type
+from ..crs import CRS, Wallpaper, WallpaperDecorator, Symmetry, Lattice as CRSLattice
 from .lattice import Lattice
 from .tweak import Tweak as RTweak
-from .axes import Com
-from .dim import Dim
+from .dim import Dim, Com
 
 
 class Tweak(RTweak):
@@ -56,14 +54,22 @@ class Paper(Wallpaper):
         return self.__str__()
 
 
-class Rectangle(Rectilinear):
+class Rhombus(CRS):
 
-    def paper(self) -> typing.Type[Wallpaper]:
+    def paper(self) -> Type[Wallpaper]:
         return Paper
 
-    def tweak(self) -> typing.Type[Tweak]:
-        return Tweak
+    def tweak(self, paper: Wallpaper, index: tuple, worker_no: int = 0) -> Tweak:
+        return Tweak(paper, index, worker_no)
 
     def lattice(self, size: tuple, wrap: tuple) -> CRSLattice:
         return Lattice(self, size, wrap)
 
+    def dim(self) -> Type[Coords]:
+        return Dim
+
+    def axis(self) -> Type[Enum]:
+        return Axis
+
+    def com(self) -> Type[Enum]:
+        return Com

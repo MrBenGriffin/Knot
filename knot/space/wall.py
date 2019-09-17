@@ -15,7 +15,7 @@ class Wall:
         return self.cells[com]
 
     def make_door(self, com, tool, cut=None) -> [Cell, None]:
-        # Make door towards com (from com.opposite)
+        # Cut a door with the tool towards com (from com.opposite)
         if self.doors or self.blocked or not self.cells[com] or not self.cells[com.opposite]:
             return None
         other = self.cells[com]
@@ -30,8 +30,8 @@ class Wall:
 
     def door(self, com):
         """
-        Return the door Cut (or None), according to direction.
-        (Some cuts may appear different depending on what side of the wall
+        Return the door cut-style (or None), according to direction.
+        (Some cut-style may appear different depending on what side of the wall
         you are looking through).
         :param com:
         :return:

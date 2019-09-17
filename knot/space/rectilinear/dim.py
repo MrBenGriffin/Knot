@@ -1,5 +1,34 @@
-from ..crs import Coords
-from .axes import Axis, Com
+from enum import Enum
+from ..crs import Coords, AxesDecorator, ComDecorator, Symmetry
+
+
+@AxesDecorator(
+    {'NS': [], 'EW': []},
+    {'NS': (Symmetry.V, Symmetry.H), 'EW': (Symmetry.H, Symmetry.V)})
+class Axis(Enum):
+    NS = 0x0100
+    EW = 0x0200
+
+    def __str__(self):
+        text = {Axis.NS: "NS", Axis.EW: "EW"}
+        return text[self]
+
+
+@ComDecorator(
+    Axis,
+    {'N': 'S', 'E': 'W'},
+    {'N': 'E', 'E': 'S', 'S': 'W', 'W': 'N'},
+    {'N': ['NS', 0], 'E': ['EW', 0], 'S': ['NS', 1], 'W': ['EW', 1]}
+)
+class Com(Enum):
+    N = 0x0001
+    E = 0x0002
+    S = 0x0004
+    W = 0x0008
+
+    def __str__(self):
+        text = {Com.N: "North", Com.E: "East", Com.S: "South", Com.W: "West"}
+        return text[self]
 
 
 class Dim(Coords):
@@ -34,17 +63,6 @@ class Dim(Coords):
             dy = dy % limit[1] if wraps[1] else dy
         return Dim(dx, dy) if 0 <= dx < limit[0] and 0 <= dy < limit[1] else None
 
-    # x = index.x % self.h_range if self.h_wrap else index.x
-    # y = index.y % self.v_range if self.v_wrap else index.y
-    # if x in range(0, self.h_range) and y in range(0, self.v_range):
-    #     return map_to_use[x][y]
-
-    # point.going(com, self.wall_dims, self.wrap)
-        # return Dim(self.x, self.y + 1) if com == Com.N else \
-        #     Dim(self.x, self.y - 1) if com == Com.S else \
-        #     Dim(self.x - 1, self.y) if com == Com.W else \
-        #     Dim(self.x + 1, self.y) if com == Com.E else self
-
     def tuple(self) -> tuple:
         return self.x, self.y
 
@@ -75,7 +93,7 @@ class Dim(Coords):
         return "(" + str(self.x) + "," + str(self.y) + ")"
 
     def __repr__(self):
-        return "<Dim>(" + str(self.x) + "," + str(self.y) + ")"
+        return "Dim(" + str(self.x) + "," + str(self.y) + ")"
 
     def __eq__(self, other):
         if isinstance(other, Dim):
@@ -90,3 +108,5 @@ class Dim(Coords):
         if isinstance(other, tuple):
             return self.x != other[0] or self.y != other[1]
         return NotImplemented
+
+

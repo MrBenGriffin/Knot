@@ -1,5 +1,5 @@
 # encoding: utf-8
-from knot.space.rectilinear import Com
+from .dim import Com
 from ..lattice import Lattice as CRSLattice
 
 

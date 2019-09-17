@@ -1,9 +1,8 @@
 # encoding: utf-8
 from abc import ABC, abstractmethod
 from math import floor, ceil
-from knot.space.crs import Tweak as CRSTweak, Wallpaper
-from .axes import Com
-from .dim import Dim
+from ..crs import Tweak as CRSTweak, Wallpaper
+from .dim import Dim, Com
 
 
 class Tweak(CRSTweak, ABC):
@@ -21,10 +20,8 @@ class Tweak(CRSTweak, ABC):
         :param idx: The index within the lattice of the master cell that this is a transform of.
         :param worker_no: The worker number that this paper is identifying with (0..3)
         """
-        super().__init__(paper, idx, worker_no)
-        self.paper = paper
-        self.worker_no = worker_no
-        self._dim = Dim.adopt((max(0, idx[0] - 1), max(0, idx[1] - 1)))
+        coords = Dim.adopt((max(0, idx[0] - 1), max(0, idx[1] - 1)))
+        super().__init__(paper, coords, worker_no)
 
     @abstractmethod
     def face(self, com: Com) -> [Com, None]:
@@ -40,12 +37,12 @@ class Tweak(CRSTweak, ABC):
         my x_off and y_off are the maximum indices of a grid.
         Normally I start at the centre of the grid at ceil((grid.x-1)/2),ceil((grid.x-1)/2)
         """
-        xy = ceil(self._dim.x / 2) if not border else floor(border / 2), ceil(self._dim.y / 2) if not border else floor(border / 2)
+        xy = ceil(self.coords.x / 2) if not border else floor(border / 2), ceil(self.coords.y / 2) if not border else floor(border / 2)
         return self.dim(xy)
 
     #    Sunset w1; under (2,3)
     def __repr__(self):
-        return str(self.paper) + " w" + str(self.worker_no) + "; under " + str(self._dim)
+        return str(self.paper) + " w" + str(self.worker_no) + "; under " + str(self.coords)
 
     #    Sunset w1
     def __str__(self):

@@ -46,7 +46,6 @@ class ArgRange(object):
 
 
 def make_knot(args: dict):
-    # print(args)
     random.seed(args['random'])
     shape = None
 

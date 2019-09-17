@@ -1,5 +1,5 @@
 import unittest
-from knot.space.rectilinear.axes import Com
+from knot.space.rectilinear import Com
 from knot.space.rectilinear.dim import Dim
 from knot.space.rectilinear.rectangle import Paper, Tweak
 

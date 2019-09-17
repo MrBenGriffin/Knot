@@ -1,5 +1,5 @@
 # encoding: utf-8
-from knot.space.rectilinear import Com
+from .axes import Com
 from ..lattice import Lattice as CRSLattice
 """
 cf. https://www.redblobgames.com/grids/hexagons/
@@ -20,8 +20,8 @@ class Lattice(CRSLattice):
                 self.cells[x0, yi].wall(Com.W).block()
                 self.cells[xn, yi].wall(Com.W).block()
             for xi in range(x0, xn):
-                self.cells[xi, y0].wall(Com.S).block()
-                self.cells[xi, yn].wall(Com.S).block()
+                self.cells[xi, y0].wall(Com.D).block()
+                self.cells[xi, yn].wall(Com.D).block()
             self.border = border
             return border
         return None

@@ -1,6 +1,6 @@
 import unittest
 from knot.space.crs import Symmetry
-from knot.space.rectilinear.axes import Com
+from knot.space.rectilinear import Com
 from knot.space.rectilinear.square import Paper
 
 
