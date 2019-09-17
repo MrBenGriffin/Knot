@@ -1,5 +1,5 @@
 import unittest
-from knot.space import Shape
+from knot.space.rectilinear.square import Square
 from knot.tool import Cut, Cutter
 
 
@@ -21,11 +21,14 @@ class TestWall(unittest.TestCase):
         It's really hard to use walls without cells.
         So here, we are initialising a group of 3x3 cells - the centre of which is Blocked.
         """
-        self.shape = Shape.squared
-        self.com = self.shape.com
-        self.lattice = self.shape.lattice((3, 3), (False, False))
-        self.lattice.border(1)
-        self.cutter = Cutter(self.shape.wallpaper.identity())
+        self.shape = Square()
+        self.com = self.shape.com()
+        self.nowrap = (False, False)
+        self.lat33 = (3, 3)
+        self.lattice = self.shape.lattice(self.lat33, self.nowrap)
+        self.lattice.set_border(1)
+        self.paper = self.shape.paper()
+        self.cutter = Cutter(self.paper.identity())
 
     def makeDoor(self, dim: tuple, com: tuple, cut: Cut):
         wall = self.lattice.wall(dim, com)
