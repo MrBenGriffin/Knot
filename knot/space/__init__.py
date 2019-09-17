@@ -1,4 +1,4 @@
-from .shape import Shape
+# from .shape import Shape
 from .cell import Cell
 from .wall import Wall
 from .lattice import Lattice

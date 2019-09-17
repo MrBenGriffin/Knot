@@ -1,5 +1,5 @@
 # encoding: utf-8
-from knot.space import Coords, Shape, Cell
+from knot.space import Coords, CRS, Cell
 
 
 class Structure:
@@ -9,7 +9,7 @@ class Structure:
     # {'width': 11, 'height': 11, 'straights': 0.2, 'zoo': 0.2, 'symmetry'
     #  : < Wallpaper.rot090: 5 >, 'border': None, 'htile': True, 'vtile': True, 'connectivity': 12, 'random': 1337}
     # shape, args['dimensions']
-    def __init__(self, shape: Shape, size: tuple, border: [None, int], wrap: tuple):
+    def __init__(self, shape: CRS, size: tuple, border: [None, int], wrap: tuple):
         self.shape = shape
         self.mined = False
         self.joined = False

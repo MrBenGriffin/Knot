@@ -3,7 +3,7 @@ import os
 import random
 import argparse
 from knot.space.crs import Symmetry
-from knot.space.shape import Shape
+from knot.space.rectilinear import Square, Rectangle
 from knot.works import Structure
 from knot.actor import Mazer, Clone, Joiner, Holer, Spiral
 from knot.tool import Setting
@@ -52,11 +52,11 @@ def make_knot(args: dict):
 
     if not args['hex']:
         if len(args['dimensions']) == 1 or args['dimensions'][0] == args['dimensions'][1]:
-            shape = Shape.squared
+            shape = Square()
         else:
-            shape = Shape.rectangle
+            shape = Rectangle()
 
-    style = shape.wallpaper.select(args['symmetry'])
+    style = shape.paper().select(args['symmetry'])
     if not style or not shape:
         print("Style / symmetry is currently not available")
         exit(0)

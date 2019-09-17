@@ -4,6 +4,7 @@ from .cell import Cell
 from .wall import Wall
 
 
+# https://www.redblobgames.com/grids/hexagons/#coordinates
 # https://en.wikipedia.org/wiki/Wallpaper_group#The_seventeen_groups
 class Lattice(ABC):
 

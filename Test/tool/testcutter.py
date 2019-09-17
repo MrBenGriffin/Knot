@@ -1,6 +1,6 @@
 import unittest
 from knot.tool import Cutter, DummyRng
-from knot.space import Shape
+from knot.space.rectilinear.square import Square
 from knot.tool.setting import Setting
 from knot.tool.cut import Cut
 
@@ -8,9 +8,9 @@ from knot.tool.cut import Cut
 class TestCutter(unittest.TestCase):
 
     def setUp(self):
-        self.shape = Shape.squared
-        self.axes = self.shape.axis
-        self.paper = self.shape.wallpaper
+        self.shape = Square()
+        self.axes = self.shape.axis()
+        self.paper = self.shape.paper()
         # Currently only tests against SQUARE.
         # Setting 0 : straights_balance; 0 = All twists, 1000=all Straights
         # Setting 1 : zoomorph_balance;  0 = All twists, 1000=all Zoomorphs.
@@ -22,9 +22,9 @@ class TestCutter(unittest.TestCase):
                         (self.paper.rotate, 3), (self.paper.rotate, 2))
 
     def test_make(self):
-        axis = self.shape.axis
         sp = self.paper
-        com = self.shape.com
+        axis = self.shape.axis()
+        com = self.shape.com()
         answers = {
             None: {
                 axis.EW: {
