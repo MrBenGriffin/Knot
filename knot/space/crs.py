@@ -229,7 +229,7 @@ class ComDecorator:
         for com, axis in self.axis_map.items():
             if axis:
                 enum[com].axis = self.axis[axis[0]]
-                if axis[1] is 0:
+                if axis[1] == 0:
                     self.axis[axis[0]].a = enum[com]
                 else:
                     self.axis[axis[0]].b = enum[com]
